@@ -17,7 +17,7 @@ export default function LoginScreen() {
       }
     >
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
+        <ThemedText type="title">You are NOT Welcome!</ThemedText>
         <HelloWave />
       </ThemedView>
 
