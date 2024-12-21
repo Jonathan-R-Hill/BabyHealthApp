@@ -19,13 +19,11 @@ const LoginScreen = () => {
   };
 
   const handleCreateAccount = () => {
-    // Navigate to the "Create Account" page
-    router.push("/createAccount");
+    router.push("./createAccount");
   };
 
   const handleForgotPassword = () => {
-    // Navigate to the "Forgot Password" page
-    router.push("/forgotPassword");
+    router.push("./forgotPassword");
   };
 
   return (
@@ -51,7 +49,7 @@ const LoginScreen = () => {
         onChangeText={setPassword}
         autoCapitalize="none"
         autoCorrect={false}
-        secureTextEntry // Hides the text for passwords
+        secureTextEntry // Hides the text
       />
 
       {/* Login Button */}
