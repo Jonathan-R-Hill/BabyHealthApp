@@ -1,18 +1,37 @@
 import React, { useState } from "react";
-import { StyleSheet, Platform, TextInput, Button, View } from "react-native";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
+import {
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+} from "react-native";
+import { useRouter } from "expo-router";
 
 const LoginScreen = () => {
   const [username, setUsername] = useState(""); // State to hold the username input
+  const [password, setPassword] = useState(""); // State to hold the password input
+  const router = useRouter();
 
   const handleLogin = () => {
-    console.log("Username:", username); // Handle login logic
+    console.log("Username:", username, "Password:", password); // Handle login logic
+  };
+
+  const handleCreateAccount = () => {
+    // Navigate to the "Create Account" page
+    router.push("/createAccount");
+  };
+
+  const handleForgotPassword = () => {
+    // Navigate to the "Forgot Password" page
+    router.push("/forgotPassword");
   };
 
   return (
-    <ThemedView style={styles.stepContainer}>
-      <ThemedText type="subtitle">User Name</ThemedText>
+    <View style={styles.container}>
+      {/* Username Input */}
+      <Text style={styles.label}>User Name</Text>
       <TextInput
         style={styles.inputBox}
         placeholder="Enter your username"
@@ -22,24 +41,65 @@ const LoginScreen = () => {
         autoCorrect={false}
         keyboardType="default"
       />
+
+      {/* Password Input */}
+      <Text style={styles.label}>Password</Text>
+      <TextInput
+        style={styles.inputBox}
+        placeholder="Enter your password"
+        value={password}
+        onChangeText={setPassword}
+        autoCapitalize="none"
+        autoCorrect={false}
+        secureTextEntry // Hides the text for passwords
+      />
+
+      {/* Login Button */}
       <Button title="Login" onPress={handleLogin} />
-    </ThemedView>
+
+      {/* Links for "Create Account" and "Forgot Password" */}
+      <View style={styles.linksContainer}>
+        <TouchableOpacity onPress={handleCreateAccount}>
+          <Text style={styles.linkText}>Create Account</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleForgotPassword}>
+          <Text style={styles.linkText}>Forgot Password?</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
+// Styles for the component
 const styles = StyleSheet.create({
-  stepContainer: {
-    padding: 20,
+  container: {
+    flex: 1,
     justifyContent: "center",
+    padding: 16,
+    backgroundColor: "#fff",
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 8,
+    fontWeight: "bold",
   },
   inputBox: {
     height: 40,
     borderColor: "gray",
     borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginVertical: 10,
-    backgroundColor: "#fff",
+    marginBottom: 16,
+    borderRadius: 4,
+    paddingHorizontal: 8,
+  },
+  linksContainer: {
+    marginTop: 16,
+    alignItems: "center",
+  },
+  linkText: {
+    fontSize: 14,
+    color: "#007BFF", // A blue color for links
+    marginVertical: 4,
+    textDecorationLine: "underline",
   },
 });
 
