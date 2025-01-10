@@ -1,6 +1,15 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import { useRouter } from "expo-router";
+
+import Navbar from "../../Navbar";
 
 export default function CreateDiaryEntry() {
   const router = useRouter();
@@ -35,14 +44,14 @@ export default function CreateDiaryEntry() {
 
       {/* Diary Entries */}
       <ScrollView style={styles.diaryContainer}>
-        <TouchableOpacity 
+        <TouchableOpacity
           onPress={handleNavigateToEntry}
           style={styles.createButton}
         >
           <Text style={styles.createButtonText}>+ Create a new entry</Text>
         </TouchableOpacity>
 
-        {['Diary title', 'Title', 'Title'].map((entry, index) => (
+        {["Diary title", "Title", "Title"].map((entry, index) => (
           <TouchableOpacity key={index} style={styles.diaryEntry}>
             <Text style={styles.diaryText}>{entry}</Text>
             <Text style={styles.dateText}>DD/MM</Text>
@@ -54,7 +63,7 @@ export default function CreateDiaryEntry() {
           <Text style={styles.yearText}>2025</Text>
         </View>
 
-        {['Title', 'Title', 'Title', 'Title'].map((entry, index) => (
+        {["Title", "Title", "Title", "Title"].map((entry, index) => (
           <TouchableOpacity key={index} style={styles.diaryEntry}>
             <Text style={styles.diaryText}>{entry}</Text>
             <Text style={styles.dateText}>DD/MM</Text>
@@ -63,7 +72,7 @@ export default function CreateDiaryEntry() {
       </ScrollView>
 
       {/* Bottom Navigation */}
-      <View style={styles.bottomNav}>
+      {/* <View style={styles.bottomNav}>
         <TouchableOpacity style={styles.navButton}>
           <Text>Diary</Text>
         </TouchableOpacity>
@@ -76,7 +85,8 @@ export default function CreateDiaryEntry() {
         <TouchableOpacity style={styles.navButton}>
           <Text>More Options</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
+      <Navbar />
     </View>
   );
 }
@@ -84,99 +94,99 @@ export default function CreateDiaryEntry() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   header: {
     padding: 10,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
+    flexDirection: "row",
+    justifyContent: "flex-start",
   },
   profileIcon: {
     width: 40,
     height: 40,
-    backgroundColor: '#ccc',
+    backgroundColor: "#ccc",
     borderRadius: 20,
   },
   chartButtonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     marginVertical: 10,
   },
   chartButton: {
-    backgroundColor: '#5A4FCF',
+    backgroundColor: "#5A4FCF",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
   },
   chartButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: "#fff",
+    fontWeight: "bold",
   },
   diaryContainer: {
     flex: 1,
     paddingHorizontal: 10,
   },
   createButton: {
-    backgroundColor: '#3498db',
+    backgroundColor: "#3498db",
     paddingVertical: 15,
     marginVertical: 10,
     borderRadius: 5,
-    alignItems: 'center',
+    alignItems: "center",
   },
   createButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   diaryEntry: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: '#3498db',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "#3498db",
     padding: 15,
     marginVertical: 5,
     borderRadius: 5,
   },
   diaryText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
   },
   dateText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
   },
   divider: {
     marginVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    alignItems: 'center',
+    borderBottomColor: "#ccc",
+    alignItems: "center",
   },
   yearText: {
     fontSize: 18,
-    color: '#000',
+    color: "#000",
     marginTop: -12,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     paddingHorizontal: 10,
   },
   bottomNav: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     paddingVertical: 10,
     borderTopWidth: 1,
-    borderTopColor: '#ccc',
+    borderTopColor: "#ccc",
   },
   navButton: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   headerButton: {
-    backgroundColor: '#007AFF',  // iOS blue color, you can change this
+    backgroundColor: "#007AFF", // iOS blue color, you can change this
     paddingHorizontal: 15,
     paddingVertical: 8,
     borderRadius: 8,
     marginLeft: 10,
   },
   headerButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
