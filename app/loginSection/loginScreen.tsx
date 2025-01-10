@@ -17,7 +17,7 @@ const LoginScreen = () => {
   const handleLogin = () => {
     console.log("Username:", username, "Password:", password); // TODO Handle login logic
 
-    router.push("../appPages/mainMenu");
+    router.push("../appPages/diary/main");
   };
 
   const handleCreateAccount = () => {
