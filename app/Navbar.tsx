@@ -3,11 +3,13 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 
 const pages = {
-  diary: "/appPages/diary/main",
-  mainMenu: "/appPages/mainMenu",
-  profile: "/appPages/profile",
-  askBot: "/appPages/bot/main",
-  settings: "/appPages/settings/main",
+  Diary: "/appPages/diary/main",
+  "Main Menu": "/appPages/mainMenu",
+  "Ask our Bot": "/appPages/bot/main",
+  Settings: "/appPages/settings/main",
+  "Baby Log": "/appPages/babyLog/main",
+  "Contact Us": "/appPages/contactUs/main",
+  "Baby Care Advice": "/appPages/adviceSection/main",
 };
 
 const Navbar: React.FC = () => {
@@ -20,36 +22,36 @@ const Navbar: React.FC = () => {
   };
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen); // Toggle the dropdown
+    setIsMenuOpen(!isMenuOpen);
   };
 
   return (
     <View style={styles.navbarContainer}>
       {/* MainMenu, Diary, AskBot buttons */}
       <TouchableOpacity
-        onPress={() => navigateTo("mainMenu")}
+        onPress={() => navigateTo("Main Menu")}
         style={styles.navButton}
       >
-        <Text style={styles.navButtonText}>MainMenu</Text>
+        <Text style={styles.navButtonText}>Main Menu</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => navigateTo("diary")}
+        onPress={() => navigateTo("Diary")}
         style={styles.navButton}
       >
         <Text style={styles.navButtonText}>Diary</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => navigateTo("askBot")}
+        onPress={() => navigateTo("Ask our Bot")}
         style={styles.navButton}
       >
-        <Text style={styles.navButtonText}>AskBot</Text>
+        <Text style={styles.navButtonText}>Ask our Bot</Text>
       </TouchableOpacity>
 
       {/* Dropdown Button */}
       <TouchableOpacity onPress={toggleMenu} style={styles.navButton}>
-        <Text style={styles.navButtonText}>More Options</Text>
+        <Text style={styles.navButtonText}>More</Text>
       </TouchableOpacity>
 
       {/* Dropdown Menu */}
@@ -57,9 +59,9 @@ const Navbar: React.FC = () => {
         <View style={styles.popoutMenu}>
           {Object.keys(pages).map((pageKey) => {
             if (
-              pageKey !== "mainMenu" &&
-              pageKey !== "diary" &&
-              pageKey !== "askBot"
+              pageKey !== "Main Menu" &&
+              pageKey !== "Diary" &&
+              pageKey !== "Ask our Bot"
             ) {
               return (
                 <TouchableOpacity
@@ -105,12 +107,13 @@ const styles = StyleSheet.create({
   },
   popoutMenu: {
     position: "absolute",
-    top: -80, // Adjust this value to control how far the dropdown goes
+    bottom: "100%", // move the menu above the navbar
     left: 0,
     right: 0,
     backgroundColor: "#2980b9",
     paddingVertical: 10,
     alignItems: "center",
+    zIndex: 100,
   },
 });
 
