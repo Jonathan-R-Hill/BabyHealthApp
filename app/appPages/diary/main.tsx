@@ -1,4 +1,14 @@
-import React from "react";
+interface DiaryEntry {
+  id: number;
+  title: string;
+  date: string;
+}
+
+// import { BACKEND_URL } from '@env';
+
+// console.log(BACKEND_URL); // Debugging: This should print your URL
+
+import React, { useEffect, useState }  from "react";
 import {
   View,
   Text,
@@ -13,6 +23,26 @@ import Navbar from "../../Navbar";
 
 export default function CreateDiaryEntry() {
   const router = useRouter();
+  const [diaryEntries, setDiaryEntries] = useState<DiaryEntry[]>([]);
+  
+  const BACKEND = process.env.EXPO_PUBLIC_JSON_SERVER || "http://localhost:3000";
+  // console.log("Backend URL:", BACKEND); // Debugging
+  
+  const fetchDiaryEntries = async () => {
+    try {
+      const response = await fetch(`${BACKEND}/entry`); 
+      const data: DiaryEntry[] = await response.json();
+      setDiaryEntries(data);
+    } catch (error) {
+      console.error("Error fetching diary entries:", error);
+      Alert.alert("Error", "Could not load diary entries.");
+    }
+  };
+
+  useEffect(() => {
+    fetchDiaryEntries();
+  }, []);
+
   // Remove useNavigation since we're using expo-router
   const handleNavigateToEntry = () => {
     console.log("Button pressed"); // Debug log
@@ -27,11 +57,6 @@ export default function CreateDiaryEntry() {
 
   return (
     <View style={styles.container}>
-      {/* Profile Icon Section */}
-      <View style={styles.header}>
-        <View style={styles.profileIcon}></View>
-      </View>
-
       {/* Chart Buttons */}
       <View style={styles.chartButtonsContainer}>
         <TouchableOpacity style={styles.chartButton}>
@@ -51,22 +76,10 @@ export default function CreateDiaryEntry() {
           <Text style={styles.createButtonText}>+ Create a new entry</Text>
         </TouchableOpacity>
 
-        {["Diary title", "Title", "Title"].map((entry, index) => (
-          <TouchableOpacity key={index} style={styles.diaryEntry}>
-            <Text style={styles.diaryText}>{entry}</Text>
-            <Text style={styles.dateText}>DD/MM</Text>
-          </TouchableOpacity>
-        ))}
-
-        {/* Divider and Year Section */}
-        <View style={styles.divider}>
-          <Text style={styles.yearText}>2025</Text>
-        </View>
-
-        {["Title", "Title", "Title", "Title"].map((entry, index) => (
-          <TouchableOpacity key={index} style={styles.diaryEntry}>
-            <Text style={styles.diaryText}>{entry}</Text>
-            <Text style={styles.dateText}>DD/MM</Text>
+        {diaryEntries.map((entry) => (
+          <TouchableOpacity key={entry.id} style={styles.diaryEntry}>
+            <Text style={styles.diaryText}>{entry.title}</Text>
+            <Text style={styles.dateText}>{entry.date}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
