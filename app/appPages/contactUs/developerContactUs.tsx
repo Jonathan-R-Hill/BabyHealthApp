@@ -10,23 +10,43 @@ import { useRouter } from "expo-router";
 
 import Navbar from "../../Navbar";
 
-export default function HandleContactUs() {
+export default function DevContactMain() {
     const router = useRouter();
 
-    const ContactDevs = () => {
+    const reportBug = () => {
         try{
             console.log("Button Pressed");
-            router.push("./developerContactUs");
+            router.push("./reportBug");
         } catch(error) {
             console.error("Navigation Error", error);
             Alert.alert("Navigation Error", "Could not navigate to correct page");
         }
     }
 
-    const ContactCarer = () => {
+    const requestFeature = () => {
         try{
             console.log("Button Pressed");
-            router.push("./contactCarer");
+            router.push("./requestFeature");
+        } catch(error) {
+            console.error("Navigation Error", error);
+            Alert.alert("Navigation Error", "Could not navigate to correct page");
+        }
+    }
+
+    const discordServer = () => {
+        try{
+            console.log("Button Pressed");
+            router.push("./discordServer"); //note this may be an actual link to a discord server in the future
+        } catch(error) {
+            console.error("Navigation Error", error);
+            Alert.alert("Navigation Error", "Could not navigate to correct page");
+        }
+    }
+
+    const gitHub = () => {
+        try{
+            console.log("Button Pressed");
+            router.push("./gitHub"); //note this may be an actual link to the github
         } catch(error) {
             console.error("Navigation Error", error);
             Alert.alert("Navigation Error", "Could not navigate to correct page");
@@ -35,33 +55,29 @@ export default function HandleContactUs() {
 
     return (
         <View style = {styles.container}>
-            {/*Logo placement*/}
             <View style = {styles.header}>
-                <View style = {styles.profileIcon}></View>
-                <Text style = {styles.textTitle}>NHS Contacts</Text>
-            </View>
-
-            {/*Text Placement*/}
-            <View style = {styles.header}>
-                <Text style = {styles.textGeneral}>
-                    Phone Number: <Text style = {styles.numberText}>0300 311 2233</Text>
-                </Text>
-            </View>
-            <View style = {styles.header}>
-                <Text style = {styles.textGeneral}>
-                    Number for hearing or speech impaired users: <Text style = {styles.numberText}>18001</Text>
-                </Text>
+                <Text style = {styles.textTitle}>Developer Contact</Text>
             </View>
 
             {/*Button Placement*/}
             <View style = {styles.header}>
-                <TouchableOpacity style={styles.chartButton} onPress={ContactCarer}>
-                    <Text style={styles.chartButtonText}>Contact A Carer</Text>
+                <TouchableOpacity style={styles.chartButton} onPress={reportBug}>
+                    <Text style={styles.chartButtonText}>Report A Bug</Text>
                 </TouchableOpacity>
             </View>
             <View style = {styles.header}>
-                <TouchableOpacity style={styles.chartButton} onPress={ContactDevs}>
-                    <Text style={styles.chartButtonText}>Contact A Developer</Text>
+                <TouchableOpacity style={styles.chartButton} onPress={requestFeature}>
+                    <Text style={styles.chartButtonText}>Request A Feature</Text>
+                </TouchableOpacity>
+            </View>
+            <View style = {styles.header}>
+                <TouchableOpacity style={styles.chartButton} onPress={discordServer}>
+                    <Text style={styles.chartButtonText}>Visit The App Support Discord Server</Text>
+                </TouchableOpacity>
+            </View>
+            <View style = {styles.header}>
+                <TouchableOpacity style={styles.chartButton} onPress={gitHub}>
+                    <Text style={styles.chartButtonText}>GitHub</Text>
                 </TouchableOpacity>
             </View>
 
@@ -96,12 +112,6 @@ const styles = StyleSheet.create({
       justifyContent: "flex-start",
       alignItems: "center",
     },
-    profileIcon: {
-      width: 80,
-      height: 80,
-      backgroundColor: "#ccc",
-      borderRadius: 20,
-    },
     chartButtonsContainer: {
       flexDirection: "row",
       justifyContent: "space-around",
@@ -116,14 +126,6 @@ const styles = StyleSheet.create({
     chartButtonText: {
       color: "#fff",
       fontWeight: "bold",
-    },
-    numberText: {
-        color: "#5A4FCF",
-        fontSize: 16,
-    },
-    textGeneral: {
-        color: "#000000",
-        fontSize: 16,
     },
     textTitle: {
         color: "#000000",
