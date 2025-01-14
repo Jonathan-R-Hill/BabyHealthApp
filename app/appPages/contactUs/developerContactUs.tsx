@@ -46,7 +46,7 @@ export default function DevContactMain() {
     const gitHub = () => {
         try{
             console.log("Button Pressed");
-            router.push("./gitHub"); //note this may be an actual link to the github
+            router.push("https://github.com/Jonathan-R-Hill/BabyHealthApp"); //note this may be an actual link to the github
         } catch(error) {
             console.error("Navigation Error", error);
             Alert.alert("Navigation Error", "Could not navigate to correct page");
@@ -55,9 +55,8 @@ export default function DevContactMain() {
 
     return (
         <View style = {styles.container}>
-            <View style = {styles.header}>
-                <Text style = {styles.textTitle}>Developer Contact</Text>
-            </View>
+            <Text style = {styles.textTitle}>Developer Contact</Text>
+            
 
             {/*Button Placement*/}
             <View style = {styles.header}>
@@ -72,7 +71,7 @@ export default function DevContactMain() {
             </View>
             <View style = {styles.header}>
                 <TouchableOpacity style={styles.chartButton} onPress={discordServer}>
-                    <Text style={styles.chartButtonText}>Visit The App Support Discord Server</Text>
+                    <Text style={styles.chartButtonText}>App Support Discord Server</Text>
                 </TouchableOpacity>
             </View>
             <View style = {styles.header}>
@@ -111,25 +110,30 @@ const styles = StyleSheet.create({
       flexDirection: "column",
       justifyContent: "flex-start",
       alignItems: "center",
-    },
-    chartButtonsContainer: {
-      flexDirection: "row",
-      justifyContent: "space-around",
-      marginVertical: 10,
+      flex: 2
     },
     chartButton: {
-      backgroundColor: "#5A4FCF",
+      backgroundColor: "#3498db",
       paddingVertical: 10,
       paddingHorizontal: 20,
       borderRadius: 5,
+      height: "30%",
+      width: "80%",
+      maxHeight: 300,
+      maxWidth: 600,
+      alignItems: "center",
+      justifyContent: "center",
     },
     chartButtonText: {
       color: "#fff",
       fontWeight: "bold",
+      alignSelf: "center",
     },
     textTitle: {
-        color: "#000000",
-        fontSize: 40,
-        fontWeight: "bold",
+      color: "#000000",
+      fontSize: 40,
+      fontWeight: "bold",
+      flex: 1,
+      textAlign: "center",
     }
 });
