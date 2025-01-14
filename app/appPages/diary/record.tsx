@@ -23,12 +23,18 @@ export default function DiaryEntryDetails() {
 
   const fetchDiaryEntries = async () => {
     try {
-      const response = await fetch(`${BACKEND}/entry`);
+      const response = await fetch(`${BACKEND}/entry`); // Ensure backticks are used here
+      // console.log("Response: ", response);
       if (!response.ok) {
         throw new Error("Failed to fetch entries");
       }
       const data: DiaryEntry[] = await response.json();
-      const foundEntry = data.find((e: DiaryEntry) => e.id === parseInt(id as string, 10)); // Typecast id to string
+      // console.log("Data:", data); // Log data to verify structure
+      // console.log("ID:", id);     // Log id to verify value
+  
+      const foundEntry = data.find((e: DiaryEntry) => e.id == Number(id));
+      // console.log("Found Entry:", foundEntry); // Log the found entry
+  
       if (!foundEntry) {
         throw new Error("Entry not found");
       }
@@ -39,7 +45,7 @@ export default function DiaryEntryDetails() {
     } finally {
       setLoading(false);
     }
-  };
+  };  
 
   useEffect(() => {
     if (id) {
