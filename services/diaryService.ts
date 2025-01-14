@@ -2,6 +2,15 @@ import axios from "axios";
 
 const API_URL = "http://localhost:3000/api";
 
+/**
+ * Fetches a specific diary entry for a user by title and date.
+ *
+ * @param {string} userId - The ID of the user whose diary entry is being fetched.
+ * @param {string} title - The title of the diary entry.
+ * @param {string} date - The date of the diary entry in the format "DD/MM/YYYY".
+ * @returns {Promise<object>} A promise that resolves to the diary entry data.
+ * @throws {Error} Throws an error if the fetch operation fails.
+ */
 const fetchDiaryEntry = async (userId: string, title: string, date: string) => {
   try {
     const response = await axios.get(
@@ -17,6 +26,13 @@ const fetchDiaryEntry = async (userId: string, title: string, date: string) => {
   }
 };
 
+/**
+ * Fetches all diary entries for a specific user.
+ *
+ * @param {string} userId - The ID of the user whose diary entries are being fetched.
+ * @returns {Promise<object[]>} A promise that resolves to an array of diary entries.
+ * @throws {Error} Throws an error if the fetch operation fails.
+ */
 const fetchAllDiaryEntries = async (userId: string) => {
   try {
     const response = await axios.get(
@@ -30,6 +46,17 @@ const fetchAllDiaryEntries = async (userId: string) => {
   }
 };
 
+/**
+ * Submits a new diary entry for a user.
+ *
+ * @param {string} userId - The ID of the user creating the diary entry.
+ * @param {string} text - The diary entry text.
+ * @param {number} weight - The user's weight associated with the diary entry.
+ * @param {string} foodType - The type of food recorded in the diary entry.
+ * @param {number} foodAmount - The amount of food recorded in the diary entry.
+ * @returns {Promise<object>} A promise that resolves to the created diary entry.
+ * @throws {Error} Throws an error if the submission fails.
+ */
 const postDiaryEntry = async (
   userId: string,
   text: string,
