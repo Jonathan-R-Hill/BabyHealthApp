@@ -46,8 +46,6 @@ export default function HandleContactUs() {
                 <Text style = {styles.textGeneral}>
                     Phone Number: <Text style = {styles.numberText}>0300 311 2233</Text>
                 </Text>
-            </View>
-            <View style = {styles.header}>
                 <Text style = {styles.textGeneral}>
                     Number for hearing or speech impaired users: <Text style = {styles.numberText}>18001</Text>
                 </Text>
@@ -95,6 +93,7 @@ const styles = StyleSheet.create({
       flexDirection: "column",
       justifyContent: "flex-start",
       alignItems: "center",
+      flex: 1
     },
     profileIcon: {
       width: 80,
@@ -102,20 +101,21 @@ const styles = StyleSheet.create({
       backgroundColor: "#ccc",
       borderRadius: 20,
     },
-    chartButtonsContainer: {
-      flexDirection: "row",
-      justifyContent: "space-around",
-      marginVertical: 10,
-    },
     chartButton: {
-      backgroundColor: "#5A4FCF",
+      backgroundColor: "#3498db",
       paddingVertical: 10,
       paddingHorizontal: 20,
       borderRadius: 5,
+      height: "30%",
+      width: "80%",
+      maxHeight: 300,
+      maxWidth: 600,
     },
     chartButtonText: {
       color: "#fff",
       fontWeight: "bold",
+      textAlign: "center",
+      verticalAlign: "middle",
     },
     numberText: {
         color: "#5A4FCF",
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
     textGeneral: {
         color: "#000000",
         fontSize: 16,
+        flex: 1
     },
     textTitle: {
         color: "#000000",

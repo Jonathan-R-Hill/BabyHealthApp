@@ -35,7 +35,7 @@ export default function reportBugMain() {
             </View>
 
             {/*Text Box Placement*/}
-            <View style = {styles.header}>
+            <View style = {styles.inputBoxContainer}>
                 <TextInput
                 style={styles.inputBox}
                 placeholder="Report bugs/issues here"
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: "#fff",
+      alignItems: "center",
     },
     header: {
       padding: 10,
@@ -83,13 +84,8 @@ const styles = StyleSheet.create({
       justifyContent: "flex-start",
       alignItems: "center",
     },
-    chartButtonsContainer: {
-      flexDirection: "row",
-      justifyContent: "space-around",
-      marginVertical: 10,
-    },
     chartButton: {
-      backgroundColor: "#5A4FCF",
+      backgroundColor: "#3498db",
       paddingVertical: 10,
       paddingHorizontal: 20,
       borderRadius: 5,
@@ -103,10 +99,11 @@ const styles = StyleSheet.create({
         color: "#000000",
         fontSize: 40,
         fontWeight: "bold",
+        textAlign: "center",
     },
     inputBox: {
-        height: 500,
-        width: 400,
+        height: "80%",
+        width: "100%",
         borderColor: "blue",
         borderWidth: 1,
         marginBottom: 16,
@@ -114,5 +111,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         backgroundColor: "#e8e6e1",
         textAlign: "center",
+    },
+    inputBoxContainer: {
+        height: "80%",
+        width: "90%",
     },
 });
