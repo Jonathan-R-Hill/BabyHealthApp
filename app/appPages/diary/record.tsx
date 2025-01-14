@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ActivityIndicator, Alert } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
+import Navbar from "../../Navbar";
 
 interface DiaryEntry {
   id: number;
@@ -50,6 +51,7 @@ export default function DiaryEntryDetails() {
     return (
       <View style={styles.container}>
         <ActivityIndicator size="large" color="#5A4FCF" />
+        <Navbar />
       </View>
     );
   }
@@ -58,27 +60,29 @@ export default function DiaryEntryDetails() {
     return (
       <View style={styles.container}>
         <Text style={styles.errorText}>Entry not found.</Text>
+        <Navbar />
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.dateText}>{entry.date}</Text>
-      <Text style={styles.title}>{entry.title}</Text>
-      <Text style={styles.content}>{entry.text}</Text>
-      <Text style={styles.infoText}>
-        <Text style={styles.infoLabel}>Weight: </Text>
-        {entry.weight}g
-      </Text>
-      <Text style={styles.infoText}>
-        <Text style={styles.infoLabel}>Food Type: </Text>
-        {entry.foodType}
-      </Text>
-      <Text style={styles.infoText}>
-        <Text style={styles.infoLabel}>Food Amount: </Text>
-        {entry.foodAmount}ml
-      </Text>
+        <Text style={styles.dateText}>{entry.date}</Text>
+        <Text style={styles.title}>{entry.title}</Text>
+        <Text style={styles.content}>{entry.text}</Text>
+        <Text style={styles.infoText}>
+            <Text style={styles.infoLabel}>Weight: </Text>
+            {entry.weight}g
+        </Text>
+        <Text style={styles.infoText}>
+            <Text style={styles.infoLabel}>Food Type: </Text>
+            {entry.foodType}
+        </Text>
+        <Text style={styles.infoText}>
+            <Text style={styles.infoLabel}>Food Amount: </Text>
+            {entry.foodAmount}ml
+        </Text>
+      <Navbar />
     </View>
   );
 }
