@@ -6,17 +6,19 @@ const API_URL = "http://localhost:3000/api";
  * Fetches a specific diary entry for a user by title and date.
  *
  * @param {string} userId - The ID of the user whose diary entry is being fetched.
- * @param {string} title - The title of the diary entry.
- * @param {string} date - The date of the diary entry in the format "DD/MM/YYYY".
+ * @param {number} entry_id - The entry_id of the diary entry.
  * @returns {Promise<object>} A promise that resolves to the diary entry data.
  * @throws {Error} Throws an error if the fetch operation fails.
  */
-const fetchDiaryEntry = async (userId: string, title: string, date: string) => {
+const fetchSingleDiaryEntry = async (
+  userId: string,
+  entry_id: number | string
+) => {
   try {
     const response = await axios.get(
       `${API_URL}/get/diary/${encodeURIComponent(userId)}/${encodeURIComponent(
-        title
-      )}/${encodeURIComponent(date)}`
+        entry_id
+      )}`
     );
     return response.data;
   } catch (error: any) {
@@ -80,4 +82,8 @@ const postDiaryEntry = async (
   }
 };
 
-module.exports = { fetchAllDiaryEntries, fetchDiaryEntry, postDiaryEntry };
+module.exports = {
+  fetchAllDiaryEntries,
+  fetchSingleDiaryEntry,
+  postDiaryEntry,
+};
