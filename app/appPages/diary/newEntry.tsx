@@ -8,6 +8,7 @@ import {
   Image,
 } from "react-native";
 
+import Header from "../../Header";
 import Navbar from "../../Navbar";
 
 export default function CreateDiaryEntry() {
@@ -19,6 +20,7 @@ export default function CreateDiaryEntry() {
 
   return (
     <View style={styles.container}>
+      <Header />
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.profileIcon}></View>

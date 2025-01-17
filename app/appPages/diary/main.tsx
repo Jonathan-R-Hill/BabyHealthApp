@@ -16,6 +16,7 @@ import {
 import { useRouter } from "expo-router";
 
 import Navbar from "../../Navbar";
+import Header from "../../Header";
 
 export default function CreateDiaryEntry() {
   const router = useRouter();
@@ -61,15 +62,16 @@ export default function CreateDiaryEntry() {
 
   return (
     <View style={styles.container}>
+      <Header />
       {/* Chart Buttons */}
-      <View style={styles.chartButtonsContainer}>
+      {/* <View style={styles.chartButtonsContainer}>
         <TouchableOpacity style={styles.chartButton}>
           <Text style={styles.chartButtonText}>Weight Chart</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.chartButton}>
           <Text style={styles.chartButtonText}>Milk Chart</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       {/* Diary Entries */}
       <ScrollView style={styles.diaryContainer}>
