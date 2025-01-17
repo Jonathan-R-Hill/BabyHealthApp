@@ -4,10 +4,6 @@ interface DiaryEntry {
   date: string;
 }
 
-// import { BACKEND_URL } from '@env';
-
-// console.log(BACKEND_URL); // Debugging: This should print your URL
-
 import React, { useEffect, useState }  from "react";
 import {
   View,
@@ -25,6 +21,7 @@ export default function CreateDiaryEntry() {
   const router = useRouter();
   const [diaryEntries, setDiaryEntries] = useState<DiaryEntry[]>([]);
   
+  // Works on mobile app view or PC browser by falling back to localhost input if the environmental variable is null
   const BACKEND = process.env.EXPO_PUBLIC_JSON_SERVER || "http://localhost:3000";
   // console.log("Backend URL:", BACKEND); // Debugging
   
@@ -47,12 +44,19 @@ export default function CreateDiaryEntry() {
   const handleNavigateToEntry = () => {
     console.log("Button pressed"); // Debug log
     try {
-      router.push("./entry"); // Changed from relative path to absolute
+      router.push("./newEntry"); // Changed from relative path to absolute
       console.log("Navigation successful"); // Debug log
     } catch (error) {
       console.error("Navigation error:", error); // Debug log
       Alert.alert("Navigation Error", "Could not navigate to entry page");
     }
+  };
+
+  const handleNavigateToDetails = (id: number) => {
+    router.push({
+      pathname: "./record",
+      params: { id: id.toString() }, // Pass the id as a string
+    });
   };
 
   return (
@@ -77,28 +81,16 @@ export default function CreateDiaryEntry() {
         </TouchableOpacity>
 
         {diaryEntries.map((entry) => (
-          <TouchableOpacity key={entry.id} style={styles.diaryEntry}>
+          <TouchableOpacity
+            key={entry.id}
+            style={styles.diaryEntry}
+            onPress={() => handleNavigateToDetails(entry.id)}
+          >
             <Text style={styles.diaryText}>{entry.title}</Text>
             <Text style={styles.dateText}>{entry.date}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
-
-      {/* Bottom Navigation */}
-      {/* <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navButton}>
-          <Text>Diary</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Text>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Text>Ask our Bot</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Text>More Options</Text>
-        </TouchableOpacity>
-      </View> */}
       <Navbar />
     </View>
   );

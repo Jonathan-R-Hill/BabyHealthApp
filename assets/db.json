@@ -1,16 +1,8 @@
 {
-    "posts": [
-        { "id": 1, "title": "a title", "views": 100 },
-        { "id": 2, "title": "another title", "views": 200 }
-    ],
-    "comments": [
-        { "id": 1, "text": "a comment about post 1", "postId": 1 },
-        { "id": 2, "text": "another comment about post 1", "postId": 1 }
-    ],
     "entry": [
         { 
             "id": 1, 
-            "date": 1012025, 
+            "date": "10/01/2025", 
             "title": "First Day Home", 
             "text": "Baby Emma had a good first day at home. Mostly sleeping and eating every 2-3 hours. Changed 6 wet diapers today.", 
             "weight": 3200, 
@@ -19,7 +11,7 @@
         },
         { 
             "id": 2, 
-            "date": 1022025, 
+            "date": "10/02/2025", 
             "title": "Night Feeding Schedule", 
             "text": "Cluster feeding in the evening. Woke up 4 times during the night. Had 8 wet diapers and 3 soiled ones.", 
             "weight": 3180, 
@@ -28,7 +20,7 @@
         },
         { 
             "id": 3, 
-            "date": 1032025, 
+            "date": "10/03/2025", 
             "title": "First Bath at Home", 
             "text": "Had our first bath at home! Emma cried at first but then seemed to enjoy it. Feeding well, took about 75ml per session.", 
             "weight": 3195, 
@@ -37,7 +29,7 @@
         },
         { 
             "id": 4, 
-            "date": 1042025, 
+            "date": "10/04/2025", 
             "title": "Pediatrician Visit", 
             "text": "First check-up went well. Doctor says weight gain is on track. Had 7 wet diapers today.", 
             "weight": 3250, 
@@ -46,7 +38,7 @@
         },
         { 
             "id": 5, 
-            "date": 1052025, 
+            "date": "10/05/2025", 
             "title": "Longer Sleep Stretch", 
             "text": "Got a 4-hour sleep stretch! Had good feeding sessions today. Alert during tummy time.", 
             "weight": 3280, 
@@ -55,7 +47,7 @@
         },
         { 
             "id": 6, 
-            "date": 1062025, 
+            "date": "10/06/2025", 
             "title": "First Smile", 
             "text": "We saw what might have been first real smile! Eating well, 8 wet diapers. Started doing 90ml per feed.", 
             "weight": 3310, 
@@ -64,7 +56,7 @@
         },
         { 
             "id": 7, 
-            "date": 1072025, 
+            "date": "10/07/2025", 
             "title": "One Week Home", 
             "text": "One week milestone! Good appetite, sleeping 2-3 hour stretches. Had umbilical cord check, healing nicely.", 
             "weight": 3350, 
@@ -73,6 +65,7 @@
         }
     ],
     "profile": {
-        "name": "baby_emma"
+        "name": "baby_emma",
+        "premature": false
     }
 }
