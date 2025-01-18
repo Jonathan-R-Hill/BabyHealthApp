@@ -1,0 +1,204 @@
+import React, { SetStateAction, useEffect, useState } from "react";
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  Alert,
+} from "react-native";
+import { useRouter } from "expo-router";
+
+export default function CreateAccountScreen() {
+    let [createEmail, setNewEmail] = useState("");
+        let [createPassword, setNewPassword] = useState("");
+        let [confirmPassword, setConfirmedPassword] = useState("");
+        let [displayMessage, setDisplayMessage] = useState("");
+    let [allValid, setAllValid] = useState(false);
+    let [validPassword, setValidPassword] = useState(false);
+
+    const router = useRouter();
+
+    const createNewAccount = () => {
+        console.log("Email:", createEmail, "Password:", confirmPassword); // TODO Handle login logic
+        router.push("./loginScreen");
+    }
+
+    const areAllValid = () => {
+        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!])(?=.{9,})/;
+        setAllValid(createEmail !== "" && displayMessage === "Passwords match!" && passwordRegex.test(confirmPassword));
+    }
+
+    const isPasswordValid = () => {
+        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!])(?=.{9,})/;
+        setValidPassword(passwordRegex.test(createPassword));
+    }
+
+    useEffect(() => {
+        isPasswordValid(); }, [createPassword]);
+
+    useEffect(() => {
+        areAllValid();
+      }, [createEmail, displayMessage, confirmPassword]);
+    
+    useEffect(() => {
+        if (createPassword && confirmPassword) {
+          if (createPassword === confirmPassword) {
+            setDisplayMessage("Passwords match!");
+          } else {
+            setDisplayMessage("The passwords do not match");
+          }
+        }
+      }, [createPassword, confirmPassword]);
+
+    const handleGoBackToLogin = () => {
+        try{
+            console.log("button pressed");
+            router.push("./loginScreen");
+        } catch (error) {
+            console.error("Error Navigating", error);
+            Alert.alert("Error navigating back to login screen");
+        }
+    }
+
+    return (
+        <View style={styles.container}>
+            {/*Title Text*/}
+            <View style={styles.header}>
+                <Text style={styles.textTitle}>Create Account</Text>
+            </View>
+
+            {/*Input Boxes*/}
+            <View style ={styles.header}>
+                {/*Enter Email*/}
+                <Text style={styles.label}>Enter Email</Text>
+                <TextInput
+                style={styles.inputBox}
+                placeholder="Enter Email Here"
+                value={createEmail}
+                onChangeText={setNewEmail}
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="default"
+                placeholderTextColor={"#84868a"}
+                />
+
+                {/*Enter Password*/}
+                <Text style={styles.label}>Enter Password</Text>
+                <Text style={styles.warning}>
+                    {validPassword ? "Password is up to safety standards" : 
+                    "Password must contain: 8 characters, a capital, a number and a special character (eg: @,>]"}
+                </Text>
+                <TextInput
+                style={styles.inputBox}
+                placeholder="Enter Password Here"
+                value={createPassword}
+                onChangeText={(newText) => {
+                    setNewPassword(newText); // Update state
+                    
+                  }}
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="default"
+                placeholderTextColor={"#84868a"}
+                secureTextEntry={true}
+                contextMenuHidden={true} //apparently does not work on android
+                />
+
+                {/*Enter Confirm Password*/}
+                <Text style={styles.warning}>{displayMessage}</Text>
+                <Text style={styles.label}>Confirm Password</Text>
+                <TextInput
+                style={styles.inputBox}
+                placeholder="Enter Password Here"
+                value={confirmPassword}
+                onChangeText={(newText) => {
+                    setConfirmedPassword(newText); // Update state
+                    
+                  }}
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="default"
+                placeholderTextColor={"#84868a"}
+                secureTextEntry={true}
+                contextMenuHidden={true} //apparently does not work on android
+                />
+            </View>
+
+            {/*Create Account Button*/}
+            <View style={styles.header}>
+                <TouchableOpacity style={[styles.chartButton, { backgroundColor: allValid ? "#3498db" : "#7c7d7c"}]} 
+                onPress={createNewAccount} disabled={!allValid}>
+                    <Text style={styles.chartButtonText}>Create Account</Text>
+                </TouchableOpacity>
+            </View>
+
+            {/*Go Back Button*/}
+            <View style={styles.header}>
+                <TouchableOpacity style={styles.chartButton} onPress={handleGoBackToLogin}>
+                    <Text style={styles.chartButtonText}>Go Back To Login Page</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    )
+}
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: "#fff",
+      alignItems: "center",
+    },
+    header: {
+      padding: 10,
+      flexDirection: "column",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      width: 800,
+      maxWidth: "100%",
+    },
+    chartButton: {
+      backgroundColor: "#3498db",
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      borderRadius: 5,
+    },
+    chartButtonText: {
+      color: "#fff",
+      fontWeight: "bold",
+    },
+    textTitle: {
+        color: "#000000",
+        fontSize: 40,
+        fontWeight: "bold",
+        textAlign: "center",
+    },
+    inputBox: {
+        height: "80%",
+        width: "100%",
+        borderColor: "blue",
+        borderWidth: 1,
+        marginBottom: 16,
+        borderRadius: 4,
+        paddingHorizontal: 8,
+        backgroundColor: "#e8e6e1",
+        textAlign: "center",
+    },
+    inputBoxContainer: {
+        height: "80%",
+        width: "90%",
+    },
+    label: {
+        fontSize: 16,
+        marginBottom: 8,
+        fontWeight: "bold",
+    },
+    warning: {
+        fontSize: 12,
+        marginBottom: 8,
+        fontWeight: "bold",
+        color: "red",
+        height: "10%",
+        maxWidth: "100%",
+    },
+});

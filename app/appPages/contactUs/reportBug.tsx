@@ -19,7 +19,6 @@ export default function reportBugMain() {
     const handleReportSend = () => {
         try{
             console.log("bug:",bugText);
-
             router.push("./developerContactUs");
         } catch (error) {
             console.error("Error Reporting bug", error);
