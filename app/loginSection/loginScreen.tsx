@@ -8,7 +8,7 @@ import {
   Text,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { asyncLogin } from "../../services/loginService";
+import { asyncLogin, asyncValidateUser } from "../../services/loginService";
 
 const LoginScreen = () => {
   const [username, setUsername] = useState(""); // State to hold the username input
@@ -17,12 +17,13 @@ const LoginScreen = () => {
 
   const handleLogin = async () => {
     try {
-      console.log("Username:", username, "Password:", password); // Log credentials for debugging
+      console.log("Username:", username, "Password:", password);
       const response = await asyncLogin(username, password); // Await the login service
+      // const response = await asyncValidateUser(username, password); // Await the login service
       console.log("Login successful:", response); // You can check what is returned by the API
-      router.push("../appPages/diary/main"); // Navigate to the main diary page after successful login
+      router.push("../appPages/diary/main");
     } catch (error: any) {
-      console.error("Login failed:", error.message); // Handle login errors here
+      console.error("Login failed:", error.message);
     }
   };
 
