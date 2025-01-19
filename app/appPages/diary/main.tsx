@@ -24,7 +24,7 @@ export default function CreateDiaryEntry() {
   const router = useRouter();
   const [diaryEntries, setDiaryEntries] = useState<DiaryEntry[]>([]);
 
-  const { username } = useLocalSearchParams(); // Get the username from the URL
+  const { username } = useLocalSearchParams();
 
   // Works on mobile app view or PC browser by falling back to localhost input if the environmental variable is null
   const BACKEND =

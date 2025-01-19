@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 const pages = {
@@ -17,6 +17,8 @@ const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
 
+  const { username } = useLocalSearchParams();
+
   const getIcon = (pageName: string, size: number = 24) => {
     switch (pageName) {
       case "Chatbot":
@@ -24,13 +26,31 @@ const Navbar: React.FC = () => {
       case "Charts":
         return <Ionicons name="bar-chart-outline" size={size} color="#fff" />;
       case "Diary":
-        return <MaterialCommunityIcons name="book-open-variant" size={size} color="#fff" />;
+        return (
+          <MaterialCommunityIcons
+            name="book-open-variant"
+            size={size}
+            color="#fff"
+          />
+        );
       case "Baby Care":
-        return <MaterialCommunityIcons name="baby-carriage" size={size} color="#fff" />;
+        return (
+          <MaterialCommunityIcons
+            name="baby-carriage"
+            size={size}
+            color="#fff"
+          />
+        );
       case "Settings":
         return <Ionicons name="settings-outline" size={size} color="#fff" />;
       case "Baby Log":
-        return <MaterialCommunityIcons name="baby-face-outline" size={size} color="#fff" />;
+        return (
+          <MaterialCommunityIcons
+            name="baby-face-outline"
+            size={size}
+            color="#fff"
+          />
+        );
       case "Contact Us":
         return <Ionicons name="mail-outline" size={size} color="#fff" />;
       default:
@@ -40,7 +60,7 @@ const Navbar: React.FC = () => {
 
   const navigateTo = (pageKey: keyof typeof pages) => {
     const path = pages[pageKey];
-    router.push(path as any);
+    router.push({ pathname: path as any, params: { username } });
     setIsMenuOpen(false);
   };
 
@@ -61,7 +81,7 @@ const Navbar: React.FC = () => {
             <Text style={styles.navButtonText}>{item}</Text>
           </TouchableOpacity>
         ))}
-        
+
         {/* More button */}
         <TouchableOpacity
           onPress={() => setIsMenuOpen(!isMenuOpen)}
