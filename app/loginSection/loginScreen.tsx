@@ -18,9 +18,11 @@ const LoginScreen = () => {
   const handleLogin = async () => {
     try {
       console.log("Username:", username, "Password:", password);
-      const response = await asyncLogin(username, password); // Await the login service
-      // const response = await asyncValidateUser(username, password); // Await the login service
-      console.log("Login successful:", response); // You can check what is returned by the API
+
+      // const response = await asyncLogin(username, password); // Await the login service
+      const response = await asyncValidateUser(username, password); // Await the login service
+
+      console.log("Login successful:", response);
       router.push("../appPages/diary/main");
     } catch (error: any) {
       console.error("Login failed:", error.message);
