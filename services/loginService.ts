@@ -1,6 +1,7 @@
 import axios from "axios";
+import { targetUrl } from "../config.json";
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = targetUrl;
 
 const asyncLogin = async (email: string, password: string) => {
   try {
