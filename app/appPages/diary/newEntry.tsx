@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-
+import { postDiaryEntry } from "../../../services/diaryService"; 
 import Header from "../../Header";
 import Navbar from "../../Navbar";
 
@@ -85,6 +85,32 @@ export default function CreateDiaryEntry() {
           />
           <Text style={styles.imageText}>Add pic</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+        onPress={() => {
+          const userId = "admin@admin1.admin"; // Replace with actual user ID if needed
+          const weightValue = parseFloat(weight);
+          const foodAmountValue = parseFloat(foodAmount);
+
+          postDiaryEntry(userId, text, weightValue, foodType, foodAmountValue)
+            .then(() => {
+              console.log("Diary entry created successfully!");
+              // Optionally, clear the form after submission
+              setTitle("");
+              setText("");
+              setWeight("");
+              setFoodType("");
+              setFoodAmount("");
+            })
+            .catch((error) => {
+              console.error("Error creating diary entry:", error);
+            });
+        }}
+        style={styles.createButton}
+      >
+        <Text>+ Create a new entry</Text>
+      </TouchableOpacity>
+
       </View>
 
       {/* Bottom Navigation */}
@@ -177,5 +203,17 @@ const styles = StyleSheet.create({
   },
   navButton: {
     alignItems: "center",
+  },
+  createButton: {
+    backgroundColor: "#3498db",
+    paddingVertical: 15,
+    marginVertical: 10,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  createButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });

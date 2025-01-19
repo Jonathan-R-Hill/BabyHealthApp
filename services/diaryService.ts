@@ -60,7 +60,7 @@ const fetchAllDiaryEntries = async (userId: string) => {
  * @returns {Promise<object>} A promise that resolves to the created diary entry.
  * @throws {Error} Throws an error if the submission fails.
  */
-const postDiaryEntry = async (
+export const postDiaryEntry = async (
   userId: string,
   text: string,
   weight: number,

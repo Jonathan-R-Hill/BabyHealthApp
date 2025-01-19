@@ -18,6 +18,8 @@ import { useRouter } from "expo-router";
 import Navbar from "../../Navbar";
 import Header from "../../Header";
 import { getEmail } from "../../storeUser";
+const diaryService = require("../../../services/diaryService");
+const fetchAllDiaryEntries = diaryService.fetchAllDiaryEntries;
 
 export default function CreateDiaryEntry() {
   const router = useRouter();
@@ -43,14 +45,14 @@ export default function CreateDiaryEntry() {
 
   const fetchDiaryEntries = async () => {
     try {
-      const response = await fetch(`${BACKEND}/entry`);
-      const data: DiaryEntry[] = await response.json();
+      const data: DiaryEntry[] = await fetchAllDiaryEntries("admin@admin1.admin");
+      console.log("Fetched diary entries:", data); // Debug log
       setDiaryEntries(data);
     } catch (error) {
       console.error("Error fetching diary entries:", error);
       Alert.alert("Error", "Could not load diary entries.");
     }
-  };
+  }
 
   useEffect(() => {
     fetchDiaryEntries();
@@ -79,9 +81,9 @@ export default function CreateDiaryEntry() {
     <View style={styles.container}>
       <Header />
       {/* view for debug purpose remove later */}
-      <View>
+      {/* <View>
         <Text>Email: {`${email} test` || "No email found"}</Text>
-      </View>
+      </View> */}
 
       {/* Chart Buttons */}
       {/* <View style={styles.chartButtonsContainer}>
