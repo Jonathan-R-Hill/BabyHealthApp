@@ -8,16 +8,25 @@ import {
   Text,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { asyncLogin, asyncValidateUser } from "../../services/loginService";
 
 const LoginScreen = () => {
   const [username, setUsername] = useState(""); // State to hold the username input
   const [password, setPassword] = useState(""); // State to hold the password input
   const router = useRouter();
 
-  const handleLogin = () => {
-    console.log("Username:", username, "Password:", password); // TODO Handle login logic
+  const handleLogin = async () => {
+    try {
+      console.log("Username:", username, "Password:", password);
 
-    router.push("../appPages/diary/main");
+      // const response = await asyncLogin(username, password); // Await the login service
+      const response = await asyncValidateUser(username, password); // Await the login service
+
+      console.log("Login successful:", response);
+      router.push("../appPages/diary/main");
+    } catch (error: any) {
+      console.error("Login failed:", error.message);
+    }
   };
 
   const handleCreateAccount = () => {
