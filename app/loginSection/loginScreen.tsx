@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { asyncLogin, asyncValidateUser } from "../../services/loginService";
+import { saveEmail } from "../storeUser";
 
 const LoginScreen = () => {
   const [username, setUsername] = useState(""); // State to hold the username input
@@ -21,6 +22,8 @@ const LoginScreen = () => {
 
       // const response = await asyncLogin(username, password); // Await the login service
       const response = await asyncValidateUser(username, password); // Await the login service
+
+      await saveEmail(username); // Save the email to AsyncStorage
 
       console.log("Login successful:", response);
       router.push("../appPages/diary/main");

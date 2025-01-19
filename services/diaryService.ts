@@ -1,7 +1,7 @@
 import axios from "axios";
-import { targetUrl } from "../config.json";
+import { targetURL } from "../config";
 
-const API_URL = targetUrl;
+const API_URL = targetURL;
 
 /**
  * Fetches a specific diary entry for a user by title and date.
@@ -60,7 +60,7 @@ const fetchAllDiaryEntries = async (userId: string) => {
  * @returns {Promise<object>} A promise that resolves to the created diary entry.
  * @throws {Error} Throws an error if the submission fails.
  */
-const postDiaryEntry = async (
+export const postDiaryEntry = async (
   userId: string,
   text: string,
   weight: number,

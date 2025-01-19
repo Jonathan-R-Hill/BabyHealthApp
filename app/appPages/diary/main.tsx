@@ -4,7 +4,7 @@ interface DiaryEntry {
   date: string;
 }
 
-import React, { useEffect, useState }  from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -17,25 +17,42 @@ import { useRouter } from "expo-router";
 
 import Navbar from "../../Navbar";
 import Header from "../../Header";
+import { getEmail } from "../../storeUser";
+const diaryService = require("../../../services/diaryService");
+const fetchAllDiaryEntries = diaryService.fetchAllDiaryEntries;
 
 export default function CreateDiaryEntry() {
   const router = useRouter();
   const [diaryEntries, setDiaryEntries] = useState<DiaryEntry[]>([]);
-  
+
+  // retrieve user email from AsyncStorage
+  const [email, setEmail] = useState<string | null>(null);
+  async function fetchEmail() {
+    const storedEmail = await getEmail(); // Retrieve email from AsyncStorage
+    setEmail(storedEmail ?? null);
+    console.log(storedEmail); // Debug log
+  }
+  fetchEmail();
+
+  useEffect(() => {
+    fetchEmail();
+  }, []);
+
   // Works on mobile app view or PC browser by falling back to localhost input if the environmental variable is null
-  const BACKEND = process.env.EXPO_PUBLIC_JSON_SERVER || "http://localhost:3000";
+  const BACKEND =
+    process.env.EXPO_PUBLIC_JSON_SERVER || "http://localhost:3000";
   // console.log("Backend URL:", BACKEND); // Debugging
-  
+
   const fetchDiaryEntries = async () => {
     try {
-      const response = await fetch(`${BACKEND}/entry`); 
-      const data: DiaryEntry[] = await response.json();
+      const data: DiaryEntry[] = await fetchAllDiaryEntries("admin@admin1.admin");
+      console.log("Fetched diary entries:", data); // Debug log
       setDiaryEntries(data);
     } catch (error) {
       console.error("Error fetching diary entries:", error);
       Alert.alert("Error", "Could not load diary entries.");
     }
-  };
+  }
 
   useEffect(() => {
     fetchDiaryEntries();
@@ -63,6 +80,11 @@ export default function CreateDiaryEntry() {
   return (
     <View style={styles.container}>
       <Header />
+      {/* view for debug purpose remove later */}
+      {/* <View>
+        <Text>Email: {`${email} test` || "No email found"}</Text>
+      </View> */}
+
       {/* Chart Buttons */}
       {/* <View style={styles.chartButtonsContainer}>
         <TouchableOpacity style={styles.chartButton}>
