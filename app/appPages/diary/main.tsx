@@ -13,56 +13,46 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 
 import Navbar from "../../Navbar";
 import Header from "../../Header";
-import { getEmail } from "../../storeUser";
-const diaryService = require("../../../services/diaryService");
-const fetchAllDiaryEntries = diaryService.fetchAllDiaryEntries;
+
+import { fetchAllDiaryEntries } from "../../../services/diaryService";
 
 export default function CreateDiaryEntry() {
   const router = useRouter();
   const [diaryEntries, setDiaryEntries] = useState<DiaryEntry[]>([]);
 
-  // retrieve user email from AsyncStorage
-  const [email, setEmail] = useState<string | null>(null);
-  async function fetchEmail() {
-    const storedEmail = await getEmail(); // Retrieve email from AsyncStorage
-    setEmail(storedEmail ?? null);
-    console.log(storedEmail); // Debug log
-  }
-  fetchEmail();
-
-  useEffect(() => {
-    fetchEmail();
-  }, []);
+  const { username } = useLocalSearchParams(); // Get the username from the URL
 
   // Works on mobile app view or PC browser by falling back to localhost input if the environmental variable is null
   const BACKEND =
     process.env.EXPO_PUBLIC_JSON_SERVER || "http://localhost:3000";
   // console.log("Backend URL:", BACKEND); // Debugging
 
-  const fetchDiaryEntries = async () => {
+  const fetchDiaryEntries = async (username: string) => {
     try {
-      const data: DiaryEntry[] = await fetchAllDiaryEntries("admin@admin1.admin");
+      const data: DiaryEntry[] = await fetchAllDiaryEntries(username);
       console.log("Fetched diary entries:", data); // Debug log
       setDiaryEntries(data);
     } catch (error) {
       console.error("Error fetching diary entries:", error);
       Alert.alert("Error", "Could not load diary entries.");
     }
-  }
+  };
 
   useEffect(() => {
-    fetchDiaryEntries();
+    fetchDiaryEntries(String(username));
   }, []);
 
   // Remove useNavigation since we're using expo-router
   const handleNavigateToEntry = () => {
     console.log("Button pressed"); // Debug log
+
     try {
-      router.push("./newEntry"); // Changed from relative path to absolute
+      router.push({ pathname: "./newEntry", params: { username } }); // Changed from relative path to absolute
+
       console.log("Navigation successful"); // Debug log
     } catch (error) {
       console.error("Navigation error:", error); // Debug log
@@ -80,10 +70,11 @@ export default function CreateDiaryEntry() {
   return (
     <View style={styles.container}>
       <Header />
-      {/* view for debug purpose remove later */}
-      {/* <View>
-        <Text>Email: {`${email} test` || "No email found"}</Text>
-      </View> */}
+
+      {/* FOR DEBUG USE */}
+      {/* <view>
+        <text>{username}</text>
+      </view> */}
 
       {/* Chart Buttons */}
       {/* <View style={styles.chartButtonsContainer}>

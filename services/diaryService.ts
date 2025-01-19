@@ -11,7 +11,7 @@ const API_URL = targetURL;
  * @returns {Promise<object>} A promise that resolves to the diary entry data.
  * @throws {Error} Throws an error if the fetch operation fails.
  */
-const fetchSingleDiaryEntry = async (
+export const fetchSingleDiaryEntry = async (
   userId: string,
   entry_id: number | string
 ) => {
@@ -36,7 +36,7 @@ const fetchSingleDiaryEntry = async (
  * @returns {Promise<object[]>} A promise that resolves to an array of diary entries.
  * @throws {Error} Throws an error if the fetch operation fails.
  */
-const fetchAllDiaryEntries = async (userId: string) => {
+export const fetchAllDiaryEntries = async (userId: string) => {
   try {
     const response = await axios.get(
       `${API_URL}/get/diary/${encodeURIComponent(userId)}`
@@ -81,10 +81,4 @@ export const postDiaryEntry = async (
       error.response ? error.response.data.message : error.message
     );
   }
-};
-
-module.exports = {
-  fetchAllDiaryEntries,
-  fetchSingleDiaryEntry,
-  postDiaryEntry,
 };
