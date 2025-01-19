@@ -1,6 +1,7 @@
 import axios from "axios";
+import { targetUrl } from "../config.json";
 
-const API_URL = "http://localhost:3000/api/push";
+const API_URL = targetUrl;
 
 /**
  * Submits a bug report to the server.
@@ -11,7 +12,7 @@ const API_URL = "http://localhost:3000/api/push";
  */
 export const submitBug = async (userId: string, bugDetails: string) => {
   try {
-    const response = await axios.post(`${API_URL}/submitBug`, {
+    const response = await axios.post(`${targetUrl}/submitBug`, {
       userId,
       bugDetails,
     });
