@@ -1,8 +1,17 @@
 interface DiaryEntry {
-  id: number;
-  title: string;
-  date: string;
+  _id: {
+    date: string; // ISO date string
+    entry_id: number; // Unique identifier for the diary entry
+    userId: string; // User identifier
+  };
+  data: {
+    foodAmount: number; // Amount of food (e.g., milk, etc.)
+    foodType: string; // Type of food
+    text: string; // Diary entry text
+    weight: number; // Weight associated with the diary entry
+  };
 }
+
 
 import React, { useEffect, useState } from "react";
 import {
@@ -27,8 +36,7 @@ export default function CreateDiaryEntry() {
   const { username } = useLocalSearchParams();
 
   // Works on mobile app view or PC browser by falling back to localhost input if the environmental variable is null
-  const BACKEND =
-    process.env.EXPO_PUBLIC_JSON_SERVER || "http://localhost:3000";
+  // const BACKEND = process.env.EXPO_PUBLIC_JSON_SERVER || "http://localhost:3000";
   // console.log("Backend URL:", BACKEND); // Debugging
 
   const fetchDiaryEntries = async (username: string) => {
@@ -97,14 +105,15 @@ export default function CreateDiaryEntry() {
 
         {diaryEntries.map((entry) => (
           <TouchableOpacity
-            key={entry.id}
+            key={entry._id.entry_id} // Use the unique entry ID as the key
             style={styles.diaryEntry}
-            onPress={() => handleNavigateToDetails(entry.id)}
+            onPress={() => handleNavigateToDetails(entry._id.entry_id)}
           >
-            <Text style={styles.diaryText}>{entry.title}</Text>
-            <Text style={styles.dateText}>{entry.date}</Text>
+            <Text style={styles.diaryText}>{entry.data.text}</Text>
+            <Text style={styles.dateText}>{new Date(entry._id.date).toLocaleDateString()}</Text>
           </TouchableOpacity>
         ))}
+
       </ScrollView>
       <Navbar />
     </View>
