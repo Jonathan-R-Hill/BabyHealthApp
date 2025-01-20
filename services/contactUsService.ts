@@ -12,7 +12,7 @@ const API_URL = targetURL;
  */
 export const submitBug = async (userId: string, bugDetails: string) => {
   try {
-    const response = await axios.post(`${API_URL}/submitBug`, {
+    const response = await axios.post(`${API_URL}/push/submitBug`, {
       userId,
       bugDetails,
     });
@@ -33,7 +33,7 @@ export const submitBug = async (userId: string, bugDetails: string) => {
  */
 export const submitFeature = async (userId: string, featureDetails: string) => {
   try {
-    const response = await axios.post(`${API_URL}/submitFeature`, {
+    const response = await axios.post(`${API_URL}/push/submitFeature`, {
       userId,
       featureDetails,
     });

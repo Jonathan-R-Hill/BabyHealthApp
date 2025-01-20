@@ -6,8 +6,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  ScrollView,
 } from "react-native";
-import { postDiaryEntry } from "../../../services/diaryService"; 
+import { useRouter, useLocalSearchParams } from "expo-router";
+import { postDiaryEntry } from "../../../services/diaryService";
 import Header from "../../Header";
 import Navbar from "../../Navbar";
 
@@ -17,6 +19,9 @@ export default function CreateDiaryEntry() {
   const [weight, setWeight] = useState("");
   const [foodType, setFoodType] = useState("");
   const [foodAmount, setFoodAmount] = useState("");
+
+  const router = useRouter();
+  const { username } = useLocalSearchParams(); // Get the username from the URL
 
   return (
     <View style={styles.container}>
@@ -28,7 +33,7 @@ export default function CreateDiaryEntry() {
       </View>
 
       {/* Form Fields */}
-      <View style={styles.form}>
+      <ScrollView style={styles.form}>
         {/* Title */}
         <Text style={styles.label}>Title</Text>
         <TextInput
@@ -87,31 +92,33 @@ export default function CreateDiaryEntry() {
         </TouchableOpacity>
 
         <TouchableOpacity
-        onPress={() => {
-          const userId = "admin@admin1.admin"; // Replace with actual user ID if needed
-          const weightValue = parseFloat(weight);
-          const foodAmountValue = parseFloat(foodAmount);
+          onPress={() => {
+            const userId = String(username); // Replace with actual user ID if needed
+            const weightValue = parseFloat(weight);
+            const foodAmountValue = parseFloat(foodAmount);
 
-          postDiaryEntry(userId, text, weightValue, foodType, foodAmountValue)
-            .then(() => {
-              console.log("Diary entry created successfully!");
-              // Optionally, clear the form after submission
-              setTitle("");
-              setText("");
-              setWeight("");
-              setFoodType("");
-              setFoodAmount("");
-            })
-            .catch((error) => {
-              console.error("Error creating diary entry:", error);
-            });
-        }}
-        style={styles.createButton}
-      >
-        <Text>+ Create a new entry</Text>
-      </TouchableOpacity>
-
-      </View>
+            postDiaryEntry(userId, text, weightValue, foodType, foodAmountValue)
+              .then(() => {
+                console.log("Diary entry created successfully!");
+                // Optionally, clear the form after submission
+                setTitle("");
+                setText("");
+                setWeight("");
+                setFoodType("");
+                setFoodAmount("");
+              })
+              .then(() => {
+                router.push({ pathname: "./main", params: { username } });
+              })
+              .catch((error) => {
+                console.error("Error creating diary entry:", error);
+              });
+          }}
+          style={styles.createButton}
+        >
+          <Text>+ Create a new entry</Text>
+        </TouchableOpacity>
+      </ScrollView>
 
       {/* Bottom Navigation */}
       {/* <View style={styles.bottomNav}>
