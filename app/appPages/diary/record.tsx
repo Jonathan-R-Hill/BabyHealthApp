@@ -1,63 +1,54 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ActivityIndicator, Alert } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator, Alert, ScrollView } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Navbar from "../../Navbar";
 import Header from "../../Header";
+import { fetchSingleDiaryEntry } from "../../../services/diaryService";
 
 interface DiaryEntry {
-  id: number;
-  date: string;
-  title: string;
-  text: string;
-  weight: number;
-  foodType: string;
-  foodAmount: number;
+  _id: {
+    date: string;
+    entry_id: number;
+    userId: string;
+  };
+  data: {
+    foodAmount: number;
+    foodType: string;
+    text: string;
+    weight: number;
+  };
 }
 
 export default function DiaryEntryDetails() {
   const router = useRouter();
-  const { id } = useLocalSearchParams(); // Replaced useSearchParams with useLocalSearchParams
+  const { id, username } = useLocalSearchParams();
   const [entry, setEntry] = useState<DiaryEntry | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const BACKEND = process.env.EXPO_PUBLIC_JSON_SERVER || "http://localhost:3000";
-
-  const fetchDiaryEntries = async () => {
+  const fetchDiaryEntry = async (username: string, entry_id: number) => {
     try {
-      const response = await fetch(`${BACKEND}/entry`); // Ensure backticks are used here
-      // console.log("Response: ", response);
-      if (!response.ok) {
-        throw new Error("Failed to fetch entries");
+      const data: DiaryEntry = await fetchSingleDiaryEntry(username, entry_id);
+      if (data) {
+        setEntry(data);
+      } else {
+        Alert.alert("Error", "Diary entry not found.");
       }
-      const data: DiaryEntry[] = await response.json();
-      // console.log("Data:", data); // Log data to verify structure
-      // console.log("ID:", id);     // Log id to verify value
-  
-      const foundEntry = data.find((e: DiaryEntry) => e.id == Number(id));
-      // console.log("Found Entry:", foundEntry); // Log the found entry
-  
-      if (!foundEntry) {
-        throw new Error("Entry not found");
-      }
-      setEntry(foundEntry);
     } catch (error) {
-      console.error("Error fetching diary entry:", error);
-      Alert.alert("Error", "Could not load diary entry.");
+      Alert.alert("Error", "Failed to load the diary entry.");
     } finally {
       setLoading(false);
     }
-  };  
+  };
 
   useEffect(() => {
-    if (id) {
-      fetchDiaryEntries();
+    if (id && username) {
+      fetchDiaryEntry(String(username), parseInt(String(id)));
     }
-  }, [id]);
+  }, [id, username]);
 
   if (loading) {
     return (
       <View style={styles.container}>
-        <Header />
         <ActivityIndicator size="large" color="#5A4FCF" />
         <Navbar />
       </View>
@@ -67,7 +58,6 @@ export default function DiaryEntryDetails() {
   if (!entry) {
     return (
       <View style={styles.container}>
-        <Header />
         <Text style={styles.errorText}>Entry not found.</Text>
         <Navbar />
       </View>
@@ -76,22 +66,24 @@ export default function DiaryEntryDetails() {
 
   return (
     <View style={styles.container}>
-      <Header />
-        <Text style={styles.dateText}>{entry.date}</Text>
-        <Text style={styles.title}>{entry.title}</Text>
-        <Text style={styles.content}>{entry.text}</Text>
-        <Text style={styles.infoText}>
-            <Text style={styles.infoLabel}>Weight: </Text>
-            {entry.weight}g
-        </Text>
-        <Text style={styles.infoText}>
-            <Text style={styles.infoLabel}>Food Type: </Text>
-            {entry.foodType}
-        </Text>
-        <Text style={styles.infoText}>
-            <Text style={styles.infoLabel}>Food Amount: </Text>
-            {entry.foodAmount}ml
-        </Text>
+      <ScrollView>
+      <Text style={styles.dateText}>
+        {new Date(entry._id.date).toLocaleDateString()}
+      </Text>
+      <Text style={styles.content}>{entry.data.text}</Text>
+      <Text style={styles.infoText}>
+        <Text style={styles.infoLabel}>Weight: </Text>
+        {entry.data.weight}g
+      </Text>
+      <Text style={styles.infoText}>
+        <Text style={styles.infoLabel}>Food Type: </Text>
+        {entry.data.foodType}
+      </Text>
+      <Text style={styles.infoText}>
+        <Text style={styles.infoLabel}>Food Amount: </Text>
+        {entry.data.foodAmount}ml
+      </Text>
+      </ScrollView>
       <Navbar />
     </View>
   );
@@ -105,11 +97,6 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  title: {
-    fontSize: 20,
     fontWeight: "bold",
     marginBottom: 10,
   },

@@ -1,18 +1,3 @@
-interface DiaryEntry {
-  _id: {
-    date: string; // ISO date string
-    entry_id: number; // Unique identifier for the diary entry
-    userId: string; // User identifier
-  };
-  data: {
-    foodAmount: number; // Amount of food (e.g., milk, etc.)
-    foodType: string; // Type of food
-    text: string; // Diary entry text
-    weight: number; // Weight associated with the diary entry
-  };
-}
-
-
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -29,72 +14,62 @@ import Header from "../../Header";
 
 import { fetchAllDiaryEntries } from "../../../services/diaryService";
 
+interface DiaryEntry {
+  _id: {
+    date: string; // ISO date string
+    entry_id: number; // Unique identifier for the diary entry
+    userId: string; // User identifier
+  };
+  data: {
+    foodAmount: number; // Amount of food (e.g., milk, etc.)
+    foodType: string; // Type of food
+    text: string; // Diary entry text
+    weight: number; // Weight associated with the diary entry
+  };
+}
+
 export default function CreateDiaryEntry() {
   const router = useRouter();
   const [diaryEntries, setDiaryEntries] = useState<DiaryEntry[]>([]);
-
   const { username } = useLocalSearchParams();
-
-  // Works on mobile app view or PC browser by falling back to localhost input if the environmental variable is null
-  // const BACKEND = process.env.EXPO_PUBLIC_JSON_SERVER || "http://localhost:3000";
-  // console.log("Backend URL:", BACKEND); // Debugging
 
   const fetchDiaryEntries = async (username: string) => {
     try {
       const data: DiaryEntry[] = await fetchAllDiaryEntries(username);
-      console.log("Fetched diary entries:", data); // Debug log
       setDiaryEntries(data);
     } catch (error) {
-      console.error("Error fetching diary entries:", error);
       Alert.alert("Error", "Could not load diary entries.");
     }
   };
 
   useEffect(() => {
-    fetchDiaryEntries(String(username));
-  }, []);
+    if (username) {
+      fetchDiaryEntries(String(username));
+    }
+  }, [username]);
 
-  // Remove useNavigation since we're using expo-router
   const handleNavigateToEntry = () => {
-    console.log("Button pressed"); // Debug log
-
-    try {
-      router.push({ pathname: "./newEntry", params: { username } }); // Changed from relative path to absolute
-
-      console.log("Navigation successful"); // Debug log
-    } catch (error) {
-      console.error("Navigation error:", error); // Debug log
-      Alert.alert("Navigation Error", "Could not navigate to entry page");
+    if (username) {
+      router.push({ pathname: "./newEntry", params: { username } });
+    } else {
+      Alert.alert("Error", "Username is not available.");
     }
   };
 
-  const handleNavigateToDetails = (id: number) => {
-    router.push({
-      pathname: "./record",
-      params: { id: id.toString() }, // Pass the id as a string
-    });
+  const handleNavigateToDetails = (entry_id: number) => {
+    if (username) {
+      router.push({
+        pathname: "./record",
+        params: { id: entry_id.toString(), username },
+      });
+    } else {
+      Alert.alert("Error", "Username is not available.");
+    }
   };
 
   return (
     <View style={styles.container}>
       <Header />
-
-      {/* FOR DEBUG USE */}
-      {/* <view>
-        <text>{username}</text>
-      </view> */}
-
-      {/* Chart Buttons */}
-      {/* <View style={styles.chartButtonsContainer}>
-        <TouchableOpacity style={styles.chartButton}>
-          <Text style={styles.chartButtonText}>Weight Chart</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.chartButton}>
-          <Text style={styles.chartButtonText}>Milk Chart</Text>
-        </TouchableOpacity>
-      </View> */}
-
-      {/* Diary Entries */}
       <ScrollView style={styles.diaryContainer}>
         <TouchableOpacity
           onPress={handleNavigateToEntry}
@@ -102,18 +77,18 @@ export default function CreateDiaryEntry() {
         >
           <Text style={styles.createButtonText}>+ Create a new entry</Text>
         </TouchableOpacity>
-
         {diaryEntries.map((entry) => (
           <TouchableOpacity
-            key={entry._id.entry_id} // Use the unique entry ID as the key
+            key={entry._id.entry_id}
             style={styles.diaryEntry}
             onPress={() => handleNavigateToDetails(entry._id.entry_id)}
           >
             <Text style={styles.diaryText}>{entry.data.text}</Text>
-            <Text style={styles.dateText}>{new Date(entry._id.date).toLocaleDateString()}</Text>
+            <Text style={styles.dateText}>
+              {new Date(entry._id.date).toLocaleDateString()}
+            </Text>
           </TouchableOpacity>
         ))}
-
       </ScrollView>
       <Navbar />
     </View>
@@ -124,32 +99,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-  },
-  header: {
-    padding: 10,
-    flexDirection: "row",
-    justifyContent: "flex-start",
-  },
-  profileIcon: {
-    width: 40,
-    height: 40,
-    backgroundColor: "#ccc",
-    borderRadius: 20,
-  },
-  chartButtonsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginVertical: 10,
-  },
-  chartButton: {
-    backgroundColor: "#5A4FCF",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-  },
-  chartButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
   },
   diaryContainer: {
     flex: 1,
@@ -182,40 +131,5 @@ const styles = StyleSheet.create({
   dateText: {
     color: "#fff",
     fontSize: 16,
-  },
-  divider: {
-    marginVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-    alignItems: "center",
-  },
-  yearText: {
-    fontSize: 18,
-    color: "#000",
-    marginTop: -12,
-    backgroundColor: "#fff",
-    paddingHorizontal: 10,
-  },
-  bottomNav: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    paddingVertical: 10,
-    borderTopWidth: 1,
-    borderTopColor: "#ccc",
-  },
-  navButton: {
-    alignItems: "center",
-  },
-  headerButton: {
-    backgroundColor: "#007AFF", // iOS blue color, you can change this
-    paddingHorizontal: 15,
-    paddingVertical: 8,
-    borderRadius: 8,
-    marginLeft: 10,
-  },
-  headerButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
   },
 });
