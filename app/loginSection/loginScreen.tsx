@@ -11,8 +11,8 @@ import { useRouter } from "expo-router";
 import { asyncLogin, asyncValidateUser } from "../../services/loginService";
 
 const LoginScreen = () => {
-  const [username, setUsername] = useState(""); // State to hold the username input
-  const [password, setPassword] = useState(""); // State to hold the password input
+  const [username, setUsername] = useState("testdata"); // Pre-fill with test username
+  const [password, setPassword] = useState("Testdata1!"); // Pre-fill with test password
   const router = useRouter();
 
   const handleLogin = async () => {
