@@ -117,7 +117,7 @@ export default function CreateDiaryEntry() {
           }}
           style={styles.createButton}
         >
-          <Text>+ Create a new entry</Text>
+          <Text style={styles.createButtonText}>+ Create a new entry</Text>
         </TouchableOpacity>
       </ScrollView>
       <Navbar />
