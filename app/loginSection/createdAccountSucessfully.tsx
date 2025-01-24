@@ -1,11 +1,9 @@
-import React, { SetStateAction, useEffect, useState } from "react";
+import React from "react";
 import {
   View,
-  TextInput,
   StyleSheet,
   TouchableOpacity,
   Text,
-  Alert,
   ScrollView,
 } from "react-native";
 import { useRouter } from "expo-router";
