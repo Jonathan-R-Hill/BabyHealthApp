@@ -13,29 +13,55 @@ import { postDiaryEntry } from "../../../services/diaryService";
 import Header from "../../Header";
 import Navbar from "../../Navbar";
 
+type Errors = {
+  title?: string;
+  text?: string;
+  weight?: string;
+  foodType?: string;
+  foodAmount?: string;
+};
+
 export default function CreateDiaryEntry() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [weight, setWeight] = useState("");
   const [foodType, setFoodType] = useState("");
   const [foodAmount, setFoodAmount] = useState("");
+  const [errors, setErrors] = useState<Errors>({});
 
   const router = useRouter();
   const { username } = useLocalSearchParams(); // Get the username from the URL
 
+  const validateForm = () => {
+    const newErrors: Errors = {};
+  
+    if (!title.trim()) newErrors.title = "Title is required.";
+    if (!text.trim()) newErrors.text = "Text is required.";
+    if (!weight.trim() || isNaN(parseFloat(weight)) || parseFloat(weight) <= 0)
+      newErrors.weight = "Valid weight is required.";
+    if (!foodType.trim()) newErrors.foodType = "Food type is required.";
+    if (
+      !foodAmount.trim() ||
+      isNaN(parseFloat(foodAmount)) ||
+      parseFloat(foodAmount) <= 0
+    )
+      newErrors.foodAmount = "Valid food amount is required.";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // Return true if no errors
+  };
+  
   return (
     <View style={styles.container}>
       <Header />
       <ScrollView style={styles.diaryContainer}>
-      {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.profileIcon}></View>
-        <Text style={styles.headerTitle}>Create Diary Entry</Text>
-      </View>
+        {/* Header */}
+        <View style={styles.header}>
+          <View style={styles.profileIcon}></View>
+          <Text style={styles.headerTitle}>Create Diary Entry</Text>
+        </View>
 
-      {/* Form Fields */}
-      {/* <ScrollView style={styles.form}> */}
-        {/* Title */}
+        {/* Form Fields */}
         <Text style={styles.label}>Title</Text>
         <TextInput
           style={styles.input}
@@ -43,8 +69,8 @@ export default function CreateDiaryEntry() {
           value={title}
           onChangeText={setTitle}
         />
+        {errors.title && <Text style={styles.errorText}>{errors.title}</Text>}
 
-        {/* Text */}
         <Text style={styles.label}>Text</Text>
         <TextInput
           style={[styles.input, styles.textArea]}
@@ -53,8 +79,8 @@ export default function CreateDiaryEntry() {
           onChangeText={setText}
           multiline
         />
+        {errors.text && <Text style={styles.errorText}>{errors.text}</Text>}
 
-        {/* Weight */}
         <Text style={styles.label}>Weight (g)</Text>
         <TextInput
           style={styles.input}
@@ -63,8 +89,8 @@ export default function CreateDiaryEntry() {
           onChangeText={setWeight}
           keyboardType="numeric"
         />
+        {errors.weight && <Text style={styles.errorText}>{errors.weight}</Text>}
 
-        {/* Food Type */}
         <Text style={styles.label}>Food (type)</Text>
         <TextInput
           style={styles.input}
@@ -72,8 +98,8 @@ export default function CreateDiaryEntry() {
           value={foodType}
           onChangeText={setFoodType}
         />
+        {errors.foodType && <Text style={styles.errorText}>{errors.foodType}</Text>}
 
-        {/* Food Amount */}
         <Text style={styles.label}>Food amount (g)</Text>
         <TextInput
           style={styles.input}
@@ -82,11 +108,10 @@ export default function CreateDiaryEntry() {
           onChangeText={setFoodAmount}
           keyboardType="numeric"
         />
+        {errors.foodAmount && <Text style={styles.errorText}>{errors.foodAmount}</Text>}
 
-        {/* Add Picture */}
         <TouchableOpacity style={styles.imageUploader}>
           <Image
-            // source={require('./assets/add-image-icon.png')} // Replace with your image asset
             style={styles.imageIcon}
           />
           <Text style={styles.imageText}>Add pic</Text>
@@ -94,26 +119,28 @@ export default function CreateDiaryEntry() {
 
         <TouchableOpacity
           onPress={() => {
-            const userId = String(username); // Replace with actual user ID if needed
-            const weightValue = parseFloat(weight);
-            const foodAmountValue = parseFloat(foodAmount);
+            if (validateForm()) {
+              const userId = String(username);
+              const weightValue = parseFloat(weight);
+              const foodAmountValue = parseFloat(foodAmount);
 
-            postDiaryEntry(userId, text, weightValue, foodType, foodAmountValue)
-              .then(() => {
-                console.log("Diary entry created successfully!");
-                // Optionally, clear the form after submission
-                setTitle("");
-                setText("");
-                setWeight("");
-                setFoodType("");
-                setFoodAmount("");
-              })
-              .then(() => {
-                router.push({ pathname: "./main", params: { username } });
-              })
-              .catch((error) => {
-                console.error("Error creating diary entry:", error);
-              });
+              postDiaryEntry(userId, text, weightValue, foodType, foodAmountValue)
+                .then(() => {
+                  console.log("Diary entry created successfully!");
+                  setTitle("");
+                  setText("");
+                  setWeight("");
+                  setFoodType("");
+                  setFoodAmount("");
+                  setErrors({}); // Clear errors after successful submission
+                })
+                .then(() => {
+                  router.push({ pathname: "./main", params: { username } });
+                })
+                .catch((error) => {
+                  console.error("Error creating diary entry:", error);
+                });
+            }
           }}
           style={styles.createButton}
         >
@@ -129,7 +156,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    // paddingHorizontal: 15,
   },
   diaryContainer: {
     flex: 1,
@@ -151,9 +177,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-  form: {
-    flex: 1,
-  },
   label: {
     fontSize: 16,
     marginVertical: 8,
@@ -170,6 +193,11 @@ const styles = StyleSheet.create({
   textArea: {
     height: 100,
     textAlignVertical: "top",
+  },
+  errorText: {
+    color: "red",
+    fontSize: 14,
+    marginVertical: 5,
   },
   imageUploader: {
     marginTop: 15,
@@ -189,16 +217,6 @@ const styles = StyleSheet.create({
   imageText: {
     fontSize: 16,
     color: "#999",
-  },
-  bottomNav: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    paddingVertical: 10,
-    borderTopWidth: 1,
-    borderTopColor: "#ccc",
-  },
-  navButton: {
-    alignItems: "center",
   },
   createButton: {
     backgroundColor: "#3498db",
