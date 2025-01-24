@@ -29,7 +29,7 @@ export default function CreateAccountScreen() {
 
       if (result) {
         console.log("Account created successfully:", result);
-        router.push("./loginScreen");
+        router.push("./createdAccountSucessfully");
       } else {
         console.error("Failed to create account. User might already exist.");
         alert(
