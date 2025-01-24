@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "expo-router";
 import { View, Text } from "react-native";
 
+// this might be the App.tsx
 export default function Index() {
   const router = useRouter();
 

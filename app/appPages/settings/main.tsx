@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Switch, Alert } from "react-native";
+import { 
+  View,
+  Text,
+  StyleSheet,
+  useColorScheme,
+  TouchableOpacity,
+  Switch,
+  Alert
+  } from "react-native";
 import { useRouter } from "expo-router";
 
 import Navbar from "../../Navbar";
@@ -9,6 +17,8 @@ export default function SettingsPage() {
 
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [darkModeEnabled, setDarkModeEnabled] = useState(false);
+
+  const isDarkMode = useColorScheme() === 'dark'
 
   const toggleNotifications = () => {
     setNotificationsEnabled((prevState) => !prevState);
