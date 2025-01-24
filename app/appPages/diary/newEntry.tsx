@@ -26,6 +26,7 @@ export default function CreateDiaryEntry() {
   return (
     <View style={styles.container}>
       <Header />
+      <ScrollView style={styles.diaryContainer}>
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.profileIcon}></View>
@@ -33,7 +34,7 @@ export default function CreateDiaryEntry() {
       </View>
 
       {/* Form Fields */}
-      <ScrollView style={styles.form}>
+      {/* <ScrollView style={styles.form}> */}
         {/* Title */}
         <Text style={styles.label}>Title</Text>
         <TextInput
@@ -119,22 +120,6 @@ export default function CreateDiaryEntry() {
           <Text>+ Create a new entry</Text>
         </TouchableOpacity>
       </ScrollView>
-
-      {/* Bottom Navigation */}
-      {/* <View style={styles.bottomNav}>
-        <TouchableOpacity style={styles.navButton}>
-          <Text>Diary</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Text>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Text>Ask our Bot</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navButton}>
-          <Text>More Options</Text>
-        </TouchableOpacity>
-      </View> */}
       <Navbar />
     </View>
   );
@@ -144,7 +129,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingHorizontal: 15,
+    // paddingHorizontal: 15,
+  },
+  diaryContainer: {
+    flex: 1,
+    paddingHorizontal: 10,
   },
   header: {
     flexDirection: "row",

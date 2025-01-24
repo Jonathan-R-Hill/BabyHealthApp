@@ -69,7 +69,7 @@ export default function CreateDiaryEntry() {
 
   return (
     <View style={styles.container}>
-      <Header />
+      <Header showLabel={true} />
       <ScrollView style={styles.diaryContainer}>
         <TouchableOpacity
           onPress={handleNavigateToEntry}

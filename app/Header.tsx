@@ -1,11 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet, Platform, StatusBar } from "react-native";
 
-const Header: React.FC = () => {
+export default function Header({ showLabel = false }) {
   return (
     <View style={styles.headerContainer}>
       <StatusBar backgroundColor="#3498db" barStyle="light-content" />
-      <Text style={styles.headerText}>Baby Care</Text>
+      {showLabel && <Text style={styles.label}>Baby Care</Text>}
     </View>
   );
 };
@@ -13,7 +13,6 @@ const Header: React.FC = () => {
 const styles = StyleSheet.create({
   headerContainer: {
     backgroundColor: "#3498db",
-    paddingVertical: 15,
     paddingHorizontal: 20,
     alignItems: "center",
     justifyContent: "center",
@@ -23,6 +22,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
+  label: {
+    paddingVertical: 15,
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
 });
-
-export default Header;
