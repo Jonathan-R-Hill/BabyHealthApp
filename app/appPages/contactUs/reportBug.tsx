@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Alert,
   TextInput,
+  ScrollView,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 
@@ -33,47 +34,49 @@ export default function reportBugMain() {
   };
 
   return (
-    <View style={styles.container}>
-      {/*Title Placement*/}
-      <View style={styles.header}>
-        <Text style={styles.textTitle}>Report bugs or issues</Text>
-      </View>
+    <ScrollView>
+      <View style={styles.container}>
+        {/*Title Placement*/}
+        <View style={styles.header}>
+          <Text style={styles.textTitle}>Report bugs or issues</Text>
+        </View>
 
-      {/*Text Box Placement*/}
-      <View style={styles.inputBoxContainer}>
-        <TextInput
-          style={styles.inputBox}
-          placeholder="Report bugs/issues here"
-          value={bugText}
-          onChangeText={setBugText}
-          autoCapitalize="none"
-          autoCorrect={true}
-          keyboardType="default"
-          multiline={true}
-          placeholderTextColor={"#84868a"}
-        />
-        <TouchableOpacity style={styles.chartButton} onPress={handleReportSend}>
-          <Text style={styles.chartButtonText}>Send Report</Text>
-        </TouchableOpacity>
-      </View>
+        {/*Text Box Placement*/}
+        <View style={styles.inputBoxContainer}>
+          <TextInput
+            style={styles.inputBox}
+            placeholder="Report bugs/issues here"
+            value={bugText}
+            onChangeText={setBugText}
+            autoCapitalize="none"
+            autoCorrect={true}
+            keyboardType="default"
+            multiline={true}
+            placeholderTextColor={"#84868a"}
+          />
+          <TouchableOpacity style={styles.chartButton} onPress={handleReportSend}>
+            <Text style={styles.chartButtonText}>Send Report</Text>
+          </TouchableOpacity>
+        </View>
 
-      {/* Bottom Navigation */}
-      {/* <View style={styles.bottomNav}>
-                <TouchableOpacity style={styles.navButton}>
-                <Text>Diary</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.navButton}>
-                <Text>Home</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.navButton}>
-                <Text>Ask our Bot</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.navButton}>
-                <Text>More Options</Text>
-                </TouchableOpacity>
-            </View> */}
-      <Navbar />
-    </View>
+        {/* Bottom Navigation */}
+        {/* <View style={styles.bottomNav}>
+                  <TouchableOpacity style={styles.navButton}>
+                  <Text>Diary</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.navButton}>
+                  <Text>Home</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.navButton}>
+                  <Text>Ask our Bot</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.navButton}>
+                  <Text>More Options</Text>
+                  </TouchableOpacity>
+              </View> */}
+        <Navbar />
+      </View>
+    </ScrollView>
   );
 }
 

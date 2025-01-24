@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Text,
   Alert,
+  ScrollView,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { asyncCreateNewUser } from "../../services/loginService";
@@ -84,100 +85,102 @@ export default function CreateAccountScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      {/*Title Text*/}
-      <View style={styles.textHeader}>
-        <Text style={styles.textTitle}>Create Account</Text>
-      </View>
-
-      {/*Input Boxes*/}
-      <View style={styles.header}>
-        <View style={styles.innerHeader}>
-          {/*Enter Email*/}
-          <Text style={styles.label}>Enter Email</Text>
-          <TextInput
-            style={styles.inputBox}
-            placeholder="Enter Email Here"
-            value={createEmail}
-            onChangeText={setNewEmail}
-            autoCapitalize="none"
-            autoCorrect={false}
-            keyboardType="default"
-            placeholderTextColor={"#84868a"}
-          />
+    <ScrollView>
+      <View style={styles.container}>
+        {/*Title Text*/}
+        <View style={styles.textHeader}>
+          <Text style={styles.textTitle}>Create Account</Text>
         </View>
 
-        
-          {/*Enter Password*/}
-          <Text style={styles.warning}>
-            {validPassword
-              ? "Password is up to safety standards"
-              : "Password must contain: 8 characters, a capital, a number and a special character (eg: @,>]"}
-          </Text>
+        {/*Input Boxes*/}
+        <View style={styles.header}>
           <View style={styles.innerHeader}>
-          <Text style={styles.label}>Enter Password</Text>
-          <TextInput
-            style={styles.inputBox}
-            placeholder="Enter Password Here"
-            value={createPassword}
-            onChangeText={(newText) => {
-              setNewPassword(newText); // Update state
-            }}
-            autoCapitalize="none"
-            autoCorrect={false}
-            keyboardType="default"
-            placeholderTextColor={"#84868a"}
-            secureTextEntry={true}
-            contextMenuHidden={true} //apparently does not work on android
-          />
+            {/*Enter Email*/}
+            <Text style={styles.label}>Enter Email</Text>
+            <TextInput
+              style={styles.inputBox}
+              placeholder="Enter Email Here"
+              value={createEmail}
+              onChangeText={setNewEmail}
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="default"
+              placeholderTextColor={"#84868a"}
+            />
+          </View>
+
+          
+            {/*Enter Password*/}
+            <Text style={styles.warning}>
+              {validPassword
+                ? "Password is up to safety standards"
+                : "Password must contain: 8 characters, a capital, a number and a special character (eg: @,>]"}
+            </Text>
+            <View style={styles.innerHeader}>
+            <Text style={styles.label}>Enter Password</Text>
+            <TextInput
+              style={styles.inputBox}
+              placeholder="Enter Password Here"
+              value={createPassword}
+              onChangeText={(newText) => {
+                setNewPassword(newText); // Update state
+              }}
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="default"
+              placeholderTextColor={"#84868a"}
+              secureTextEntry={true}
+              contextMenuHidden={true} //apparently does not work on android
+            />
+          </View>
+
+          
+            {/*Enter Confirm Password*/}
+            <Text style={styles.warning}>{displayMessage}</Text>
+          <View style={styles.innerHeader}>
+            <Text style={styles.label}>Confirm Password</Text>
+            <TextInput
+              style={styles.inputBox}
+              placeholder="Enter Password Here"
+              value={confirmPassword}
+              onChangeText={(newText) => {
+                setConfirmedPassword(newText); // Update state
+              }}
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="default"
+              placeholderTextColor={"#84868a"}
+              secureTextEntry={true}
+              contextMenuHidden={true} //apparently does not work on android
+            />
+          </View>
         </View>
 
-        
-          {/*Enter Confirm Password*/}
-          <Text style={styles.warning}>{displayMessage}</Text>
-        <View style={styles.innerHeader}>
-          <Text style={styles.label}>Confirm Password</Text>
-          <TextInput
-            style={styles.inputBox}
-            placeholder="Enter Password Here"
-            value={confirmPassword}
-            onChangeText={(newText) => {
-              setConfirmedPassword(newText); // Update state
-            }}
-            autoCapitalize="none"
-            autoCorrect={false}
-            keyboardType="default"
-            placeholderTextColor={"#84868a"}
-            secureTextEntry={true}
-            contextMenuHidden={true} //apparently does not work on android
-          />
+        {/*Create Account Button*/}
+        <View style={styles.textHeader}>
+          <TouchableOpacity
+            style={[
+              styles.chartButton,
+              { backgroundColor: allValid ? "#3498db" : "#7c7d7c" },
+            ]}
+            onPress={createNewAccount}
+            disabled={!allValid}
+          >
+            <Text style={styles.chartButtonText}>Create Account</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/*Go Back Button*/}
+        <View style={styles.textHeader}>
+          <TouchableOpacity
+            style={styles.chartButton}
+            onPress={handleGoBackToLogin}
+          >
+            <Text style={styles.chartButtonText}>Go Back To Login Page</Text>
+          </TouchableOpacity>
         </View>
       </View>
-
-      {/*Create Account Button*/}
-      <View style={styles.textHeader}>
-        <TouchableOpacity
-          style={[
-            styles.chartButton,
-            { backgroundColor: allValid ? "#3498db" : "#7c7d7c" },
-          ]}
-          onPress={createNewAccount}
-          disabled={!allValid}
-        >
-          <Text style={styles.chartButtonText}>Create Account</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/*Go Back Button*/}
-      <View style={styles.textHeader}>
-        <TouchableOpacity
-          style={styles.chartButton}
-          onPress={handleGoBackToLogin}
-        >
-          <Text style={styles.chartButtonText}>Go Back To Login Page</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    </ScrollView>
   );
 }
 
