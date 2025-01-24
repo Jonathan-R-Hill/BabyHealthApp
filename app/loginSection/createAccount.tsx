@@ -86,68 +86,76 @@ export default function CreateAccountScreen() {
   return (
     <View style={styles.container}>
       {/*Title Text*/}
-      <View style={styles.header}>
+      <View style={styles.textHeader}>
         <Text style={styles.textTitle}>Create Account</Text>
       </View>
 
       {/*Input Boxes*/}
       <View style={styles.header}>
-        {/*Enter Email*/}
-        <Text style={styles.label}>Enter Email</Text>
-        <TextInput
-          style={styles.inputBox}
-          placeholder="Enter Email Here"
-          value={createEmail}
-          onChangeText={setNewEmail}
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType="default"
-          placeholderTextColor={"#84868a"}
-        />
+        <View style={styles.innerHeader}>
+          {/*Enter Email*/}
+          <Text style={styles.label}>Enter Email</Text>
+          <TextInput
+            style={styles.inputBox}
+            placeholder="Enter Email Here"
+            value={createEmail}
+            onChangeText={setNewEmail}
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="default"
+            placeholderTextColor={"#84868a"}
+          />
+        </View>
 
-        {/*Enter Password*/}
-        <Text style={styles.label}>Enter Password</Text>
-        <Text style={styles.warning}>
-          {validPassword
-            ? "Password is up to safety standards"
-            : "Password must contain: 8 characters, a capital, a number and a special character (eg: @,>]"}
-        </Text>
-        <TextInput
-          style={styles.inputBox}
-          placeholder="Enter Password Here"
-          value={createPassword}
-          onChangeText={(newText) => {
-            setNewPassword(newText); // Update state
-          }}
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType="default"
-          placeholderTextColor={"#84868a"}
-          secureTextEntry={true}
-          contextMenuHidden={true} //apparently does not work on android
-        />
+        
+          {/*Enter Password*/}
+          <Text style={styles.warning}>
+            {validPassword
+              ? "Password is up to safety standards"
+              : "Password must contain: 8 characters, a capital, a number and a special character (eg: @,>]"}
+          </Text>
+          <View style={styles.innerHeader}>
+          <Text style={styles.label}>Enter Password</Text>
+          <TextInput
+            style={styles.inputBox}
+            placeholder="Enter Password Here"
+            value={createPassword}
+            onChangeText={(newText) => {
+              setNewPassword(newText); // Update state
+            }}
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="default"
+            placeholderTextColor={"#84868a"}
+            secureTextEntry={true}
+            contextMenuHidden={true} //apparently does not work on android
+          />
+        </View>
 
-        {/*Enter Confirm Password*/}
-        <Text style={styles.warning}>{displayMessage}</Text>
-        <Text style={styles.label}>Confirm Password</Text>
-        <TextInput
-          style={styles.inputBox}
-          placeholder="Enter Password Here"
-          value={confirmPassword}
-          onChangeText={(newText) => {
-            setConfirmedPassword(newText); // Update state
-          }}
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType="default"
-          placeholderTextColor={"#84868a"}
-          secureTextEntry={true}
-          contextMenuHidden={true} //apparently does not work on android
-        />
+        
+          {/*Enter Confirm Password*/}
+          <Text style={styles.warning}>{displayMessage}</Text>
+        <View style={styles.innerHeader}>
+          <Text style={styles.label}>Confirm Password</Text>
+          <TextInput
+            style={styles.inputBox}
+            placeholder="Enter Password Here"
+            value={confirmPassword}
+            onChangeText={(newText) => {
+              setConfirmedPassword(newText); // Update state
+            }}
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="default"
+            placeholderTextColor={"#84868a"}
+            secureTextEntry={true}
+            contextMenuHidden={true} //apparently does not work on android
+          />
+        </View>
       </View>
 
       {/*Create Account Button*/}
-      <View style={styles.header}>
+      <View style={styles.textHeader}>
         <TouchableOpacity
           style={[
             styles.chartButton,
@@ -161,7 +169,7 @@ export default function CreateAccountScreen() {
       </View>
 
       {/*Go Back Button*/}
-      <View style={styles.header}>
+      <View style={styles.textHeader}>
         <TouchableOpacity
           style={styles.chartButton}
           onPress={handleGoBackToLogin}
@@ -184,8 +192,25 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    width: 800,
-    maxWidth: "100%",
+    width: "100%",
+    maxWidth: 600,
+  },
+  innerHeader: {
+    padding: 10,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    width: "100%",
+    maxWidth: 600,
+    flex: 3,
+  },
+  textHeader: {
+    padding: 10,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    width: "100%",
+    maxWidth: 600,
   },
   chartButton: {
     backgroundColor: "#3498db",
@@ -204,8 +229,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   inputBox: {
-    height: "80%",
-    width: "100%",
     borderColor: "blue",
     borderWidth: 1,
     marginBottom: 16,
@@ -213,6 +236,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     backgroundColor: "#e8e6e1",
     textAlign: "center",
+    width: 300,
+    maxWidth: 400,
   },
   inputBoxContainer: {
     height: "80%",
@@ -228,7 +253,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     fontWeight: "bold",
     color: "red",
-    height: "10%",
+    maxHeight: "10%",
     maxWidth: "100%",
+    flex: 1,
   },
 });
