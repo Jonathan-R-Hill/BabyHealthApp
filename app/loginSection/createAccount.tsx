@@ -85,8 +85,8 @@ export default function CreateAccountScreen() {
   };
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <ScrollView style={styles.scrollStyle}>
         {/*Title Text*/}
         <View style={styles.textHeader}>
           <Text style={styles.textTitle}>Create Account</Text>
@@ -179,8 +179,9 @@ export default function CreateAccountScreen() {
             <Text style={styles.chartButtonText}>Go Back To Login Page</Text>
           </TouchableOpacity>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
+    
   );
 }
 
@@ -190,13 +191,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
   },
+  scrollStyle: {
+    flexDirection: "column",
+  },
   header: {
     padding: 10,
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
     width: "100%",
-    maxWidth: 600,
+    maxWidth: 400,
   },
   innerHeader: {
     padding: 10,
@@ -204,7 +208,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     width: "100%",
-    maxWidth: 600,
+    maxWidth: 400,
     flex: 3,
   },
   textHeader: {
@@ -213,7 +217,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     width: "100%",
-    maxWidth: 600,
+    maxWidth: 400,
   },
   chartButton: {
     backgroundColor: "#3498db",

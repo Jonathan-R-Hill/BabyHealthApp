@@ -34,37 +34,37 @@ export default function HandleContactUs() {
   };
 
   return (
-    <ScrollView>
       <View style={styles.container}>
-        {/*Logo placement*/}
-        <View style={styles.header}>
-          <View style={styles.profileIcon}></View>
-          <Text style={styles.textTitle}>NHS Contacts</Text>
-        </View>
+        <ScrollView style={styles.scrollStyle}>
+          {/*Logo placement*/}
+          <View style={styles.header}>
+            <View style={styles.profileIcon}></View>
+            <Text style={styles.textTitle}>NHS Contacts</Text>
+          </View>
 
-        {/*Text Placement*/}
-        <View style={styles.header}>
-          <Text style={styles.textGeneral}>
-            Phone Number: <Text style={styles.numberText}>0300 311 2233</Text>
-          </Text>
-          <Text style={styles.textGeneral}>
-            Number for hearing or speech impaired users:{" "}
-            <Text style={styles.numberText}>18001</Text>
-          </Text>
-        </View>
+          {/*Text Placement*/}
+          <View style={styles.header}>
+            <Text style={styles.textGeneral}>
+              Phone Number: <Text style={styles.numberText}>0300 311 2233</Text>
+            </Text>
+            <Text style={styles.textGeneral}>
+              Number for hearing or speech impaired users:{" "}
+              <Text style={styles.numberText}>18001</Text>
+            </Text>
+          </View>
 
-        {/*Button Placement*/}
-        <View style={styles.header}>
-          <TouchableOpacity style={styles.chartButton} onPress={ContactCarer}>
-            <Text style={styles.chartButtonText}>Contact A Carer</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.header}>
-          <TouchableOpacity style={styles.chartButton} onPress={ContactDevs}>
-            <Text style={styles.chartButtonText}>Contact A Developer</Text>
-          </TouchableOpacity>
-        </View>
-
+          {/*Button Placement*/}
+          <View style={styles.header}>
+            <TouchableOpacity style={styles.chartButton} onPress={ContactCarer}>
+              <Text style={styles.chartButtonText}>Contact A Carer</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.header}>
+            <TouchableOpacity style={styles.chartButton} onPress={ContactDevs}>
+              <Text style={styles.chartButtonText}>Contact A Developer</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
         {/* Bottom Navigation */}
         {/* <View style={styles.bottomNav}>
                   <TouchableOpacity style={styles.navButton}>
@@ -82,7 +82,6 @@ export default function HandleContactUs() {
               </View> */}
         <Navbar />
       </View>
-    </ScrollView>
   );
 }
 
@@ -109,6 +108,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
+    minHeight: 40,
     height: "30%",
     width: "80%",
     maxHeight: 300,
@@ -133,5 +133,9 @@ const styles = StyleSheet.create({
     color: "#000000",
     fontSize: 40,
     fontWeight: "bold",
+  },
+  scrollStyle: {
+    flexDirection: "column",
+    flex: 1
   },
 });

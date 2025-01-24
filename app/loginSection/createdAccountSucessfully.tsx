@@ -22,26 +22,26 @@ export default function CreateAccountApprovalScreen() {
     };
 
     return (
-        <ScrollView>
           <View style={styles.container}>
-            {/*Logo placement*/}
-            <View style={styles.header}>
-              <View style={styles.profileIcon}></View>
-            </View>
+            <ScrollView style={styles.scrollStyle}>
+              {/*Logo placement*/}
+              <View style={styles.header}>
+                <View style={styles.profileIcon}></View>
+              </View>
 
-            {/*Text*/}
-            <View style={styles.header}>
-              <Text style={styles.textTitle}>Account Created Sucessfully</Text>
-            </View>
+              {/*Text*/}
+              <View style={styles.header}>
+                <Text style={styles.textTitle}>Account Created Sucessfully</Text>
+              </View>
 
-            {/*Button*/}
-            <View style={styles.header}>
-              <TouchableOpacity style={styles.chartButton} onPress={redirectToLogin}>
-                <Text style={styles.chartButtonText}>Return To Login</Text>
-              </TouchableOpacity>
-            </View>
+              {/*Button*/}
+              <View style={styles.header}>
+                <TouchableOpacity style={styles.chartButton} onPress={redirectToLogin}>
+                  <Text style={styles.chartButtonText}>Return To Login</Text>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
           </View>
-        </ScrollView>
     );
 }
 
@@ -80,5 +80,8 @@ const styles = StyleSheet.create({
       fontSize: 40,
       fontWeight: "bold",
       textAlign: "center",
+    },
+    scrollStyle: {
+      flexDirection: "column",
     },
   });

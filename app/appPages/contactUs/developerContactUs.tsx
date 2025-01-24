@@ -50,32 +50,32 @@ export default function DevContactMain() {
   };
 
   return (
-    <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.textTitle}>Developer Contact</Text>
+        <ScrollView style={styles.scrollStyle}>
+          <Text style={styles.textTitle}>Developer Contact</Text>
 
-        {/*Button Placement*/}
-        <View style={styles.header}>
-          <TouchableOpacity style={styles.chartButton} onPress={reportBug}>
-            <Text style={styles.chartButtonText}>Report A Bug</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.header}>
-          <TouchableOpacity style={styles.chartButton} onPress={requestFeature}>
-            <Text style={styles.chartButtonText}>Request A Feature</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.header}>
-          <TouchableOpacity style={styles.chartButton} onPress={discordServer}>
-            <Text style={styles.chartButtonText}>App Support Discord Server</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.header}>
-          <TouchableOpacity style={styles.chartButton} onPress={gitHub}>
-            <Text style={styles.chartButtonText}>GitHub</Text>
-          </TouchableOpacity>
-        </View>
-
+          {/*Button Placement*/}
+          <View style={styles.header}>
+            <TouchableOpacity style={styles.chartButton} onPress={reportBug}>
+              <Text style={styles.chartButtonText}>Report A Bug</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.header}>
+            <TouchableOpacity style={styles.chartButton} onPress={requestFeature}>
+              <Text style={styles.chartButtonText}>Request A Feature</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.header}>
+            <TouchableOpacity style={styles.chartButton} onPress={discordServer}>
+              <Text style={styles.chartButtonText}>App Support Discord Server</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.header}>
+            <TouchableOpacity style={styles.chartButton} onPress={gitHub}>
+              <Text style={styles.chartButtonText}>GitHub</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
         {/* Bottom Navigation */}
         {/* <View style={styles.bottomNav}>
                   <TouchableOpacity style={styles.navButton}>
@@ -93,7 +93,6 @@ export default function DevContactMain() {
               </View> */}
         <Navbar />
       </View>
-    </ScrollView>
   );
 }
 
@@ -114,6 +113,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
+    minHeight: 40,
     height: "30%",
     width: "80%",
     maxHeight: 300,
@@ -132,5 +132,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     flex: 1,
     textAlign: "center",
+  },
+  scrollStyle: {
+    flexDirection: "column",
+    flex: 1,
   },
 });

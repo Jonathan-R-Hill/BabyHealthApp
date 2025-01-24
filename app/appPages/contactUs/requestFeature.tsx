@@ -34,30 +34,31 @@ export default function requestFeatureMain() {
   };
 
   return (
-    <ScrollView>
       <View style={styles.container}>
-        {/*Title Placement*/}
-        <View style={styles.header}>
-          <Text style={styles.textTitle}>Request A Feature</Text>
-        </View>
+        <ScrollView style={styles.scrollStyle}>
+          {/*Title Placement*/}
+          <View style={styles.header}>
+            <Text style={styles.textTitle}>Request A Feature</Text>
+          </View>
 
-        {/*Text Box Placement*/}
-        <View style={styles.inputBoxContainer}>
-          <TextInput
-            style={styles.inputBox}
-            placeholder="Request a feature here"
-            value={requestText}
-            onChangeText={setRequestText}
-            autoCapitalize="none"
-            autoCorrect={true}
-            keyboardType="default"
-            multiline={true}
-            placeholderTextColor={"#84868a"}
-          />
-          <TouchableOpacity style={styles.chartButton} onPress={handleReportSend}>
-            <Text style={styles.chartButtonText}>Send Report</Text>
-          </TouchableOpacity>
-        </View>
+          {/*Text Box Placement*/}
+          <View style={styles.inputBoxContainer}>
+            <TextInput
+              style={styles.inputBox}
+              placeholder="Request a feature here"
+              value={requestText}
+              onChangeText={setRequestText}
+              autoCapitalize="none"
+              autoCorrect={true}
+              keyboardType="default"
+              multiline={true}
+              placeholderTextColor={"#84868a"}
+            />
+            <TouchableOpacity style={styles.chartButton} onPress={handleReportSend}>
+              <Text style={styles.chartButtonText}>Send Report</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
 
         {/* Bottom Navigation */}
         {/* <View style={styles.bottomNav}>
@@ -76,7 +77,6 @@ export default function requestFeatureMain() {
               </View> */}
         <Navbar />
       </View>
-    </ScrollView>
   );
 }
 
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 5,
     marginLeft: "auto",
+    minHeight: 40,
   },
   chartButtonText: {
     color: "#fff",
@@ -123,5 +124,9 @@ const styles = StyleSheet.create({
   inputBoxContainer: {
     height: "80%",
     width: "90%",
+  },
+  scrollStyle: {
+    flexDirection: "column",
+    flex: 1,
   },
 });
