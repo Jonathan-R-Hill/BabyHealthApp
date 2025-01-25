@@ -85,12 +85,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
+    width: "100%",
+    height: "100%",
   },
   header: {
     padding: 10,
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
+    maxWidth: 400,
   },
   chartButton: {
     backgroundColor: "#3498db",
@@ -120,13 +123,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     backgroundColor: "#e8e6e1",
     textAlign: "center",
+    maxWidth: 400,
   },
   inputBoxContainer: {
     height: "80%",
     width: "90%",
+    maxWidth: "90%",
+
   },
   scrollStyle: {
     flexDirection: "column",
-    flex: 1,
+    width: "90%",
+    maxWidth: "90%",
   },
 });

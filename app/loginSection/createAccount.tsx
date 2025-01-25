@@ -44,8 +44,9 @@ export default function CreateAccountScreen() {
 
   const areAllValid = () => {
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!])(?=.{9,})/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     setAllValid(
-      createEmail !== "" &&
+      emailRegex.test(createEmail) &&
         displayMessage === "Passwords match!" &&
         passwordRegex.test(confirmPassword)
     );
