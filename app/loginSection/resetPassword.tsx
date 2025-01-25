@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
-  Alert,
   ScrollView,
 } from "react-native";
 import { useRouter } from "expo-router";
@@ -72,7 +71,7 @@ export default function resetPassword(){
         <ScrollView style={styles.scrollStyle}>
             {/*Title Text*/}
             <View style={styles.textHeader}>
-            <Text style={styles.textTitle}>Create Account</Text>
+            <Text style={styles.textTitle}>Reset Password</Text>
             </View>
     
             {/*Input Boxes*/}
