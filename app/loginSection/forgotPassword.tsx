@@ -20,7 +20,7 @@ export default function forgotPasswordPage() {
         if(allValid)
         {
           console.log("user resetting password", userEmail);
-          router.push("./emailAuthenticationCode");
+          router.push("./resetPassword"); //possibly some logic to handle pushing about an entered email
         }
         else{
           setDisplayMessage("Please enter a valid email");
