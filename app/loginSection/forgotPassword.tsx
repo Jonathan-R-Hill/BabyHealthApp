@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   View,
   TextInput,
-  Button,
   StyleSheet,
   TouchableOpacity,
   Text,
@@ -20,7 +19,7 @@ export default function forgotPasswordPage() {
         if(allValid)
         {
           console.log("user resetting password", userEmail);
-          router.push("./resetPassword"); //possibly some logic to handle pushing about an entered email
+          router.push({pathname: './resetPassword', params: {userEmail: userEmail}}); //must go to auth code page first
         }
         else{
           setDisplayMessage("Please enter a valid email");
