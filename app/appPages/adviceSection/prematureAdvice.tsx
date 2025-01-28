@@ -13,41 +13,47 @@ import Navbar from "../../Navbar";
 
 //Data for the advice categories
 const categoryData = [
-    {id: "1", title: "PreTest 1", content: "PreContent Test 1"},
-    {id: "2", title: "PreTest 2", content: "PreContent Test 2"},
-    {id: "3", title: "PreTest 3", content: "PreContent Test 3"},
-    {id: "4", title: "PreTest 4", content: "PreContent Test 4"},
-    {id: "5", title: "PreTest 5", content: "PreContent Test 5"},
-    {id: "6", title: "PreTest 6", content: "PreContent Test 6"},
-    {id: "7", title: "PreTest 7", content: "PreContent Test 7"},
-    {id: "8", title: "PreTest 8", content: "PreContent Test 8"},
-    {id: "9", title: "PreTest 9", content: "PreContent Test 9"},
-    {id: "10", title: "PreTest 10", content: "PreContent Test 10"},
-    {id: "11", title: "PreTest 11", content: "PreContent Test 11"},
-    {id: "12", title: "PreTest 12", content: "PreContent Test 12"},
-    {id: "13", title: "PreTest 13", content: "PreContent Test 13"},
-]
-
+  { id: "1", title: "PreTest 1", content: "PreContent Test 1" },
+  { id: "2", title: "PreTest 2", content: "PreContent Test 2" },
+  { id: "3", title: "PreTest 3", content: "PreContent Test 3" },
+  { id: "4", title: "PreTest 4", content: "PreContent Test 4" },
+  { id: "5", title: "PreTest 5", content: "PreContent Test 5" },
+  { id: "6", title: "PreTest 6", content: "PreContent Test 6" },
+  { id: "7", title: "PreTest 7", content: "PreContent Test 7" },
+  { id: "8", title: "PreTest 8", content: "PreContent Test 8" },
+  { id: "9", title: "PreTest 9", content: "PreContent Test 9" },
+  { id: "10", title: "PreTest 10", content: "PreContent Test 10" },
+  { id: "11", title: "PreTest 11", content: "PreContent Test 11" },
+  { id: "12", title: "PreTest 12", content: "PreContent Test 12" },
+  { id: "13", title: "PreTest 13", content: "PreContent Test 13" },
+];
 
 export default function PrematureAdviceSection() {
   const router = useRouter();
 
   const [expandedSections, setExpandedSections] = useState<string[]>([]);
-  
+
   const toggleSection = (id: string) => {
     setExpandedSections((prev) =>
-      prev.includes(id) ? prev.filter((sectionId) => sectionId !== id) : [...prev, id]
+      prev.includes(id)
+        ? prev.filter((sectionId) => sectionId !== id)
+        : [...prev, id]
     );
   };
 
-const renderSection = ({ item }: {item: typeof categoryData[0]}) => {
+  const renderSection = ({ item }: { item: (typeof categoryData)[0] }) => {
     const isExpanded = expandedSections.includes(item.id);
     return (
       <View style={styles.section}>
-        <TouchableOpacity onPress={() => toggleSection(item.id)} style={styles.sectionHeader}>
+        <TouchableOpacity
+          onPress={() => toggleSection(item.id)}
+          style={styles.sectionHeader}
+        >
           <Text style={styles.sectionTitle}>{item.title}</Text>
         </TouchableOpacity>
-        {isExpanded && <Text style={styles.sectionContent}>{item.content}</Text>}
+        {isExpanded && (
+          <Text style={styles.sectionContent}>{item.content}</Text>
+        )}
       </View>
     );
   };

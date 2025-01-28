@@ -8,46 +8,54 @@ import {
   FlatList,
   ScrollView,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import Navbar from "../../Navbar";
 
 //Data for the advice categories
 const categoryData = [
-    {id: "1", title: "Test 1", content: "Content Test 1"},
-    {id: "2", title: "Test 2", content: "Content Test 2"},
-    {id: "3", title: "Test 3", content: "Content Test 3"},
-    {id: "4", title: "Test 4", content: "Content Test 4"},
-    {id: "5", title: "Test 5", content: "Content Test 5"},
-    {id: "6", title: "Test 6", content: "Content Test 6"},
-    {id: "7", title: "Test 7", content: "Content Test 7"},
-    {id: "8", title: "Test 8", content: "Content Test 8"},
-    {id: "9", title: "Test 9", content: "Content Test 9"},
-    {id: "10", title: "Test 10", content: "Content Test 10"},
-    {id: "11", title: "Test 11", content: "Content Test 11"},
-    {id: "12", title: "Test 12", content: "Content Test 12"},
-    {id: "13", title: "Test 13", content: "Content Test 13"},
-]
-
+  { id: "1", title: "Test 1", content: "Content Test 1" },
+  { id: "2", title: "Test 2", content: "Content Test 2" },
+  { id: "3", title: "Test 3", content: "Content Test 3" },
+  { id: "4", title: "Test 4", content: "Content Test 4" },
+  { id: "5", title: "Test 5", content: "Content Test 5" },
+  { id: "6", title: "Test 6", content: "Content Test 6" },
+  { id: "7", title: "Test 7", content: "Content Test 7" },
+  { id: "8", title: "Test 8", content: "Content Test 8" },
+  { id: "9", title: "Test 9", content: "Content Test 9" },
+  { id: "10", title: "Test 10", content: "Content Test 10" },
+  { id: "11", title: "Test 11", content: "Content Test 11" },
+  { id: "12", title: "Test 12", content: "Content Test 12" },
+  { id: "13", title: "Test 13", content: "Content Test 13" },
+];
 
 export default function AdviceSection() {
   const router = useRouter();
 
   const [expandedSections, setExpandedSections] = useState<string[]>([]);
-  
+
+  const { username } = useLocalSearchParams();
+
   const toggleSection = (id: string) => {
     setExpandedSections((prev) =>
-      prev.includes(id) ? prev.filter((sectionId) => sectionId !== id) : [...prev, id]
+      prev.includes(id)
+        ? prev.filter((sectionId) => sectionId !== id)
+        : [...prev, id]
     );
   };
 
-const renderSection = ({ item }: {item: typeof categoryData[0]}) => {
+  const renderSection = ({ item }: { item: (typeof categoryData)[0] }) => {
     const isExpanded = expandedSections.includes(item.id);
     return (
       <View style={styles.section}>
-        <TouchableOpacity onPress={() => toggleSection(item.id)} style={styles.sectionHeader}>
+        <TouchableOpacity
+          onPress={() => toggleSection(item.id)}
+          style={styles.sectionHeader}
+        >
           <Text style={styles.sectionTitle}>{item.title}</Text>
         </TouchableOpacity>
-        {isExpanded && <Text style={styles.sectionContent}>{item.content}</Text>}
+        {isExpanded && (
+          <Text style={styles.sectionContent}>{item.content}</Text>
+        )}
       </View>
     );
   };
@@ -55,7 +63,7 @@ const renderSection = ({ item }: {item: typeof categoryData[0]}) => {
   const prematureAdvice = () => {
     try {
       console.log("Button Pressed");
-      router.push("./prematureAdvice");
+      router.push({ pathname: "./prematureAdvice", params: { username } });
     } catch (error) {
       console.error("Navigation Error", error);
       Alert.alert("Navigation Error", "Could not navigate to the correct page");
@@ -144,4 +152,3 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-
