@@ -62,6 +62,7 @@ export const fetchAllDiaryEntries = async (userId: string) => {
  */
 export const postDiaryEntry = async (
   userId: string,
+  title: string,
   text: string,
   weight: number,
   foodType: string,
@@ -70,6 +71,7 @@ export const postDiaryEntry = async (
   try {
     const response = await axios.post(`${API_URL}/post/diary`, {
       userId,
+      title,
       text,
       weight,
       foodType,

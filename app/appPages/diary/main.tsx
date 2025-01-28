@@ -19,6 +19,7 @@ interface DiaryEntry {
     date: string; // ISO date string
     entry_id: number; // Unique identifier for the diary entry
     userId: string; // User identifier
+    diaryTitle: string;
   };
   data: {
     foodAmount: number; // Amount of food (e.g., milk, etc.)
@@ -32,7 +33,7 @@ export default function CreateDiaryEntry() {
   const router = useRouter();
   const [diaryEntries, setDiaryEntries] = useState<DiaryEntry[]>([]);
   const { username } = useLocalSearchParams();
-  
+
   const fetchDiaryEntries = async (username: string) => {
     try {
       const data: DiaryEntry[] = await fetchAllDiaryEntries(username);
@@ -68,7 +69,7 @@ export default function CreateDiaryEntry() {
   };
 
   let lastYear = ""; // To track the last displayed year
-  
+
   return (
     <View style={styles.container}>
       <Header showLabel={true} />
@@ -80,38 +81,39 @@ export default function CreateDiaryEntry() {
           <Text style={styles.createButtonText}>+ Create a new entry</Text>
         </TouchableOpacity>
         {diaryEntries.map((entry) => {
-        const entryDate = new Date(entry._id.date);
-        const entryYear = entryDate.getFullYear().toString();
-        const currentYear = new Date().getFullYear().toString();
-        const displayYearHeader = entryYear !== lastYear && entryYear !== currentYear;
+          const entryDate = new Date(entry._id.date);
+          const entryYear = entryDate.getFullYear().toString();
+          const currentYear = new Date().getFullYear().toString();
+          const displayYearHeader =
+            entryYear !== lastYear && entryYear !== currentYear;
 
-        if (displayYearHeader) {
-          lastYear = entryYear; // Update the last displayed year
-        }
+          if (displayYearHeader) {
+            lastYear = entryYear; // Update the last displayed year
+          }
 
-        return (
-          <View key={entry._id.entry_id}>
-            {displayYearHeader && (
-              <View style={styles.yearHeader}>
-                <Text>{entryYear}</Text>
-                <View style={styles.yearHeaderLine} />
-              </View>
-            )}
-            <TouchableOpacity
-              style={styles.diaryEntry}
-              onPress={() => handleNavigateToDetails(entry._id.entry_id)}
-            >
-              <Text style={styles.diaryText}>{entry.data.text}</Text>
-              <Text style={styles.dateText}>
-                {entryDate.toLocaleDateString(undefined, {
-                  day: "2-digit",
-                  month: "short",
-                })}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        );
-      })}
+          return (
+            <View key={entry._id.entry_id}>
+              {displayYearHeader && (
+                <View style={styles.yearHeader}>
+                  <Text>{entryYear}</Text>
+                  <View style={styles.yearHeaderLine} />
+                </View>
+              )}
+              <TouchableOpacity
+                style={styles.diaryEntry}
+                onPress={() => handleNavigateToDetails(entry._id.entry_id)}
+              >
+                <Text style={styles.diaryText}>{entry._id.diaryTitle}</Text>
+                <Text style={styles.dateText}>
+                  {entryDate.toLocaleDateString(undefined, {
+                    day: "2-digit",
+                    month: "short",
+                  })}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          );
+        })}
       </ScrollView>
       <Navbar />
     </View>
@@ -145,17 +147,17 @@ const styles = StyleSheet.create({
     marginVertical: 6,
     marginLeft: 10,
     color: "#2c3e50",
-    position: 'relative',
+    position: "relative",
     paddingRight: 20, // Make space for the line
     opacity: 0.7, // Make it subtle
   },
   yearHeaderLine: {
-    position: 'absolute',
+    position: "absolute",
     right: 10,
-    top: '50%',
+    top: "50%",
     height: 1,
-    width: '90%', // Adjust width as needed
-    backgroundColor: '#2c3e50', // Same color as year header text
+    width: "90%", // Adjust width as needed
+    backgroundColor: "#2c3e50", // Same color as year header text
     opacity: 0.4, // Make it subtle
   },
   diaryEntry: {

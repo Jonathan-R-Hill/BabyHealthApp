@@ -34,7 +34,7 @@ export default function CreateDiaryEntry() {
 
   const validateForm = () => {
     const newErrors: Errors = {};
-  
+
     if (!title.trim()) newErrors.title = "Title is required.";
     if (!text.trim()) newErrors.text = "Text is required.";
     if (!weight.trim() || isNaN(parseFloat(weight)) || parseFloat(weight) <= 0)
@@ -50,7 +50,7 @@ export default function CreateDiaryEntry() {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; // Return true if no errors
   };
-  
+
   return (
     <View style={styles.container}>
       <Header />
@@ -98,7 +98,9 @@ export default function CreateDiaryEntry() {
           value={foodType}
           onChangeText={setFoodType}
         />
-        {errors.foodType && <Text style={styles.errorText}>{errors.foodType}</Text>}
+        {errors.foodType && (
+          <Text style={styles.errorText}>{errors.foodType}</Text>
+        )}
 
         <Text style={styles.label}>Food amount (g)</Text>
         <TextInput
@@ -108,12 +110,12 @@ export default function CreateDiaryEntry() {
           onChangeText={setFoodAmount}
           keyboardType="numeric"
         />
-        {errors.foodAmount && <Text style={styles.errorText}>{errors.foodAmount}</Text>}
+        {errors.foodAmount && (
+          <Text style={styles.errorText}>{errors.foodAmount}</Text>
+        )}
 
         <TouchableOpacity style={styles.imageUploader}>
-          <Image
-            style={styles.imageIcon}
-          />
+          <Image style={styles.imageIcon} />
           <Text style={styles.imageText}>Add pic</Text>
         </TouchableOpacity>
 
@@ -124,7 +126,14 @@ export default function CreateDiaryEntry() {
               const weightValue = parseFloat(weight);
               const foodAmountValue = parseFloat(foodAmount);
 
-              postDiaryEntry(userId, text, weightValue, foodType, foodAmountValue)
+              postDiaryEntry(
+                userId,
+                title,
+                text,
+                weightValue,
+                foodType,
+                foodAmountValue
+              )
                 .then(() => {
                   console.log("Diary entry created successfully!");
                   setTitle("");
