@@ -19,13 +19,15 @@ const LoginScreen = () => {
     try {
       console.log("Username:", username, "Password:", password);
 
-      // const response = await asyncLogin(username, password); // Await the login service
-      const response = await asyncValidateUser(username, password); // Await the login service
+      // Await the login service
+      const token = await asyncValidateUser(username, password);
 
-      console.log("Login successful:", response);
+      console.log("Login successful:", token);
+
+      // After successful login, navigate to the main diary page
       router.push({
-        pathname: "../appPages/diary/main", // Target page
-        params: { username }, // Passing data as query parameters
+        pathname: "../appPages/diary/main",
+        params: { username, token },
       });
     } catch (error: any) {
       console.error("Login failed:", error.message);

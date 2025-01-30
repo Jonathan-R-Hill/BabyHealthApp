@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ActivityIndicator, Alert, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  Alert,
+  ScrollView,
+} from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Navbar from "../../Navbar";
 import Header from "../../Header";
 import { fetchSingleDiaryEntry } from "../../../services/diaryService";
 
 interface DiaryEntry {
-  _id: {
+  details: {
     date: string;
     entry_id: number;
     userId: string;
@@ -67,22 +74,22 @@ export default function DiaryEntryDetails() {
   return (
     <View style={styles.container}>
       <ScrollView>
-      <Text style={styles.dateText}>
-        {new Date(entry._id.date).toLocaleDateString()}
-      </Text>
-      <Text style={styles.content}>{entry.data.text}</Text>
-      <Text style={styles.infoText}>
-        <Text style={styles.infoLabel}>Weight: </Text>
-        {entry.data.weight}g
-      </Text>
-      <Text style={styles.infoText}>
-        <Text style={styles.infoLabel}>Food Type: </Text>
-        {entry.data.foodType}
-      </Text>
-      <Text style={styles.infoText}>
-        <Text style={styles.infoLabel}>Food Amount: </Text>
-        {entry.data.foodAmount}ml
-      </Text>
+        <Text style={styles.dateText}>
+          {new Date(entry.details.date).toLocaleDateString()}
+        </Text>
+        <Text style={styles.content}>{entry.data.text}</Text>
+        <Text style={styles.infoText}>
+          <Text style={styles.infoLabel}>Weight: </Text>
+          {entry.data.weight}g
+        </Text>
+        <Text style={styles.infoText}>
+          <Text style={styles.infoLabel}>Food Type: </Text>
+          {entry.data.foodType}
+        </Text>
+        <Text style={styles.infoText}>
+          <Text style={styles.infoLabel}>Food Amount: </Text>
+          {entry.data.foodAmount}ml
+        </Text>
       </ScrollView>
       <Navbar />
     </View>

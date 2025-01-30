@@ -29,7 +29,7 @@ export default function CreateAccountScreen() {
 
       if (result) {
         console.log("Account created successfully:", result);
-        
+
         router.push("./createdAccountSucessfully");
       } else {
         console.error("Failed to create account. User might already exist.");
@@ -111,14 +111,13 @@ export default function CreateAccountScreen() {
             />
           </View>
 
-          
-            {/*Enter Password*/}
-            <Text style={styles.warning}>
-              {validPassword
-                ? "Password is up to safety standards"
-                : "Password must contain: 8 characters, a capital, a number and a special character (eg: @,>]"}
-            </Text>
-            <View style={styles.innerHeader}>
+          {/*Enter Password*/}
+          <Text style={styles.warning}>
+            {validPassword
+              ? "Password is up to safety standards"
+              : "Password must contain: 8 characters, a capital, a number and a special character (eg: @,>]"}
+          </Text>
+          <View style={styles.innerHeader}>
             <Text style={styles.label}>Enter Password</Text>
             <TextInput
               style={styles.inputBox}
@@ -136,9 +135,8 @@ export default function CreateAccountScreen() {
             />
           </View>
 
-          
-            {/*Enter Confirm Password*/}
-            <Text style={styles.warning}>{displayMessage}</Text>
+          {/*Enter Confirm Password*/}
+          <Text style={styles.warning}>{displayMessage}</Text>
           <View style={styles.innerHeader}>
             <Text style={styles.label}>Confirm Password</Text>
             <TextInput
@@ -183,7 +181,6 @@ export default function CreateAccountScreen() {
         </View>
       </ScrollView>
     </View>
-    
   );
 }
 

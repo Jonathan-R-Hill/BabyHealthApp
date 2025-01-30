@@ -15,7 +15,7 @@ import Header from "../../Header";
 import { fetchAllDiaryEntries } from "../../../services/diaryService";
 
 interface DiaryEntry {
-  _id: {
+  details: {
     date: string; // ISO date string
     entry_id: number; // Unique identifier for the diary entry
     userId: string; // User identifier
@@ -81,7 +81,7 @@ export default function CreateDiaryEntry() {
           <Text style={styles.createButtonText}>+ Create a new entry</Text>
         </TouchableOpacity>
         {diaryEntries.map((entry) => {
-          const entryDate = new Date(entry._id.date);
+          const entryDate = new Date(entry.details.date);
           const entryYear = entryDate.getFullYear().toString();
           const currentYear = new Date().getFullYear().toString();
           const displayYearHeader =
@@ -92,7 +92,7 @@ export default function CreateDiaryEntry() {
           }
 
           return (
-            <View key={entry._id.entry_id}>
+            <View key={entry.details.entry_id}>
               {displayYearHeader && (
                 <View style={styles.yearHeader}>
                   <Text>{entryYear}</Text>
@@ -101,9 +101,9 @@ export default function CreateDiaryEntry() {
               )}
               <TouchableOpacity
                 style={styles.diaryEntry}
-                onPress={() => handleNavigateToDetails(entry._id.entry_id)}
+                onPress={() => handleNavigateToDetails(entry.details.entry_id)}
               >
-                <Text style={styles.diaryText}>{entry._id.diaryTitle}</Text>
+                <Text style={styles.diaryText}>{entry.details.diaryTitle}</Text>
                 <Text style={styles.dateText}>
                   {entryDate.toLocaleDateString(undefined, {
                     day: "2-digit",

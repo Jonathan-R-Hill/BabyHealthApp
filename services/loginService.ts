@@ -40,7 +40,12 @@ const asyncValidateUser = async (email: string, password: string) => {
     );
 
     console.log(response.data);
-    return response.data;
+
+    if (!response.data.token) {
+      return false; // If no token, invalid login
+    }
+
+    return response.data.token;
   } catch (error: any) {
     throw new Error(error.response?.data?.message || "Failed to login");
   }
