@@ -33,7 +33,7 @@ export default function AdviceSection() {
 
   const [expandedSections, setExpandedSections] = useState<string[]>([]);
 
-  const { username } = useLocalSearchParams();
+  const { username, token } = useLocalSearchParams();
 
   const toggleSection = (id: string) => {
     setExpandedSections((prev) =>
@@ -63,7 +63,10 @@ export default function AdviceSection() {
   const prematureAdvice = () => {
     try {
       console.log("Button Pressed");
-      router.push({ pathname: "./prematureAdvice", params: { username } });
+      router.push({
+        pathname: "./prematureAdvice",
+        params: { username, token },
+      });
     } catch (error) {
       console.error("Navigation Error", error);
       Alert.alert("Navigation Error", "Could not navigate to the correct page");

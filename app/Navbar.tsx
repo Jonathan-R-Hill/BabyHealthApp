@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
 
-  const { username } = useLocalSearchParams();
+  const { username, token } = useLocalSearchParams();
 
   const getIcon = (pageName: string, size: number = 24) => {
     switch (pageName) {
@@ -60,7 +60,7 @@ const Navbar: React.FC = () => {
 
   const navigateTo = (pageKey: keyof typeof pages) => {
     const path = pages[pageKey];
-    router.push({ pathname: path as any, params: { username } });
+    router.push({ pathname: path as any, params: { username, token } });
     setIsMenuOpen(false);
   };
 

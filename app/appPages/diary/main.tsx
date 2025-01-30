@@ -32,7 +32,7 @@ interface DiaryEntry {
 export default function CreateDiaryEntry() {
   const router = useRouter();
   const [diaryEntries, setDiaryEntries] = useState<DiaryEntry[]>([]);
-  const { username } = useLocalSearchParams();
+  const { username, token } = useLocalSearchParams();
 
   const fetchDiaryEntries = async (username: string) => {
     try {
@@ -51,7 +51,7 @@ export default function CreateDiaryEntry() {
 
   const handleNavigateToEntry = () => {
     if (username) {
-      router.push({ pathname: "./newEntry", params: { username } });
+      router.push({ pathname: "./newEntry", params: { username, token } });
     } else {
       Alert.alert("Error", "Username is not available.");
     }
@@ -61,7 +61,7 @@ export default function CreateDiaryEntry() {
     if (username) {
       router.push({
         pathname: "./record",
-        params: { id: entry_id.toString(), username },
+        params: { id: entry_id.toString(), username, token },
       });
     } else {
       Alert.alert("Error", "Username is not available.");

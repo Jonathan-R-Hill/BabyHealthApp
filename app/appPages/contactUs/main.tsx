@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  ScrollView,
+} from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 
 import Navbar from "../../Navbar";
@@ -7,7 +14,7 @@ import Navbar from "../../Navbar";
 export default function HandleContactUs() {
   const router = useRouter();
 
-  const { username } = useLocalSearchParams();
+  const { username, token } = useLocalSearchParams();
 
   const ContactDevs = () => {
     try {
@@ -15,7 +22,7 @@ export default function HandleContactUs() {
 
       router.push({
         pathname: "./developerContactUs",
-        params: { username },
+        params: { username, token },
       });
     } catch (error) {
       console.error("Navigation Error", error);
@@ -26,7 +33,7 @@ export default function HandleContactUs() {
   const ContactCarer = () => {
     try {
       console.log("Contact Carer Button Pressed");
-      router.push("./contactCarer");
+      router.push({ pathname: "./contactCarer", params: { username, token } });
     } catch (error) {
       console.error("Navigation Error", error);
       Alert.alert("Navigation Error", "Could not navigate to correct page");
@@ -34,39 +41,39 @@ export default function HandleContactUs() {
   };
 
   return (
-      <View style={styles.container}>
-        <ScrollView style={styles.scrollStyle}>
-          {/*Logo placement*/}
-          <View style={styles.header}>
-            <View style={styles.profileIcon}></View>
-            <Text style={styles.textTitle}>NHS Contacts</Text>
-          </View>
+    <View style={styles.container}>
+      <ScrollView style={styles.scrollStyle}>
+        {/*Logo placement*/}
+        <View style={styles.header}>
+          <View style={styles.profileIcon}></View>
+          <Text style={styles.textTitle}>NHS Contacts</Text>
+        </View>
 
-          {/*Text Placement*/}
-          <View style={styles.header}>
-            <Text style={styles.textGeneral}>
-              Phone Number: <Text style={styles.numberText}>0300 311 2233</Text>
-            </Text>
-            <Text style={styles.textGeneral}>
-              Number for hearing or speech impaired users:{" "}
-              <Text style={styles.numberText}>18001</Text>
-            </Text>
-          </View>
+        {/*Text Placement*/}
+        <View style={styles.header}>
+          <Text style={styles.textGeneral}>
+            Phone Number: <Text style={styles.numberText}>0300 311 2233</Text>
+          </Text>
+          <Text style={styles.textGeneral}>
+            Number for hearing or speech impaired users:{" "}
+            <Text style={styles.numberText}>18001</Text>
+          </Text>
+        </View>
 
-          {/*Button Placement*/}
-          <View style={styles.header}>
-            <TouchableOpacity style={styles.chartButton} onPress={ContactCarer}>
-              <Text style={styles.chartButtonText}>Contact A Carer</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.header}>
-            <TouchableOpacity style={styles.chartButton} onPress={ContactDevs}>
-              <Text style={styles.chartButtonText}>Contact A Developer</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-        {/* Bottom Navigation */}
-        {/* <View style={styles.bottomNav}>
+        {/*Button Placement*/}
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.chartButton} onPress={ContactCarer}>
+            <Text style={styles.chartButtonText}>Contact A Carer</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.chartButton} onPress={ContactDevs}>
+            <Text style={styles.chartButtonText}>Contact A Developer</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+      {/* Bottom Navigation */}
+      {/* <View style={styles.bottomNav}>
                   <TouchableOpacity style={styles.navButton}>
                   <Text>Diary</Text>
                   </TouchableOpacity>
@@ -80,8 +87,8 @@ export default function HandleContactUs() {
                   <Text>More Options</Text>
                   </TouchableOpacity>
               </View> */}
-        <Navbar />
-      </View>
+      <Navbar />
+    </View>
   );
 }
 
@@ -136,6 +143,6 @@ const styles = StyleSheet.create({
   },
   scrollStyle: {
     flexDirection: "column",
-    flex: 1
+    flex: 1,
   },
 });

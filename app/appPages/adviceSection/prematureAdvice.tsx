@@ -8,7 +8,7 @@ import {
   FlatList,
   ScrollView,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import Navbar from "../../Navbar";
 
 //Data for the advice categories
@@ -32,6 +32,8 @@ export default function PrematureAdviceSection() {
   const router = useRouter();
 
   const [expandedSections, setExpandedSections] = useState<string[]>([]);
+
+  const { username, token } = useLocalSearchParams();
 
   const toggleSection = (id: string) => {
     setExpandedSections((prev) =>
@@ -61,7 +63,7 @@ export default function PrematureAdviceSection() {
   const generalAdvice = () => {
     try {
       console.log("Button Pressed");
-      router.push("./main");
+      router.push({ pathname: "./main", params: { username, token } });
     } catch (error) {
       console.error("Navigation Error", error);
       Alert.alert("Navigation Error", "Could not navigate to the correct page");

@@ -30,7 +30,7 @@ export default function CreateDiaryEntry() {
   const [errors, setErrors] = useState<Errors>({});
 
   const router = useRouter();
-  const { username } = useLocalSearchParams(); // Get the username from the URL
+  const { username, token } = useLocalSearchParams(); // Get the username/token from the URL
 
   const validateForm = () => {
     const newErrors: Errors = {};
@@ -144,7 +144,10 @@ export default function CreateDiaryEntry() {
                   setErrors({}); // Clear errors after successful submission
                 })
                 .then(() => {
-                  router.push({ pathname: "./main", params: { username } });
+                  router.push({
+                    pathname: "./main",
+                    params: { username, token },
+                  });
                 })
                 .catch((error) => {
                   console.error("Error creating diary entry:", error);

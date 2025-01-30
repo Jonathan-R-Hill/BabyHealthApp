@@ -28,7 +28,7 @@ interface DiaryEntry {
 
 export default function DiaryEntryDetails() {
   const router = useRouter();
-  const { id, username } = useLocalSearchParams();
+  const { id, username, token } = useLocalSearchParams();
   const [entry, setEntry] = useState<DiaryEntry | null>(null);
   const [loading, setLoading] = useState(true);
 

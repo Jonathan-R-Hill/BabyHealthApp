@@ -1,42 +1,53 @@
 import React, { useState } from "react";
-import { 
+import {
   View,
   Text,
   StyleSheet,
   useColorScheme,
   TouchableOpacity,
   Switch,
-  Alert
-  } from "react-native";
-import { useRouter } from "expo-router";
+  Alert,
+} from "react-native";
+import { useRouter, useLocalSearchParams } from "expo-router";
 
 import Navbar from "../../Navbar";
 
 export default function SettingsPage() {
   const router = useRouter();
 
+  const { username, token } = useLocalSearchParams();
+
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [darkModeEnabled, setDarkModeEnabled] = useState(false);
 
-  const isDarkMode = useColorScheme() === 'dark'
+  const isDarkMode = useColorScheme() === "dark";
 
   const toggleNotifications = () => {
     setNotificationsEnabled((prevState) => !prevState);
-    Alert.alert("Settings Updated", `Notifications ${!notificationsEnabled ? "enabled" : "disabled"}`);
+    Alert.alert(
+      "Settings Updated",
+      `Notifications ${!notificationsEnabled ? "enabled" : "disabled"}`
+    );
   };
 
   const toggleDarkMode = () => {
     setDarkModeEnabled((prevState) => !prevState);
-    Alert.alert("Settings Updated", `Dark mode ${!darkModeEnabled ? "enabled" : "disabled"}`);
+    Alert.alert(
+      "Settings Updated",
+      `Dark mode ${!darkModeEnabled ? "enabled" : "disabled"}`
+    );
   };
 
   const aboutApp = () => {
     try {
       console.log("About App Button Pressed");
-      router.push(".//aboutApp");
+      router.push({ pathname: "./aboutApp", params: { username, token } });
     } catch (error) {
       console.error("Navigation Error", error);
-      Alert.alert("Navigation Error", "Could not navigate to the About App page");
+      Alert.alert(
+        "Navigation Error",
+        "Could not navigate to the About App page"
+      );
     }
   };
 
@@ -54,10 +65,7 @@ export default function SettingsPage() {
       </View>
       <View style={styles.settingOption}>
         <Text style={styles.settingText}>Enable Dark Mode</Text>
-        <Switch
-          value={darkModeEnabled}
-          onValueChange={toggleDarkMode}
-        />
+        <Switch value={darkModeEnabled} onValueChange={toggleDarkMode} />
       </View>
 
       <View style={styles.header}>
