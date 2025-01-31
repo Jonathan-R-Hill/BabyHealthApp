@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { setParams } from "expo-router/build/global-state/routing";
+import { asyncResetPassword } from "../../services/loginService";
 
 export default function resetPassword(){
     const router = useRouter();
@@ -17,15 +18,17 @@ export default function resetPassword(){
     let [displayMessage, setDisplayMessage] = useState("");
     let [allValid, setAllValid] = useState(false);
     let [validPassword, setValidPassword] = useState(false);
-    const { userEmail } = useLocalSearchParams();
-    //there may be some logic here to handle a user email being passed to the class for service use
+    const { username } = useLocalSearchParams();
+    const user = String(username);
+    
 
-    const handleResetPassword = () => {
+    const handleResetPassword = async () => {
         try {
-            console.log("Email: ", { userEmail });
+            console.log("Email: ", user);
             console.log("New password: ", newPassword);
-            //result = service.resetPasswordAsync(somehowGetEmail/somehowGetUserID, newPassword);
-            if(allValid) //all valid AND result of backend true
+            const response = await asyncResetPassword( user, newPassword);
+            console.log(response);
+            if(allValid && response) //all valid AND result of backend true
             {
               router.setParams({userEmail: undefined});
               router.push("./loginScreen");

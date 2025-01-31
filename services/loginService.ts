@@ -110,4 +110,47 @@ const asyncCreateNewUser = async (email: string, password: string) => {
   return false;
 };
 
-export { asyncLogin, asyncValidateUser, asyncCreateNewUser };
+const asyncAuthCode = async (email: string, code: string) => {
+  
+};
+
+const asyncResetPassword = async (email: string, password: string) => {
+  try {
+    const existingUserResponse = await axios.get(
+      `${API_URL}/get/user/${encodeURIComponent(email)}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+
+    console.log("Existing user:", existingUserResponse.data);
+    if (!existingUserResponse) {
+      console.log("Unable to verify user exists with email: ", email);
+      return false;
+    } else {
+      const response = await axios.post(
+        `${API_URL}/put/updatePassword`,
+        {
+          userId: existingUserResponse.data.details.userId,
+          password: password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      return response.data;
+    }
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || "Failed to update user password"
+    );
+  }
+};
+
+export { asyncLogin, asyncValidateUser, asyncCreateNewUser, asyncResetPassword};
