@@ -5,7 +5,7 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 const pages = {
   Chatbot: "/appPages/bot/main",
-  Charts: "/appPages/mainMenu",
+  Charts: "/appPages/charts/weightChart",
   Diary: "/appPages/diary/main",
   "Baby Care": "/appPages/adviceSection/main",
   Settings: "/appPages/settings/main",
