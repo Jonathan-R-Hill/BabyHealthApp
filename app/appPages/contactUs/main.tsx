@@ -42,11 +42,15 @@ export default function HandleContactUs() {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollStyle}>
+      <ScrollView>
+        {/*Title Placement*/}
+        <View style={styles.header}>
+          <Text style={styles.textTitle}>NHS Contacts</Text>
+        </View>
+
         {/*Logo placement*/}
         <View style={styles.header}>
           <View style={styles.profileIcon}></View>
-          <Text style={styles.textTitle}>NHS Contacts</Text>
         </View>
 
         {/*Text Placement*/}
@@ -98,7 +102,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   header: {
-    padding: 10,
+    padding: 15,
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
@@ -140,9 +144,5 @@ const styles = StyleSheet.create({
     color: "#000000",
     fontSize: 40,
     fontWeight: "bold",
-  },
-  scrollStyle: {
-    flexDirection: "column",
-    flex: 1,
   },
 });
