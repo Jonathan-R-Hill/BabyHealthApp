@@ -140,7 +140,7 @@ export default function resetPassword(){
                 onPress={handleResetPassword}
                 disabled={!allValid}
             >
-                <Text style={styles.chartButtonText}>Create Account</Text>
+                <Text style={styles.chartButtonText}>Reset Password</Text>
             </TouchableOpacity>
             </View>
         </ScrollView>

@@ -18,6 +18,8 @@ export default function CreateAccountScreen() {
   let [displayMessage, setDisplayMessage] = useState("");
   let [allValid, setAllValid] = useState(false);
   let [validPassword, setValidPassword] = useState(false);
+  let [confirmEmail, setConfirmedEmail] = useState("");
+  let [emailDisplayMessage, setEmailDisplayMessage] = useState("");
 
   const router = useRouter();
 
@@ -49,7 +51,9 @@ export default function CreateAccountScreen() {
     setAllValid(
       emailRegex.test(createEmail) &&
         displayMessage === "Passwords match!" &&
-        passwordRegex.test(confirmPassword)
+        passwordRegex.test(confirmPassword) &&
+        emailDisplayMessage === "Emails match!" &&
+        emailRegex.test(confirmEmail)
     );
   };
 
@@ -64,7 +68,7 @@ export default function CreateAccountScreen() {
 
   useEffect(() => {
     areAllValid();
-  }, [createEmail, displayMessage, confirmPassword]);
+  }, [createEmail, displayMessage, confirmPassword, confirmEmail]);
 
   useEffect(() => {
     if (createPassword && confirmPassword) {
@@ -75,6 +79,16 @@ export default function CreateAccountScreen() {
       }
     }
   }, [createPassword, confirmPassword]);
+
+  useEffect(() => {
+    if (createEmail && confirmEmail) {
+      if (createEmail === confirmEmail) {
+        setEmailDisplayMessage("Emails match!");
+      } else {
+        setEmailDisplayMessage("The emails do not match");
+      }
+    }
+  }, [createEmail, confirmEmail]);
 
   const handleGoBackToLogin = () => {
     try {
@@ -104,6 +118,22 @@ export default function CreateAccountScreen() {
               placeholder="Enter Email Here"
               value={createEmail}
               onChangeText={setNewEmail}
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="default"
+              placeholderTextColor={"#84868a"}
+            />
+          </View>
+
+          {/*Enter Confirm Email*/}
+          <Text style={styles.warning}>{emailDisplayMessage}</Text>
+          <View style={styles.innerHeader}>
+            <Text style={styles.label}>Confirm Email</Text>
+            <TextInput
+              style={styles.inputBox}
+              placeholder="Enter Email Here"
+              value={confirmEmail}
+              onChangeText={setConfirmedEmail}
               autoCapitalize="none"
               autoCorrect={false}
               keyboardType="default"
