@@ -13,13 +13,14 @@ const API_URL = targetURL;
  */
 export const fetchSingleDiaryEntry = async (
   userId: string,
-  entry_id: number | string
+  entry_id: number | string,
+  token: string
 ) => {
   try {
     const response = await axios.get(
       `${API_URL}/get/diary/${encodeURIComponent(userId)}/${encodeURIComponent(
         entry_id
-      )}`
+      )}/${encodeURIComponent(token)}`
     );
     return response.data;
   } catch (error: any) {
@@ -36,10 +37,12 @@ export const fetchSingleDiaryEntry = async (
  * @returns {Promise<object[]>} A promise that resolves to an array of diary entries.
  * @throws {Error} Throws an error if the fetch operation fails.
  */
-export const fetchAllDiaryEntries = async (userId: string) => {
+export const fetchAllDiaryEntries = async (userId: string, token: string) => {
   try {
     const response = await axios.get(
-      `${API_URL}/get/diary/${encodeURIComponent(userId)}`
+      `${API_URL}/get/diary/${encodeURIComponent(userId)}/${encodeURIComponent(
+        token
+      )}`
     );
     return response.data;
   } catch (error: any) {
@@ -66,7 +69,8 @@ export const postDiaryEntry = async (
   text: string,
   weight: number,
   foodType: string,
-  foodAmount: number
+  foodAmount: number,
+  token: string
 ) => {
   try {
     const response = await axios.post(`${API_URL}/post/diary`, {
@@ -76,6 +80,7 @@ export const postDiaryEntry = async (
       weight,
       foodType,
       foodAmount,
+      token,
     });
     return response.data;
   } catch (error: any) {

@@ -21,7 +21,7 @@ export default function requestFeatureMain() {
   const [requestText, setRequestText] = useState("");
 
   const handleReportSend = async () => {
-    submitFeature(String(username), requestText)
+    submitFeature(String(username), requestText, String(token))
       .then(() => {
         console.log("Diary entry created successfully!");
       })

@@ -32,9 +32,17 @@ export default function DiaryEntryDetails() {
   const [entry, setEntry] = useState<DiaryEntry | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchDiaryEntry = async (username: string, entry_id: number) => {
+  const fetchDiaryEntry = async (
+    username: string,
+    entry_id: number,
+    token: string
+  ) => {
     try {
-      const data: DiaryEntry = await fetchSingleDiaryEntry(username, entry_id);
+      const data: DiaryEntry = await fetchSingleDiaryEntry(
+        username,
+        entry_id,
+        String(token)
+      );
       if (data) {
         setEntry(data);
       } else {
@@ -49,7 +57,7 @@ export default function DiaryEntryDetails() {
 
   useEffect(() => {
     if (id && username) {
-      fetchDiaryEntry(String(username), parseInt(String(id)));
+      fetchDiaryEntry(String(username), parseInt(String(id)), String(token));
     }
   }, [id, username]);
 

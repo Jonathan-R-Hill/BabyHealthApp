@@ -21,7 +21,7 @@ export default function reportBugMain() {
   const [bugText, setBugText] = useState("");
 
   const handleReportSend = async () => {
-    submitBug(String(username), bugText)
+    submitBug(String(username), bugText, String(token))
       .then(() => {
         console.log("Diary entry created successfully!");
       })
@@ -67,20 +67,6 @@ export default function reportBugMain() {
       </ScrollView>
 
       {/* Bottom Navigation */}
-      {/* <View style={styles.bottomNav}>
-                  <TouchableOpacity style={styles.navButton}>
-                  <Text>Diary</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.navButton}>
-                  <Text>Home</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.navButton}>
-                  <Text>Ask our Bot</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.navButton}>
-                  <Text>More Options</Text>
-                  </TouchableOpacity>
-              </View> */}
       <Navbar />
     </View>
   );

@@ -132,7 +132,8 @@ export default function CreateDiaryEntry() {
                 text,
                 weightValue,
                 foodType,
-                foodAmountValue
+                foodAmountValue,
+                String(token)
               )
                 .then(() => {
                   console.log("Diary entry created successfully!");
