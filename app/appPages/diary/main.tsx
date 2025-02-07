@@ -34,9 +34,9 @@ export default function CreateDiaryEntry() {
   const [diaryEntries, setDiaryEntries] = useState<DiaryEntry[]>([]);
   const { username, token } = useLocalSearchParams();
 
-  const fetchDiaryEntries = async (username: string) => {
+  const fetchDiaryEntries = async (username: string, token: string) => {
     try {
-      const data: DiaryEntry[] = await fetchAllDiaryEntries(username);
+      const data: DiaryEntry[] = await fetchAllDiaryEntries(username, token);
       setDiaryEntries(data);
     } catch (error) {
       Alert.alert("Error", "Could not load diary entries.");
@@ -45,7 +45,7 @@ export default function CreateDiaryEntry() {
 
   useEffect(() => {
     if (username) {
-      fetchDiaryEntries(String(username));
+      fetchDiaryEntries(String(username), String(token));
     }
   }, [username]);
 

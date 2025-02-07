@@ -83,5 +83,7 @@ const styles = StyleSheet.create({
     },
     scrollStyle: {
       flexDirection: "column",
+      width: "90%",
+      maxWidth: "90%",
     },
   });

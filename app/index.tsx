@@ -1,19 +1,15 @@
-import React, { useEffect } from "react";
-import { useRouter } from "expo-router";
+import { useRouter, useFocusEffect } from "expo-router";
+import { useCallback } from "react";
 import { View, Text } from "react-native";
 
-// this might be the App.tsx
 export default function Index() {
   const router = useRouter();
 
-  useEffect(() => {
-    // Delay navigation to avoid errors
-    const timer = setTimeout(() => {
-      router.push("./loginSection/loginScreen");
-    }, 0);
-
-    return () => clearTimeout(timer);
-  }, [router]);
+  useFocusEffect(
+    useCallback(() => {
+      router.replace("/loginSection/loginScreen");
+    }, [router])
+  );
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>

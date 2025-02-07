@@ -21,7 +21,7 @@ export default function reportBugMain() {
   const [bugText, setBugText] = useState("");
 
   const handleReportSend = async () => {
-    submitBug(String(username), bugText)
+    submitBug(String(username), bugText, String(token))
       .then(() => {
         console.log("Diary entry created successfully!");
       })
@@ -67,20 +67,6 @@ export default function reportBugMain() {
       </ScrollView>
 
       {/* Bottom Navigation */}
-      {/* <View style={styles.bottomNav}>
-                  <TouchableOpacity style={styles.navButton}>
-                  <Text>Diary</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.navButton}>
-                  <Text>Home</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.navButton}>
-                  <Text>Ask our Bot</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.navButton}>
-                  <Text>More Options</Text>
-                  </TouchableOpacity>
-              </View> */}
       <Navbar />
     </View>
   );
@@ -99,7 +85,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    maxWidth: 400,
   },
   chartButton: {
     backgroundColor: "#3498db",
@@ -129,7 +114,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     backgroundColor: "#e8e6e1",
     textAlign: "center",
-    maxWidth: 400,
   },
   inputBoxContainer: {
     height: "80%",
@@ -139,6 +123,6 @@ const styles = StyleSheet.create({
   scrollStyle: {
     flexDirection: "column",
     width: "90%",
-    maxWidth: "90%",
+    maxWidth: 600,
   },
 });
