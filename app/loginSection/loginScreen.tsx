@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   TextInput,
@@ -13,6 +13,8 @@ import { asyncLogin, asyncValidateUser } from "../../services/loginService";
 const LoginScreen = () => {
   const [username, setUsername] = useState("test@test.test"); // Pre-fill with test username
   const [password, setPassword] = useState("Testdata1!"); // Pre-fill with test password
+  let [invalidLoginError, setInvalidLoginError] = useState(false); //assume the login does not require an error message
+  let [allValid, setAllValid] = useState(false) //assume nothing is valid to begin with
   const router = useRouter();
 
   const handleLogin = async () => {
@@ -31,6 +33,7 @@ const LoginScreen = () => {
       });
     } catch (error: any) {
       console.error("Login failed:", error.message);
+      setInvalidLoginError(true);
     }
   };
 
@@ -42,8 +45,21 @@ const LoginScreen = () => {
     router.push("./forgotPassword");
   };
 
+  const areAllValid = () => {
+    setAllValid(username !== "" && password !== "")
+  }
+
+  useEffect(() => {
+      areAllValid();
+    }, [username, password]);
+
   return (
     <View style={styles.container}>
+      {/*Login Error Message*/}
+      <Text style={styles.warning}>{invalidLoginError 
+        ? "Error Logging In. Please re-enter and double check your details when entered" : 
+        ""}</Text>
+
       {/* Username Input */}
       <Text style={styles.label}>User Name</Text>
       <TextInput
@@ -69,7 +85,7 @@ const LoginScreen = () => {
       />
 
       {/* Login Button */}
-      <Button title="Login" onPress={handleLogin} />
+      <Button title="Login" onPress={handleLogin} color= {allValid ? "#3498db" : "#7c7d7c"} disabled={!allValid}/>
 
       {/* Links for "Create Account" and "Forgot Password" */}
       <View style={styles.linksContainer}>
@@ -114,6 +130,12 @@ const styles = StyleSheet.create({
     color: "#007BFF", // A blue color for links
     marginVertical: 4,
     textDecorationLine: "underline",
+  },
+  warning: {
+    fontSize: 16,
+    marginBottom: 8,
+    fontWeight: "bold",
+    color: "red",
   },
 });
 
