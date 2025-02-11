@@ -85,13 +85,13 @@ export default function AdviceSection() {
 
       {/* Categories for advice */}
       <View style={styles.listContainer}>
-        <ScrollView>
+        {/*<ScrollView>*/}
           <FlatList
             data={categoryData}
             renderItem={renderSection}
             keyExtractor={(item) => item.id}
           />
-        </ScrollView>
+       {/* </ScrollView> */}
       </View>
 
       {/* Navbar */}
