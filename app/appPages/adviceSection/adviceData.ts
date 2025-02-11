@@ -1,0 +1,31 @@
+export const categoryData = [
+    { id: "1", title: "Test 1", content: "Content Test 1" },
+    { id: "2", title: "Test 2", content: "Content Test 2" },
+    { id: "3", title: "Test 3", content: "Content Test 3" },
+    { id: "4", title: "Test 4", content: "Content Test 4" },
+    { id: "5", title: "Test 5", content: "Content Test 5" },
+    { id: "6", title: "Test 6", content: "Content Test 6" },
+    { id: "7", title: "Test 7", content: "Content Test 7" },
+    { id: "8", title: "Test 8", content: "Content Test 8" },
+    { id: "9", title: "Test 9", content: "Content Test 9" },
+    { id: "10", title: "Test 10", content: "Content Test 10" },
+    { id: "11", title: "Test 11", content: "Content Test 11" },
+    { id: "12", title: "Test 12", content: "Content Test 12" },
+    { id: "13", title: "Test 13", content: "Content Test 13" },
+  ];
+
+  export const prematureCategoryData = [
+    { id: "1", title: "PreTest 1", content: "PreContent Test 1" },
+    { id: "2", title: "PreTest 2", content: "PreContent Test 2" },
+    { id: "3", title: "PreTest 3", content: "PreContent Test 3" },
+    { id: "4", title: "PreTest 4", content: "PreContent Test 4" },
+    { id: "5", title: "PreTest 5", content: "PreContent Test 5" },
+    { id: "6", title: "PreTest 6", content: "PreContent Test 6" },
+    { id: "7", title: "PreTest 7", content: "PreContent Test 7" },
+    { id: "8", title: "PreTest 8", content: "PreContent Test 8" },
+    { id: "9", title: "PreTest 9", content: "PreContent Test 9" },
+    { id: "10", title: "PreTest 10", content: "PreContent Test 10" },
+    { id: "11", title: "PreTest 11", content: "PreContent Test 11" },
+    { id: "12", title: "PreTest 12", content: "PreContent Test 12" },
+    { id: "13", title: "PreTest 13", content: "PreContent Test 13" },
+  ];
