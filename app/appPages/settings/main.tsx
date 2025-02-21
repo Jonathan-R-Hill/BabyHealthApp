@@ -6,21 +6,18 @@ import {
   useColorScheme,
   TouchableOpacity,
   Switch,
-  Alert,
+  Alert
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
-
 import Navbar from "../../Navbar";
+import { ThemedView } from "@/components/ThemedView"
+import { ThemedText } from "@/components/ThemedText"
 
 export default function SettingsPage() {
   const router = useRouter();
-
   const { username, token } = useLocalSearchParams();
-
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [darkModeEnabled, setDarkModeEnabled] = useState(false);
-
-  const isDarkMode = useColorScheme() === "dark";
 
   const toggleNotifications = () => {
     setNotificationsEnabled((prevState) => !prevState);
@@ -32,10 +29,6 @@ export default function SettingsPage() {
 
   const toggleDarkMode = () => {
     setDarkModeEnabled((prevState) => !prevState);
-    Alert.alert(
-      "Settings Updated",
-      `Dark mode ${!darkModeEnabled ? "enabled" : "disabled"}`
-    );
   };
 
   const aboutApp = () => {
@@ -52,41 +45,41 @@ export default function SettingsPage() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.textTitle}>Settings</Text>
+    <ThemedView style={styles.container}>
+      <ThemedText type="title" style={styles.textTitle}>
+        Settings
+      </ThemedText>
 
       {/* Settings Options */}
-      <View style={styles.settingOption}>
-        <Text style={styles.settingText}>Enable Notifications</Text>
+      <ThemedView style={styles.settingOption}>
+        <ThemedText style={styles.settingText}>Enable Notifications</ThemedText>
         <Switch
           value={notificationsEnabled}
           onValueChange={toggleNotifications}
         />
-      </View>
-      <View style={styles.settingOption}>
-        <Text style={styles.settingText}>Enable Dark Mode</Text>
+      </ThemedView>
+      <ThemedView style={styles.settingOption}>
+        <ThemedText style={styles.settingText}>Enable Dark Mode</ThemedText>
         <Switch value={darkModeEnabled} onValueChange={toggleDarkMode} />
-      </View>
+      </ThemedView>
 
-      <View style={styles.header}>
+      <ThemedView style={styles.header}>
         <TouchableOpacity style={styles.actionButton} onPress={aboutApp}>
-          <Text style={styles.actionButtonText}>About App</Text>
+          <ThemedText style={styles.actionButtonText}>About App</ThemedText>
         </TouchableOpacity>
-      </View>
+      </ThemedView>
 
       {/* Bottom Navigation */}
       <Navbar />
-    </View>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
   },
   textTitle: {
-    color: "#000000",
     fontSize: 40,
     fontWeight: "bold",
     textAlign: "center",
@@ -102,7 +95,6 @@ const styles = StyleSheet.create({
   },
   settingText: {
     fontSize: 18,
-    color: "#333",
   },
   header: {
     padding: 10,
