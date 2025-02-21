@@ -134,6 +134,7 @@ export default function CreateNewCarer() {
                 </TouchableOpacity>
 
             </ScrollView>
+            <Navbar />
         </View>
     )
 };
