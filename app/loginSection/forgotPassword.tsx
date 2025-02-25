@@ -7,7 +7,7 @@ import {
   Text,
   ScrollView,
 } from "react-native";
-import { useRouter, useLocalSearchParams } from "expo-router";
+import { useRouter } from "expo-router";
 
 export default function forgotPasswordPage() {
     const router = useRouter();
@@ -21,7 +21,7 @@ export default function forgotPasswordPage() {
           console.log("user resetting password", userEmail);
           const username = String(userEmail);
           console.log(username);
-          router.push({pathname: './resetPassword', params: {username}}); //must go to auth code page first
+          router.push({pathname: './loginAuthenticationCodePassword', params: {username}}); //must go to auth code page first
         }
         else{
           setDisplayMessage("Please enter a valid email");

@@ -7,17 +7,27 @@ import {
   Text,
   ScrollView,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
+import { asyncValidateAuthCode } from "../../services/loginService";
 
 export default function authenticationPage() {
     const router = useRouter();
     let [authCode, setAuthCode] = useState("");
     let [displayMessage, setDisplayMessage] = useState("");
-    //possibly an email here, passed from another page
+    let [userEmail, setUserEmail] = useState("");
 
-    const handleAuthCode = () => {
+    const handleAuthCode = async () => {
         //pass auth code entered to service, then to backend, result is bool from comparison
         //if true, success, if not give them another try (displaying error message) or send them back to the page they came from
+        const response = await asyncValidateAuthCode(userEmail, authCode);
+        if(response) //if the response is true
+        {
+          router.push({pathname: './createdAccountSucessfully', params: {userEmail}});
+        }
+        else
+        {
+          setDisplayMessage("Please enter a valid code and email");
+        }
     }
 
     const handleBackToLogin = () => {
@@ -33,9 +43,24 @@ export default function authenticationPage() {
                 <View style={styles.profileIcon}></View>
                 </View>
 
-                {/*Enter Auth Code*/}
+                {/*Enter Email Again*/}
                 <View style={styles.header}>
                     <Text style={styles.warning}>{displayMessage}</Text>
+                    <Text style={styles.label}>Enter Your Email Again</Text>
+                    <TextInput
+                    style={styles.inputBox}
+                    placeholder="Enter Email Here"
+                    value={userEmail}
+                    onChangeText={setUserEmail}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    keyboardType="default"
+                    placeholderTextColor={"#84868a"}
+                    />
+                </View>
+
+                {/*Enter Auth Code*/}
+                <View style={styles.header}>
                     <Text style={styles.label}>Enter Authentication Code</Text>
                     <TextInput
                     style={styles.inputBox}
@@ -46,7 +71,6 @@ export default function authenticationPage() {
                     autoCorrect={false}
                     keyboardType="default"
                     placeholderTextColor={"#84868a"}
-                    maxLength={6} //can be changed, but most codes are 6 characters long
                     />
                 </View>
 

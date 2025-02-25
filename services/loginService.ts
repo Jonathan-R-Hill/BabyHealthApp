@@ -110,8 +110,29 @@ const asyncCreateNewUser = async (email: string, password: string) => {
   return false;
 };
 
-const asyncAuthCode = async (email: string, code: string) => {
-  
+const asyncValidateAuthCode = async (email: string, code: string) => {
+  try {
+    const response = await axios.post(
+      `${API_URL}/post/verifyAccount`,
+      {
+        userId: email,
+        code
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+
+    console.log("Code authenticated successfully:", response.data);
+    return response.data;
+  } catch (error: any) {
+    console.log("Error:", error.response?.data?.message
+    )
+    return false;
+  }
 };
 
 const asyncResetPassword = async (email: string, password: string) => {
@@ -153,4 +174,4 @@ const asyncResetPassword = async (email: string, password: string) => {
   }
 };
 
-export { asyncLogin, asyncValidateUser, asyncCreateNewUser, asyncResetPassword};
+export { asyncLogin, asyncValidateUser, asyncCreateNewUser, asyncResetPassword, asyncValidateAuthCode };

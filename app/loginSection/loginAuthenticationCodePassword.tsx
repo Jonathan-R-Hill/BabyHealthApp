@@ -7,17 +7,28 @@ import {
   Text,
   ScrollView,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
+import { asyncValidateAuthCode } from "../../services/loginService";
 
 export default function authenticationPage() {
     const router = useRouter();
     let [authCode, setAuthCode] = useState("");
     let [displayMessage, setDisplayMessage] = useState("");
-    //possibly an email here, passed from another page
+    const { username } = useLocalSearchParams();
+    const user = String(username);
 
-    const handleAuthCode = () => {
+    const handleAuthCode = async () => {
         //pass auth code entered to service, then to backend, result is bool from comparison
         //if true, success, if not give them another try (displaying error message) or send them back to the page they came from
+        const response = await asyncValidateAuthCode(user, authCode);
+        if(response) //if the response is true
+        {
+          router.push({pathname: './resetPassword', params: {user}});
+        }
+        else
+        {
+          setDisplayMessage("Please enter a valid code");
+        }
     }
 
     const handleBackToLogin = () => {
@@ -46,7 +57,6 @@ export default function authenticationPage() {
                     autoCorrect={false}
                     keyboardType="default"
                     placeholderTextColor={"#84868a"}
-                    maxLength={6} //can be changed, but most codes are 6 characters long
                     />
                 </View>
 

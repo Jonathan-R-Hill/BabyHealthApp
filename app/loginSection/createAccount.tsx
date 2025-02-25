@@ -31,8 +31,8 @@ export default function CreateAccountScreen() {
 
       if (result) {
         console.log("Account created successfully:", result);
-
-        router.push("./createdAccountSucessfully");
+        //send to auth code, then to created sucessfully
+        router.push({pathname: './loginAuthenticationCodeEmail'}); //must go to auth code page first
       } else {
         console.error("Failed to create account. User might already exist.");
         alert(

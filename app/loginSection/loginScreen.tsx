@@ -45,6 +45,10 @@ const LoginScreen = () => {
     router.push("./forgotPassword");
   };
 
+  const handleVerifyAccount = () => {
+    router.push("./loginAuthenticationCodeEmail");
+  };
+
   const areAllValid = () => {
     setAllValid(username !== "" && password !== "")
   }
@@ -94,6 +98,9 @@ const LoginScreen = () => {
         </TouchableOpacity>
         <TouchableOpacity onPress={handleForgotPassword}>
           <Text style={styles.linkText}>Forgot Password?</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleVerifyAccount}>
+          <Text style={styles.linkText}>Verify Account</Text>
         </TouchableOpacity>
       </View>
     </View>
