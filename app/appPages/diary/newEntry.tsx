@@ -13,6 +13,7 @@ import { postDiaryEntry } from "../../../services/diaryService";
 import Header from "../../Header";
 import Navbar from "../../Navbar";
 
+// Define the type for form errors
 type Errors = {
   title?: string;
   text?: string;
@@ -22,6 +23,7 @@ type Errors = {
 };
 
 export default function CreateDiaryEntry() {
+  // State variables for form fields and validation errors
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [weight, setWeight] = useState("");
@@ -30,8 +32,9 @@ export default function CreateDiaryEntry() {
   const [errors, setErrors] = useState<Errors>({});
 
   const router = useRouter();
-  const { username, token } = useLocalSearchParams(); // Get the username/token from the URL
+  const { username, token } = useLocalSearchParams(); // Retrieve username and token from the URL
 
+  // Form validation function
   const validateForm = () => {
     const newErrors: Errors = {};
 
@@ -48,14 +51,14 @@ export default function CreateDiaryEntry() {
       newErrors.foodAmount = "Valid food amount is required.";
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // Return true if no errors
+    return Object.keys(newErrors).length === 0; // Return true if no errors exist
   };
 
   return (
     <View style={styles.container}>
       <Header />
       <ScrollView style={styles.diaryContainer}>
-        {/* Header */}
+        {/* Header Section */}
         <View style={styles.header}>
           <View style={styles.profileIcon}></View>
           <Text style={styles.headerTitle}>Create Diary Entry</Text>
@@ -114,11 +117,13 @@ export default function CreateDiaryEntry() {
           <Text style={styles.errorText}>{errors.foodAmount}</Text>
         )}
 
+        {/* Image Upload Section */}
         <TouchableOpacity style={styles.imageUploader}>
           <Image style={styles.imageIcon} />
           <Text style={styles.imageText}>Add pic</Text>
         </TouchableOpacity>
 
+        {/* Submit Button */}
         <TouchableOpacity
           onPress={() => {
             if (validateForm()) {

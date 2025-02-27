@@ -12,6 +12,7 @@ import Navbar from "../../Navbar";
 import Header from "../../Header";
 import { fetchSingleDiaryEntry } from "../../../services/diaryService";
 
+// Define the structure of a diary entry
 interface DiaryEntry {
   details: {
     date: string;
@@ -28,10 +29,11 @@ interface DiaryEntry {
 
 export default function DiaryEntryDetails() {
   const router = useRouter();
-  const { id, username, token } = useLocalSearchParams();
-  const [entry, setEntry] = useState<DiaryEntry | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { id, username, token } = useLocalSearchParams(); // Get parameters from the route
+  const [entry, setEntry] = useState<DiaryEntry | null>(null); // State to store diary entry data
+  const [loading, setLoading] = useState(true); // State to track loading status
 
+  // Function to fetch a single diary entry
   const fetchDiaryEntry = async (
     username: string,
     entry_id: number,
@@ -44,14 +46,14 @@ export default function DiaryEntryDetails() {
         String(token)
       );
       if (data) {
-        setEntry(data);
+        setEntry(data); // Store the retrieved entry
       } else {
-        Alert.alert("Error", "Diary entry not found.");
+        Alert.alert("Error", "Diary entry not found."); // Show an alert if entry is not found
       }
     } catch (error) {
-      Alert.alert("Error", "Failed to load the diary entry.");
+      Alert.alert("Error", "Failed to load the diary entry."); // Handle fetch errors
     } finally {
-      setLoading(false);
+      setLoading(false); // Stop loading
     }
   };
 
@@ -59,8 +61,9 @@ export default function DiaryEntryDetails() {
     if (id && username) {
       fetchDiaryEntry(String(username), parseInt(String(id)), String(token));
     }
-  }, [id, username]);
+  }, [id, username]); // Fetch the diary entry when `id` or `username` changes
 
+  // Display loading indicator while fetching data
   if (loading) {
     return (
       <View style={styles.container}>
@@ -70,6 +73,7 @@ export default function DiaryEntryDetails() {
     );
   }
 
+  // Display error message if the entry is not found
   if (!entry) {
     return (
       <View style={styles.container}>
@@ -79,6 +83,7 @@ export default function DiaryEntryDetails() {
     );
   }
 
+  // Display the diary entry details
   return (
     <View style={styles.container}>
       <ScrollView>

@@ -14,41 +14,45 @@ import Header from "../../Header";
 
 import { fetchAllDiaryEntries } from "../../../services/diaryService";
 
+// Define the structure of a diary entry
 interface DiaryEntry {
   details: {
-    date: string; // ISO date string
+    date: string; // ISO date string representing the diary entry date
     entry_id: number; // Unique identifier for the diary entry
     userId: string; // User identifier
-    diaryTitle: string;
+    diaryTitle: string; // Title of the diary entry
   };
   data: {
-    foodAmount: number; // Amount of food (e.g., milk, etc.)
-    foodType: string; // Type of food
-    text: string; // Diary entry text
+    foodAmount: number; // Amount of food recorded (e.g., milk, etc.)
+    foodType: string; // Type of food recorded
+    text: string; // Text content of the diary entry
     weight: number; // Weight associated with the diary entry
   };
 }
 
 export default function CreateDiaryEntry() {
-  const router = useRouter();
-  const [diaryEntries, setDiaryEntries] = useState<DiaryEntry[]>([]);
-  const { username, token } = useLocalSearchParams();
+  const router = useRouter(); // Router for navigation
+  const [diaryEntries, setDiaryEntries] = useState<DiaryEntry[]>([]); // State to store diary entries
+  const { username, token } = useLocalSearchParams(); // Get username and token from local search params
 
+  // Function to fetch diary entries from the backend
   const fetchDiaryEntries = async (username: string, token: string) => {
     try {
       const data: DiaryEntry[] = await fetchAllDiaryEntries(username, token);
-      setDiaryEntries(data);
+      setDiaryEntries(data); // Store fetched diary entries in state
     } catch (error) {
-      Alert.alert("Error", "Could not load diary entries.");
+      Alert.alert("Error", "Could not load diary entries."); // Show an error alert if fetching fails
     }
   };
 
+  // Fetch diary entries when username is available
   useEffect(() => {
     if (username) {
       fetchDiaryEntries(String(username), String(token));
     }
   }, [username]);
 
+  // Navigate to the new diary entry creation page
   const handleNavigateToEntry = () => {
     if (username) {
       router.push({ pathname: "./newEntry", params: { username, token } });
@@ -57,6 +61,7 @@ export default function CreateDiaryEntry() {
     }
   };
 
+  // Navigate to the details page of a specific diary entry
   const handleNavigateToDetails = (entry_id: number) => {
     if (username) {
       router.push({
@@ -68,24 +73,27 @@ export default function CreateDiaryEntry() {
     }
   };
 
-  let lastYear = ""; // To track the last displayed year
+  let lastYear = ""; // Track the last displayed year for section headers
 
   return (
     <View style={styles.container}>
       <Header showLabel={true} />
       <ScrollView style={styles.diaryContainer}>
+        {/* Button to create a new diary entry */}
         <TouchableOpacity
           onPress={handleNavigateToEntry}
           style={styles.createButton}
         >
           <Text style={styles.createButtonText}>+ Create a new entry</Text>
         </TouchableOpacity>
+        
+        {/* Display diary entries */}
         {diaryEntries.map((entry) => {
           const entryDate = new Date(entry.details.date);
           const entryYear = entryDate.getFullYear().toString();
           const currentYear = new Date().getFullYear().toString();
           const displayYearHeader =
-            entryYear !== lastYear && entryYear !== currentYear;
+            entryYear !== lastYear && entryYear !== currentYear; // Show year header if new year appears
 
           if (displayYearHeader) {
             lastYear = entryYear; // Update the last displayed year
@@ -99,6 +107,7 @@ export default function CreateDiaryEntry() {
                   <View style={styles.yearHeaderLine} />
                 </View>
               )}
+              {/* Display diary entry */}
               <TouchableOpacity
                 style={styles.diaryEntry}
                 onPress={() => handleNavigateToDetails(entry.details.entry_id)}
@@ -120,6 +129,7 @@ export default function CreateDiaryEntry() {
   );
 }
 
+// Define styles for components
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -156,7 +166,7 @@ const styles = StyleSheet.create({
     right: 10,
     top: "50%",
     height: 1,
-    width: "90%", // Adjust width as needed
+    width: "90%", 
     backgroundColor: "#2c3e50", // Same color as year header text
     opacity: 0.4, // Make it subtle
   },

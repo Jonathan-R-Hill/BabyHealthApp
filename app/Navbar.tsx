@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
+// Define navigation pages and their corresponding paths
 const pages = {
   Chatbot: "/appPages/bot/main",
   Charts: "/appPages/charts/weightChart",
@@ -15,11 +16,11 @@ const pages = {
 };
 
 const Navbar: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // Track menu open/close state
   const router = useRouter();
+  const { username, token } = useLocalSearchParams(); // Extract parameters from the route
 
-  const { username, token } = useLocalSearchParams();
-
+  // Function to return an appropriate icon based on the page name
   const getIcon = (pageName: string, size: number = 24) => {
     switch (pageName) {
       case "Chatbot":
@@ -59,13 +60,14 @@ const Navbar: React.FC = () => {
     }
   };
 
+  // Function to navigate to a selected page
   const navigateTo = (pageKey: keyof typeof pages) => {
     const path = pages[pageKey];
-    router.push({ pathname: path as any, params: { username, token } });
-    setIsMenuOpen(false);
+    router.push({ pathname: path as any, params: { username, token } }); // Navigate with parameters
+    setIsMenuOpen(false); // Close the menu after navigation
   };
 
-  // Main navigation items in the specified order
+  // Define the main navigation items
   const mainItems = ["Chatbot", "Charts", "Diary", "Baby Care"];
 
   return (
@@ -83,7 +85,7 @@ const Navbar: React.FC = () => {
           </TouchableOpacity>
         ))}
 
-        {/* More button */}
+        {/* More button to open dropdown menu */}
         <TouchableOpacity
           onPress={() => setIsMenuOpen(!isMenuOpen)}
           style={styles.navButton}
@@ -93,7 +95,7 @@ const Navbar: React.FC = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Dropdown menu */}
+      {/* Dropdown menu for additional pages */}
       {isMenuOpen && (
         <View style={styles.popoutMenu}>
           {Object.keys(pages).map((pageKey) => {
