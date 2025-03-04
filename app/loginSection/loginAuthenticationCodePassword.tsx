@@ -14,16 +14,16 @@ export default function authenticationPage() {
     const router = useRouter();
     let [authCode, setAuthCode] = useState("");
     let [displayMessage, setDisplayMessage] = useState("");
-    const { username } = useLocalSearchParams();
-    const user = String(username);
+    let [userEmail, setUserEmail] = useState("");
 
     const handleAuthCode = async () => {
         //pass auth code entered to service, then to backend, result is bool from comparison
         //if true, success, if not give them another try (displaying error message) or send them back to the page they came from
-        const response = await asyncValidateAuthCode(user, authCode);
+        //const response = await asyncValidateAuthCode(user, authCode); currently there is no email auth for this page
+        const response = true;
         if(response) //if the response is true
         {
-          router.push({pathname: './resetPassword', params: {user}});
+          router.push({pathname: './resetPassword', params: {userEmail}});
         }
         else
         {
@@ -42,6 +42,22 @@ export default function authenticationPage() {
                 {/*Logo placement*/}
                 <View style={styles.header}>
                 <View style={styles.profileIcon}></View>
+                </View>
+
+                {/*Enter Email Again*/}
+                <View style={styles.header}>
+                    <Text style={styles.warning}>{displayMessage}</Text>
+                    <Text style={styles.label}>Enter Your Email Again</Text>
+                    <TextInput
+                    style={styles.inputBox}
+                    placeholder="Enter Email Here"
+                    value={userEmail}
+                    onChangeText={setUserEmail}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    keyboardType="default"
+                    placeholderTextColor={"#84868a"}
+                    />
                 </View>
 
                 {/*Enter Auth Code*/}

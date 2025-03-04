@@ -11,11 +11,9 @@ import {
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { postNewCarer } from "../../../services/contactUsService";
 import Navbar from "../../Navbar";
-import { setNativeProps } from "react-native-reanimated";
 
 export default function CreateNewCarer() {
-    const [firstName, setFirstName] = useState("");
-    const [surname, setSurname] = useState("");
+    const [name, setName] = useState("");
     const [title, setTitle] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [email, setEmail] = useState("");
@@ -24,13 +22,21 @@ export default function CreateNewCarer() {
     const router = useRouter();
     const { username, token } = useLocalSearchParams(); // Get the username/token from the URL
 
-    const handleCreation = () => {
+    const handleCreation = async() => {
         try{
             if(checkIfFilledCorrectly())
             {
                 try{
-                    postNewCarer(username.toString(), token.toString(), firstName, surname, title, phoneNumber, email)
-                    router.push({ pathname: "./contactCarer", params: { username, token } });
+                    console.log(username, token, name, title, email, phoneNumber)
+                    const response = await postNewCarer(username.toString(), token.toString(), name, title, email, phoneNumber)
+                    
+                    if(response)
+                    {
+                        router.push({ pathname: "./contactCarer", params: { username, token } });
+                    }
+                    else {
+                        Alert.alert("Error", "Could not make a new carer");
+                    }
                 }catch(error){
                     Alert.alert("Error", "Could not make a new carer");
                 }
@@ -47,23 +53,19 @@ export default function CreateNewCarer() {
         let errorCounter = 0;
         let errorMessage = "Please enter something for the field(s): "
 
-        if(nameTitleRegex.test(firstName)) {
+        if(!(nameTitleRegex.test(name))) {
             errorCounter++;
             errorMessage = errorMessage + "first name, "
         }
-        if(nameTitleRegex.test(surname)){
-            errorCounter++;
-            errorMessage = errorMessage + "surname, "
-        }
-        if(nameTitleRegex.test(title)){
+        if(!(nameTitleRegex.test(title))){
             errorCounter++;
             errorMessage = errorMessage + "title, "
         }
-        if(phoneRegex.test(phoneNumber)){
+        if(!(phoneRegex.test(phoneNumber))){
             errorCounter++;
             errorMessage = errorMessage + "phone number, "
         }
-        if(emailRegex.test(email)){
+        if(!(emailRegex.test(email))){
             errorCounter++;
             errorMessage = errorMessage + "email, "
         }
@@ -83,22 +85,13 @@ export default function CreateNewCarer() {
             <ScrollView style={styles.scrollViewContainer}>
                 <Text style={styles.errorText}>{errorDisplayMessage}</Text>
 
-                {/*First Name Input*/}
-                <Text style={styles.label}>First Name</Text>
+                {/*Name Input*/}
+                <Text style={styles.label}>Full Name</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="Enter first name"
-                    value={firstName}
-                    onChangeText={setFirstName}
-                />
-
-                {/*Surname Input*/}
-                <Text style={styles.label}>Surname</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter surname"
-                    value={surname}
-                    onChangeText={setSurname}
+                    placeholder="Enter Full Name"
+                    value={name}
+                    onChangeText={setName}
                 />
 
                 {/*Title Input*/}

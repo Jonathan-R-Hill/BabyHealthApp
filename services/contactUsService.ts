@@ -63,58 +63,48 @@ export const submitFeature = async (
  * @throws {Error} Throws an error if the fetch operation fails.
  */
 interface Carers {
-  technicalDetails: {
-      entry_id: number //unique identifier for the carer
-      user_id: string //unique identifier for the user
+  details: {
+      carerId: number //unique identifier for the carer
+      userId: string //unique identifier for the user
   };
-  carerData: {
-      firstName: string 
-      surname: string
+  data: {
+      name: string
       title: string //title such as Sir, Dr, Mr, Miss, ect
-      phoneNumber: string
+      phone: string
       email: string
   }
 }
 
-const carer: Carers = {
-  technicalDetails: {
-    entry_id: 1,
-    user_id: "test@test.test",
-},
-carerData: {
-    firstName: "John",
-    surname: "Jorhnson",
-    title: "Dr",
-    phoneNumber: "01642997884",
-    email: "testCarer@test.test",
-}
-};
-
 export const getDataOnCarers = async (
-  userID: string,
+  userId: string,
   token: string
 ) => {
-  var arr: Carers[] = [];
-  arr.push(carer);
-  return arr;
+  try {
+    const response = await axios.get(`${API_URL}/carers/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`);
+    return response.data.carers;
+  } catch(error: any){
+    throw new Error(
+      error.response ? error.response.data.message : error.message);
+  }
 };
 
 export const postNewCarer = async (
-  userID: string,
+  userId: string,
   token: string,
-  firstName: string,
-  surname: string, 
+  name: string,
   title: string,
-  phoneNumber: string,
-  email: string
+  email: string,
+  phone: string
 ) => {
-
+  try {
+    const response = await axios.post(`${API_URL}/carers/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`,
+  {
+    userId, title, name, email, phone
+  });
+  console.log(userId, title, name, email, phone);
+  return response.data;
+  } catch (error: any){
+    throw new Error(
+      error.response ? error.response.data.message : error.message);
+  }
 };
-
-export const getSingleCarer = async (
-  userID: string,
-  token: string,
-  entry_id: number,
-) => {
- return carer;
-}

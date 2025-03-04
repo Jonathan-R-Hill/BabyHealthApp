@@ -13,30 +13,29 @@ import { getDataOnCarers } from "../../../services/contactUsService";
 
 import Navbar from "../../Navbar";
 
-interface Carers {
-    technicalDetails: {
-        entry_id: number //unique identifier for the carer
-        user_id: string //unique identifier for the user
+interface Carer {
+    details: {
+        carerId: number //unique identifier for the carer
+        userId: string //unique identifier for the user
     };
-    carerData: {
-        firstName: string 
-        surname: string
+    data: {
+        name: string
         title: string //title such as Sir, Dr, Mr, Miss, ect
-        phoneNumber: string
         email: string
+        phone: string
     }
 }
 
 export default function CarerPage()
 {
     const router = useRouter();
-    const [carers, setCarers] = useState<Carers[]>([]);
+    const [carers, setCarers] = useState<Carer[]>([]);
     const { username, token } = useLocalSearchParams();
     
     //looks at backend to get all carers' data
     const fetchAllCarers = async (username: string, token: string) => {
         try {
-            const data: Carers[] = await getDataOnCarers(username, token);
+            const data: Carer[] = await getDataOnCarers(username, token);
             setCarers(data);
         } catch (error) {
             Alert.alert("Error", "Could not load carers")
@@ -58,14 +57,6 @@ export default function CarerPage()
         }
       }
 
-      const routeToDetails = (entry_id: number) => {
-        try {
-          router.push({ pathname: "./carerDetails", params: { username, token, entry_id } });
-        } catch (error) {
-            Alert.alert("Error", "Unable to route")
-        }
-      }
-
       return (
         <View style = {styles.container}>
             <ScrollView style = {styles.scrollView}>
@@ -76,14 +67,15 @@ export default function CarerPage()
               </TouchableOpacity>
 
               {carers.map((carer) => {
-                  const fullname = (carer.carerData.title + " " + carer.carerData.surname + " (" + carer.carerData.firstName + ")");
+                  const fullname = (carer.data.title + " " + carer.data.name);
 
                   return (
-                    <View key={carer.technicalDetails.entry_id}>
-                      <TouchableOpacity style={styles.carerEntry}
-                          onPress={() => routeToDetails(carer.technicalDetails.entry_id)}>
-                        <Text style={styles.carerText}>{fullname}</Text>
-                      </TouchableOpacity>
+                    <View key={carer.details.carerId}>
+                      <View style={styles.carerEntry}>
+                        <Text style={styles.carerText}>Name: {fullname}</Text>
+                        <Text style={styles.carerText}>Phone Number: {carer.data.phone}</Text>
+                        <Text style={styles.carerText}>Email: {carer.data.email}</Text>
+                      </View>
                     </View>
                   );
               })}
@@ -116,7 +108,7 @@ const styles = StyleSheet.create({
       fontWeight: "bold",
     },
     carerEntry: {
-      flexDirection: "row",
+      flexDirection: "column",
       justifyContent: "space-between",
       backgroundColor: "#3498db",
       padding: 15,
