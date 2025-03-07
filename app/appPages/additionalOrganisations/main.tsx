@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Text,
-  Alert,
+  Linking,
   FlatList,
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -13,6 +13,10 @@ import {orgData} from "./orgData"
 
 export default function additionalOrgs() {
   const router = useRouter();
+
+  const handlePress = (url: string) => {
+    Linking.openURL(url).catch((err) => console.error('Failed to open URL:', err));
+  };
 
   return (
       <View style={styles.container}>
@@ -28,7 +32,9 @@ export default function additionalOrgs() {
             <View style={{ marginBottom: 10 }}>
                 <Text>{item.orgName}</Text>
                 <Text>{item.orgDesc}</Text>
-                <Text>{item.orgLink}</Text>
+                <TouchableOpacity onPress={() => handlePress(item.orgLink)}>
+                <Text style={{ color: 'blue' }}>{item.orgLink}</Text>
+                </TouchableOpacity>
                 <Text>{item.orgEmail}</Text>
                 <Text>{item.orgPhone}</Text>
             </View>
