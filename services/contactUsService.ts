@@ -108,3 +108,36 @@ export const postNewCarer = async (
       error.response ? error.response.data.message : error.message);
   }
 };
+
+export const updateCarer = async (
+  userId: string,
+  token: string,
+  carerId: string,
+  name: string,
+  title: string,
+  email: string,
+  phone: string
+) => {
+
+};
+
+export const fetchSingleCarer = async (
+  userId: string,
+  token: string,
+  carerId: number
+) => {
+  try {
+    const response = await axios.get(`${API_URL}/carers/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`);
+    const carers = response.data;
+    for(const carer of carers)
+    {
+      if(carer.details.carerId == carerId)
+      {
+        return carer;
+      }
+    }
+  } catch(error: any){
+    throw new Error(
+      error.response ? error.response.data.message : error.message);
+  }
+};

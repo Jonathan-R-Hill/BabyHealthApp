@@ -135,7 +135,7 @@ const asyncValidateAuthCode = async (email: string, code: string) => {
   }
 };
 
-const asyncResetPassword = async (email: string, password: string) => {
+const asyncResetPassword = async (email: string, code: string, password: string) => {
   try {
     const existingUserResponse = await axios.get(
       `${API_URL}/get/user/${encodeURIComponent(email)}`,
@@ -156,6 +156,7 @@ const asyncResetPassword = async (email: string, password: string) => {
         `${API_URL}/put/updatePassword`,
         {
           userId: existingUserResponse.data.details.userId,
+          code: code,
           password: password,
         },
         {
@@ -174,4 +175,48 @@ const asyncResetPassword = async (email: string, password: string) => {
   }
 };
 
-export { asyncLogin, asyncValidateUser, asyncCreateNewUser, asyncResetPassword, asyncValidateAuthCode };
+const asyncSendCodePassword = async (userId: string) => {
+  try {
+    const response = await axios.post(`${API_URL}/post/forgotPwEmail`,
+      {
+        userId: userId
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+    return response.data;
+  } catch(error: any) {
+
+  }
+};
+
+const asyncValidatePwAuthCode = async (userId: string, code: string) => {
+  try {
+    console.log(userId, code);
+    const response = await axios.post(
+      `${API_URL}/post/checkForgotCode`,
+      {
+        userId,
+        code
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+
+    console.log("Code authenticated successfully:", response.data);
+    return response.data;
+  } catch (error: any) {
+    console.log("Error:", error.response?.data?.message
+    )
+    return false;
+  }
+};
+
+export { asyncLogin, asyncValidateUser, asyncCreateNewUser, asyncResetPassword, asyncValidateAuthCode, asyncSendCodePassword, asyncValidatePwAuthCode };

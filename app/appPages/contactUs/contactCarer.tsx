@@ -57,6 +57,14 @@ export default function CarerPage()
         }
       }
 
+      const routeToEditCarer = (carerId: number) => {
+        try {
+          router.push({ pathname: "./editCarer", params: { username, token, carerId} });
+        } catch (error) {
+            Alert.alert("Error", "Unable to route")
+        }
+      }
+
       return (
         <View style = {styles.container}>
             <ScrollView style = {styles.scrollView}>
@@ -75,6 +83,9 @@ export default function CarerPage()
                         <Text style={styles.carerText}>Name: {fullname}</Text>
                         <Text style={styles.carerText}>Phone Number: {carer.data.phone}</Text>
                         <Text style={styles.carerText}>Email: {carer.data.email}</Text>
+                        <TouchableOpacity onPress={()=>routeToEditCarer(carer.details.carerId)}>
+                          <Text style={styles.linkText}>Edit Carer</Text>
+                        </TouchableOpacity>
                       </View>
                     </View>
                   );
@@ -118,5 +129,11 @@ const styles = StyleSheet.create({
     carerText: {
       color: "#fff",
       fontSize: 16,
+    },
+    linkText: {
+      fontSize: 14,
+      color: "#007BFF", // A blue color for links
+      marginVertical: 4,
+      textDecorationLine: "underline",
     },
 });

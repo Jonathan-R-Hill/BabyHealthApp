@@ -18,15 +18,15 @@ export default function resetPassword(){
     let [displayMessage, setDisplayMessage] = useState("");
     let [allValid, setAllValid] = useState(false);
     let [validPassword, setValidPassword] = useState(false);
-    const { username } = useLocalSearchParams();
-    const user = String(username);
-    
+    const { userEmail, authCode } = useLocalSearchParams();
+    const user = String(userEmail);
+    const code = String(authCode);
 
     const handleResetPassword = async () => {
         try {
             console.log("Email: ", user);
             console.log("New password: ", newPassword);
-            const response = await asyncResetPassword( user, newPassword);
+            const response = await asyncResetPassword( user, code, newPassword);
             console.log(response);
             if(allValid && response) //all valid AND result of backend true
             {
