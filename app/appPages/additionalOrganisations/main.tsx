@@ -1,0 +1,59 @@
+import React, { useState } from "react";
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+  Alert,
+  FlatList,
+} from "react-native";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import Navbar from "../../Navbar";
+import {orgData} from "./orgData"
+
+export default function additionalOrgs() {
+  const router = useRouter();
+
+  return (
+      <View style={styles.container}>
+        {/* Title */}
+        <Text style={styles.title}>Additional Organisations</Text>
+
+        {/* Org List*/}
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <FlatList
+            data={orgData}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+            <View style={{ marginBottom: 10 }}>
+                <Text>{item.orgName}</Text>
+                <Text>{item.orgDesc}</Text>
+                <Text>{item.orgLink}</Text>
+                <Text>{item.orgEmail}</Text>
+                <Text>{item.orgPhone}</Text>
+            </View>
+            )}
+        />
+        </View>
+
+        {/* Navbar */}
+      <Navbar />
+    </View>
+);
+}
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: "center",
+      paddingVertical: 20,
+    },
+    title: {
+      fontSize: 40,
+      fontWeight: "bold",
+      textAlign: "center",
+      color: "#000000",
+      marginBottom: 20,
+    },
+    
+  });
+  
