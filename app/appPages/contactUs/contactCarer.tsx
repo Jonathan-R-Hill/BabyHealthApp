@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     },
     linkText: {
       fontSize: 14,
-      color: "#007BFF", // A blue color for links
+      color: "#b9cc10", // A yellow colour
       marginVertical: 4,
       textDecorationLine: "underline",
     },

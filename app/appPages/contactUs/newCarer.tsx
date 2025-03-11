@@ -55,7 +55,7 @@ export default function CreateNewCarer() {
 
         if(!(nameTitleRegex.test(name))) {
             errorCounter++;
-            errorMessage = errorMessage + "first name, "
+            errorMessage = errorMessage + "name, "
         }
         if(!(nameTitleRegex.test(title))){
             errorCounter++;
