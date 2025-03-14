@@ -12,6 +12,7 @@ const API_URL = targetURL; // Assign the imported URL to a constant
  */
 export const fetchWeightRecord = async (userId: string, token: string) => {
   try {
+    console.log("weight request token: " + token);
     // Make a GET request to fetch the weight record
     const response = await axios.get(
       `${API_URL}/get/diaryweight/${encodeURIComponent(
@@ -23,7 +24,7 @@ export const fetchWeightRecord = async (userId: string, token: string) => {
   } catch (error: any) {
     // Handle errors and return a meaningful message
     throw new Error(
-      error.response?.data?.message || "Failed to fetch weight data"
+      error.response?.data?.message || "Failed to fetch weight data at service level."
     );
   }
 };
@@ -37,18 +38,20 @@ export const fetchWeightRecord = async (userId: string, token: string) => {
  */
 export const fetchMilkRecord = async (userId: string, token: string) => {
   try {
+    console.log("DATA: ");
     // Make a GET request to fetch the milk record
+    console.log("milk request token: " + token);
     const response = await axios.get(
       `${API_URL}/get/diary/milk/${encodeURIComponent(
         userId
       )}/${encodeURIComponent(token)}`
     );
-    
+    console.log("DATA: " + response.data);
     return response.data; // Return the retrieved data
   } catch (error: any) {
     // Handle errors and return a meaningful message
     throw new Error(
-      error.response?.data?.message || "Failed to fetch milk data"
+      error.response?.data?.message || `Failed to fetch milk record at service level: ${error.message}`
     );
   }
 };
