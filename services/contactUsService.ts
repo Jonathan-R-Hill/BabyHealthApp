@@ -108,3 +108,46 @@ export const postNewCarer = async (
       error.response ? error.response.data.message : error.message);
   }
 };
+
+export const updateCarer = async (
+  userId: string,
+  token: string,
+  carerId: number,
+  name: string,
+  title: string,
+  email: string,
+  phone: string
+) => {
+  try {
+    const response = await axios.put(`${API_URL}/carers/${encodeURIComponent(userId)}/
+        ${encodeURIComponent(carerId)}/${encodeURIComponent(token)}`,
+        {
+          name, title, email, phone
+        });
+    return response.data;
+  } catch(error: any){
+    throw new Error(
+      error.response ? error.response.data.message : error.message);
+  }
+};
+
+export const fetchSingleCarer = async (
+  userId: string,
+  token: string,
+  carerId: number
+) => {
+  try {
+    const response = await axios.get(`${API_URL}/carers/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`);
+    const carers = response.data.carers;
+    for(const carer of carers)
+    {
+      if(carer.details.carerId == carerId)
+      {
+        return carer;
+      }
+    }
+  } catch(error: any){
+    throw new Error(
+      error.response ? error.response.data.message : error.message);
+  }
+};

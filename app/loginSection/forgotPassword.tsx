@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { asyncSendCodePassword } from "../../services/loginService";
 
 export default function forgotPasswordPage() {
     const router = useRouter();
@@ -15,13 +16,20 @@ export default function forgotPasswordPage() {
     let [allValid, setAllValid] = useState(false);
     let [displayMessage, setDisplayMessage] = useState("");
 
-    const submitPasswordReset = () => {
+    const submitPasswordReset = async () => {
         if(allValid)
         {
           console.log("user resetting password", userEmail);
           const username = String(userEmail);
           console.log(username);
-          router.push({pathname: './loginAuthenticationCodePassword', params: {username}}); //must go to auth code page first
+          const response = await asyncSendCodePassword(username);
+          if(response)
+          {
+            router.push({pathname: './loginAuthenticationCodePassword', params: {username}}); //must go to auth code page first
+          }
+          else {
+            alert("An error occurred while resetting your password. Please try again.");
+          }
         }
         else{
           setDisplayMessage("Please enter a valid email");

@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
-import { asyncValidateAuthCode } from "../../services/loginService";
+import { asyncValidatePwAuthCode } from "../../services/loginService";
 
 export default function authenticationPage() {
     const router = useRouter();
@@ -19,11 +19,10 @@ export default function authenticationPage() {
     const handleAuthCode = async () => {
         //pass auth code entered to service, then to backend, result is bool from comparison
         //if true, success, if not give them another try (displaying error message) or send them back to the page they came from
-        //const response = await asyncValidateAuthCode(user, authCode); currently there is no email auth for this page
-        const response = true;
+        const response = await asyncValidatePwAuthCode(userEmail, authCode);
         if(response) //if the response is true
         {
-          router.push({pathname: './resetPassword', params: {userEmail}});
+          router.push({pathname: './resetPassword', params: {userEmail, authCode}});
         }
         else
         {
