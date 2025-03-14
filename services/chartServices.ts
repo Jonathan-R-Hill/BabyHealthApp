@@ -42,7 +42,7 @@ export const fetchMilkRecord = async (userId: string, token: string) => {
     // Make a GET request to fetch the milk record
     console.log("milk request token: " + token);
     const response = await axios.get(
-      `${API_URL}/get/diary/milk/${encodeURIComponent(
+      `${API_URL}/get/diarymilk/${encodeURIComponent(
         userId
       )}/${encodeURIComponent(token)}`
     );

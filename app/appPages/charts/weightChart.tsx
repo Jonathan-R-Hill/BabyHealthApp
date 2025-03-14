@@ -13,7 +13,7 @@ type WeightRecord = {
 
 type MilkRecord = {
   date: string;
-  amount: number;
+  foodAmount: number;
 }
 
 const BabyCharts = () => {
@@ -22,42 +22,44 @@ const BabyCharts = () => {
   const [ milkData, setMilkData ] = useState<MilkRecord[]>([]);
 
   useEffect(() => {
-    async function fetchWeightData(username: string, token: string) {
-      try {
-        console.log("token: " + token);
-        //fetch record returns an array of WeightRecord objects, parsed at service level
-        const data: WeightRecord[] = await fetchWeightRecord(username, token);
-
-        console.log(data);
-
-        if (data && data.length > 0) {
-          setWeightData(data);
-        }
-      } catch (error) {
-        console.error("Error fetching weight data at frontend:", error);
-      }
-    }
-    fetchWeightData(username as string, token as string);
-
-    async function fetchMilkData(username: string, token: string) {      
-      try {
-        console.log("token: " + token);
-        //fetch record returns an array of WeightRecord objects, parsed at service level
-        const data: MilkRecord[] = await fetchMilkRecord(username, token);
-
-        console.log("milk request token: " + token);
-        console.log(data);
-        
-        if (data && data.length > 0) {
-          setMilkData(data);
-        }
-      } catch (error) {
-        console.error("Error fetching milk data at frontend:", error);
-      }
-    }
-    fetchMilkData(username as string, token as string);
+      fetchWeightData(username as string, token as string).then(() => {
+      fetchMilkData(username as string, token as string);
+    });    
   }, []);
   
+  async function fetchWeightData(username: string, token: string) {
+    try {
+      console.log("token: " + token);
+      //fetch record returns an array of WeightRecord objects, parsed at service level
+      const data: WeightRecord[] = await fetchWeightRecord(username, token);
+
+      console.log(data);
+
+      if (data && data.length > 0) {
+        setWeightData(data);
+      }
+    } catch (error) {
+      console.error("Error fetching weight data at frontend:", error);
+    }
+  }
+
+  async function fetchMilkData(username: string, token: string) {      
+    try {
+      console.log("token: " + token);
+      //fetch record returns an array of WeightRecord objects, parsed at service level
+      const data: MilkRecord[] = await fetchMilkRecord(username, token);
+
+      console.log("milk request token: " + token);
+      console.log(data);
+      
+      if (data && data.length > 0) {
+        setMilkData(data);
+      }
+    } catch (error) {
+      console.error("Error fetching milk data at frontend:", error);
+    }
+  }
+
   const seenMonthsWeight = new Set<string>(); // Track which months have been shown
   const seenMonthsMilk = new Set<string>(); // Track which months have been shown
 
@@ -89,10 +91,10 @@ const BabyCharts = () => {
     seenMonthsMilk.add(monthKey);
 
     // If more than 15 entries, hide every second label
-    const showLabel = weightData.length > 15 ? index % 2 === 0 : true;
+    const showLabel = milkData.length > 15 ? index % 2 === 0 : true;
 
     const entry = {
-      value: record.amount,
+      value: record.foodAmount,
       label: showLabel
         ? (showMonth ? date.toLocaleDateString("en-GB", { month: "short" }).charAt(0) : date.getDate().toString())
         : "", // Hide alternate labels if >15 entries
