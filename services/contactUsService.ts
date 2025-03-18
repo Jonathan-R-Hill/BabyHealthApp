@@ -80,7 +80,7 @@ export const getDataOnCarers = async (
   token: string
 ) => {
   try {
-    const response = await axios.get(`${API_URL}/carers/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`);
+    const response = await axios.get(`${API_URL}/carers/getAll/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`);
     return response.data.carers;
   } catch(error: any){
     throw new Error(
@@ -97,7 +97,7 @@ export const postNewCarer = async (
   phone: string
 ) => {
   try {
-    const response = await axios.post(`${API_URL}/carers/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`,
+    const response = await axios.post(`${API_URL}/carers/create/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`,
   {
     userId, title, name, email, phone
   });
@@ -119,7 +119,7 @@ export const updateCarer = async (
   phone: string
 ) => {
   try {
-    const response = await axios.put(`${API_URL}/carers/${encodeURIComponent(userId)}/
+    const response = await axios.put(`${API_URL}/carers/update/${encodeURIComponent(userId)}/
         ${encodeURIComponent(carerId)}/${encodeURIComponent(token)}`,
         {
           name, title, email, phone
@@ -137,7 +137,7 @@ export const fetchSingleCarer = async (
   carerId: number
 ) => {
   try {
-    const response = await axios.get(`${API_URL}/carers/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`);
+    const response = await axios.get(`${API_URL}/carers/getAll/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`);
     const carers = response.data.carers;
     for(const carer of carers)
     {
@@ -146,6 +146,22 @@ export const fetchSingleCarer = async (
         return carer;
       }
     }
+  } catch(error: any){
+    throw new Error(
+      error.response ? error.response.data.message : error.message);
+  }
+};
+
+export const deleteCarer = async (
+  userId: string,
+  token: string,
+  carerId: number
+) => {
+  try {
+    console.log(userId, carerId, token)
+    const response = await axios.delete(`${API_URL}/carers/delete/${encodeURIComponent(userId)}/
+        ${encodeURIComponent(carerId)}/${encodeURIComponent(token)}`);
+    return response.data;
   } catch(error: any){
     throw new Error(
       error.response ? error.response.data.message : error.message);

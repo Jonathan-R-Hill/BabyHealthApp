@@ -84,7 +84,7 @@ export default function CarerPage()
                         <Text style={styles.carerText}>Phone Number: {carer.data.phone}</Text>
                         <Text style={styles.carerText}>Email: {carer.data.email}</Text>
                         <TouchableOpacity onPress={()=>routeToEditCarer(carer.details.carerId)}>
-                          <Text style={styles.linkText}>Edit Carer</Text>
+                          <Text style={styles.linkText}>Edit Or Delete Carer</Text>
                         </TouchableOpacity>
                       </View>
                     </View>

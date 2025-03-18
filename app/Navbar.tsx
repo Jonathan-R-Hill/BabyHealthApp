@@ -11,7 +11,7 @@ const pages = {
   "Baby Care": "/appPages/adviceSection/main",
   Settings: "/appPages/settings/main",
   "Baby Log": "/appPages/babyLog/main",
-  "Contact Us": "/appPages/contactUs/main",
+  "Contacts": "/appPages/contactUs/main",
   Terminology: "/appPages/terminology/main",
   "Additional Organisations": "/appPages/additionalOrganisations/main",
 };

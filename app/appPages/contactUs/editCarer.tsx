@@ -7,10 +7,12 @@ import {
   TouchableOpacity,
   Alert,
   TextInput,
+  Modal,
+  ImageBackground
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 
-import { updateCarer, fetchSingleCarer } from "../../../services/contactUsService";
+import { updateCarer, fetchSingleCarer, deleteCarer } from "../../../services/contactUsService";
 
 import Navbar from "../../Navbar";
 
@@ -36,6 +38,7 @@ export default function editCarerPage() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [errorDisplayMessage, setErrorDisplayMessage] = useState("");
+  const [isModalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     if (username) {
@@ -79,11 +82,11 @@ export default function editCarerPage() {
             setErrorDisplayMessage("We could not update the carer's details");
           }
         } catch (error) {
-          Alert.alert("Error", "Could not make a new carer");
+          Alert.alert("Error", "Could not update carer");
         }
       }
     } catch (error) {
-      Alert.alert("Error", "Could not make a new carer");
+      Alert.alert("Error", "Could not update carer");
     }
   };
 
@@ -122,6 +125,33 @@ export default function editCarerPage() {
     }
   };
 
+  const deleteCarerMethod = async () => {
+    try{
+      const result = await deleteCarer(String(username), String(token), Number(carerId));
+      if (result) {
+        toggleVisibility();
+        router.push({
+          pathname: "./contactCarer",
+          params: { username, token },
+        });
+      } else {
+        setErrorDisplayMessage("We could not delete this carer");
+        toggleVisibility();
+      }
+    }catch (error) {
+      Alert.alert("Error", "Could not delete this carer");
+    }
+  };
+
+  const toggleVisibility = () => {
+    if (isModalVisible) {
+      setModalVisible(false);
+    }
+    else {
+      setModalVisible(true);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollViewContainer}>
@@ -135,6 +165,21 @@ export default function editCarerPage() {
           value={name}
           onChangeText={setName}
         />
+
+        <Modal visible={isModalVisible} transparent={true} style={styles.popupWindow}>
+          <View style={styles.popup}>
+            <Text style={styles.label}>Are you sure you want to delete this?</Text>
+            <View style={styles.buttonBlock}>
+              <TouchableOpacity onPress={deleteCarerMethod} style={styles.deleteButton}>
+                <Text style={styles.createButtonText}>Delete Carer</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={toggleVisibility} style={styles.createButton}>
+                <Text style={styles.createButtonText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
 
         {/*Title Input*/}
         <Text style={styles.label}>Professional Title</Text>
@@ -162,10 +207,15 @@ export default function editCarerPage() {
           value={email}
           onChangeText={setEmail}
         />
-
+      
         {/*Create Button*/}
         <TouchableOpacity onPress={editCarer} style={styles.createButton}>
           <Text style={styles.createButtonText}>Edit Details</Text>
+        </TouchableOpacity>
+
+        {/*Delete Button*/}
+        <TouchableOpacity onPress={toggleVisibility} style={styles.deleteButton}>
+          <Text style={styles.createButtonText}>Delete</Text>
         </TouchableOpacity>
       </ScrollView>
       <Navbar />
@@ -210,10 +260,40 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 5,
     alignItems: "center",
+    paddingHorizontal: 15
   },
   createButtonText: {
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
   },
+  popup: {
+    flex: 1,
+    margin: 20,
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    backgroundColor: "white",
+    elevation: 5,
+    width: "100%",
+    height: "40%",
+    maxHeight: 400,
+    maxWidth: 900,
+    alignSelf:"center"
+  },
+  buttonBlock: {
+    flexDirection: "column",
+    padding: 30,
+  },
+  deleteButton: {
+    backgroundColor: "red",
+    paddingVertical: 15,
+    marginVertical: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    paddingHorizontal: 15
+  },
+  popupWindow: {
+    alignSelf: "center",
+  }
 });
