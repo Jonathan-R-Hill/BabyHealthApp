@@ -33,11 +33,11 @@ export default function editCarerPage() {
   const router = useRouter();
   const { username, token, carerId } = useLocalSearchParams(); //do not pass large objects
   const [carer, setCarer] = useState<Carer>();
-  const [name, setName] = useState("");
-  const [title, setTitle] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [errorDisplayMessage, setErrorDisplayMessage] = useState("");
+  let [name, setName] = useState("");
+  let [title, setTitle] = useState("");
+  let [phoneNumber, setPhoneNumber] = useState("");
+  let [email, setEmail] = useState("");
+  let [errorDisplayMessage, setErrorDisplayMessage] = useState("");
   const [isModalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export default function editCarerPage() {
     try {
       if (checkIfFilledCorrectly()) {
         try {
-          console.log(name, title, email, phoneNumber);
+          
           const result = await updateCarer(
             String(username),
             String(token),
@@ -92,33 +92,31 @@ export default function editCarerPage() {
 
   const checkIfFilledCorrectly = () => {
     const nameTitleRegex = /^([A-Z]*[a-z]+)/;
-    const phoneRegex = /^([+\d\d]*\d{9,12})/;
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    let errorCount = 0;
+    let possibleErrorMessage = "Please enter valid data for:"
 
     if (!nameTitleRegex.test(name)) {
       setName(String(carer?.data.name));
+      errorCount++;
+      possibleErrorMessage = possibleErrorMessage + " name"
     }
     if (!nameTitleRegex.test(title)) {
       setTitle(String(carer?.data.title));
+      errorCount++;
+      possibleErrorMessage = possibleErrorMessage + " title"
     }
-    if (!phoneRegex.test(phoneNumber)) {
-      setPhoneNumber(String(carer?.data.phone));
-    }
-    if (!emailRegex.test(email)) {
-      setEmail(String(carer?.data.email));
+
+    if(errorCount > 0){
+      setErrorDisplayMessage(possibleErrorMessage);
+      return false;
     }
 
     if (
       name === undefined ||
       title === undefined ||
-      phoneNumber === undefined ||
-      email === undefined ||
       name === "" ||
-      title === "" ||
-      phoneNumber === "" ||
-      email === ""
+      title === ""
     ) {
-      console.log("false");
       return false;
     } else {
       return true;
@@ -251,8 +249,9 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: "red",
-    fontSize: 14,
+    fontSize: 18,
     marginVertical: 5,
+    fontWeight: "bold",
   },
   createButton: {
     backgroundColor: "#3498db",
