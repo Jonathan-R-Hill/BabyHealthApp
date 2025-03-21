@@ -19,8 +19,10 @@ export default function reportBugMain() {
   const { username, token } = useLocalSearchParams();
 
   const [bugText, setBugText] = useState("");
+  let [errorMessage, setErrorMessage] = useState("");
 
   const handleReportSend = async () => {
+    if(errorChecking()){
     submitBug(String(username), bugText, String(token))
       .then(() => {
         console.log("Diary entry created successfully!");
@@ -34,6 +36,15 @@ export default function reportBugMain() {
       .catch((error) => {
         console.error("Error creating diary entry:", error);
       });
+    }
+  };
+
+  const errorChecking = () => {
+    if(bugText === undefined || bugText === ""){
+      setErrorMessage("Please enter text into the box");
+      return false;
+    };
+    return true;
   };
 
   return (
@@ -43,6 +54,8 @@ export default function reportBugMain() {
         <View style={styles.header}>
           <Text style={styles.textTitle}>Report bugs or issues</Text>
         </View>
+
+        <Text style={styles.errorText}>{errorMessage}</Text>
 
         {/*Text Box Placement*/}
         <View style={styles.inputBoxContainer}>
@@ -124,5 +137,13 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     width: "90%",
     maxWidth: 600,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 18,
+    marginVertical: 5,
+    fontWeight: "bold",
+    padding: 10,
+    textAlign: "center",
   },
 });
