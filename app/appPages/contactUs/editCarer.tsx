@@ -98,22 +98,22 @@ export default function editCarerPage() {
     const nameTitleRegex = /^([A-Z]*[a-z]+)/;
     const phoneRegex = /^([+]\d\d)*\d{9,12}/;
     let errorCount = 0;
-    let possibleErrorMessage = "Please enter valid data for:"
+    let possibleErrorMessage = "Please enter valid data for:";
 
     if (!nameTitleRegex.test(name)) {
       setName(String(carer?.data.name));
       errorCount++;
-      possibleErrorMessage = possibleErrorMessage + " name"
+      possibleErrorMessage = possibleErrorMessage + " name";
     }
     if (!nameTitleRegex.test(title)) {
       setTitle(String(carer?.data.title));
       errorCount++;
-      possibleErrorMessage = possibleErrorMessage + " title"
+      possibleErrorMessage = possibleErrorMessage + " title";
     }
-    if(!(phoneNumber === undefined || phoneNumber === "")){
+    if(!(phoneNumber === undefined || phoneNumber === "" || phoneNumber == "N/A")){
       if(!phoneRegex.test(phoneNumber)){
         errorCount++;
-        possibleErrorMessage = possibleErrorMessage + " phone number"
+        possibleErrorMessage = possibleErrorMessage + " phone number";
       }
     }
 
