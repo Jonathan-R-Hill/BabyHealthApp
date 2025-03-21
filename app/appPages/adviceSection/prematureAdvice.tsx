@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     marginHorizontal: 10,
     marginBottom: 30,
+    paddingBottom: 25,
   },
   section: {
     marginBottom: 10,

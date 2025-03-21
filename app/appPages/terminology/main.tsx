@@ -62,7 +62,6 @@ export default function TerminologySection() {
           />
        {/* </ScrollView> */}
       </View>
-
       {/* Navbar */}
       <Navbar />
     </View>
@@ -98,6 +97,7 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     marginHorizontal: 10,
     marginBottom: 30,
+    paddingBottom: 25,
   },
   section: {
     marginBottom: 10,
@@ -123,4 +123,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
   },
+  
 });
