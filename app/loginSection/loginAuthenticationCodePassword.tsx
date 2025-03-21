@@ -61,7 +61,6 @@ export default function authenticationPage() {
 
                 {/*Enter Auth Code*/}
                 <View style={styles.header}>
-                    <Text style={styles.warning}>{displayMessage}</Text>
                     <Text style={styles.label}>Enter Authentication Code</Text>
                     <TextInput
                     style={styles.inputBox}

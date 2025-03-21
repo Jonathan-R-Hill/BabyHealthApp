@@ -208,7 +208,7 @@ export default function editCarerPage() {
       
         {/*Create Button*/}
         <TouchableOpacity onPress={editCarer} style={styles.createButton}>
-          <Text style={styles.createButtonText}>Edit Details</Text>
+          <Text style={styles.createButtonText}>Save</Text>
         </TouchableOpacity>
 
         {/*Delete Button*/}
