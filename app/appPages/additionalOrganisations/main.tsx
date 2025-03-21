@@ -24,7 +24,7 @@ export default function additionalOrgs() {
         <Text style={styles.title}>Additional Organisations</Text>
 
         {/* Org List*/}
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.listContainer}>
         <FlatList
             data={orgData}
             keyExtractor={(item, index) => index.toString()}
@@ -68,6 +68,12 @@ const styles = StyleSheet.create({
       textAlign: "center",
       color: "#000000",
       marginBottom: 20,
+    },
+    listContainer: {
+      flex: 1, 
+      justifyContent: 'center', 
+      alignItems: 'center',
+      paddingBottom: 25,
     },
     listItem: {
       borderRadius: 8, 
