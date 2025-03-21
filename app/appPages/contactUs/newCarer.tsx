@@ -13,10 +13,10 @@ import { postNewCarer } from "../../../services/contactUsService";
 import Navbar from "../../Navbar";
 
 export default function CreateNewCarer() {
-    const [name, setName] = useState("");
-    const [title, setTitle] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [email, setEmail] = useState("");
+    let [name, setName] = useState("");
+    let [title, setTitle] = useState("");
+    let [phoneNumber, setPhoneNumber] = useState("");
+    let [email, setEmail] = useState("");
     const [errorDisplayMessage, setErrorDisplayMessage] = useState("")
 
     const router = useRouter();
@@ -27,8 +27,21 @@ export default function CreateNewCarer() {
             if(checkIfFilledCorrectly())
             {
                 try{
-                    console.log(username, token, name, title, email, phoneNumber)
-                    const response = await postNewCarer(username.toString(), token.toString(), name, title, email, phoneNumber)
+                    let response = false
+                    if(phoneNumber === undefined || phoneNumber === "" && !(email === undefined || email === ""))
+                    {
+                        response = await postNewCarer(username.toString(), token.toString(), name, title, email, "N/A")
+                    }
+                    else if(email === undefined || email === "" && !(phoneNumber === undefined || phoneNumber === ""))
+                    {
+                        response = await postNewCarer(username.toString(), token.toString(), name, title, "N/A", phoneNumber)
+                    }
+                    else if(phoneNumber === undefined || phoneNumber === "" && email === undefined || email === ""){
+                        response = await postNewCarer(username.toString(), token.toString(), name, title, "N/A", "N/A")
+                    }
+                    else{
+                        response = await postNewCarer(username.toString(), token.toString(), name, title, email, phoneNumber)
+                    }
                     
                     if(response)
                     {
@@ -48,8 +61,6 @@ export default function CreateNewCarer() {
 
     const checkIfFilledCorrectly = () => {
         const nameTitleRegex = /^([A-Z]*[a-z]+)/;
-        const phoneRegex = /^([+\d\d]*\d{9,12})/;
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         let errorCounter = 0;
         let errorMessage = "Please enter something for the field(s): "
 
@@ -60,14 +71,6 @@ export default function CreateNewCarer() {
         if(!(nameTitleRegex.test(title))){
             errorCounter++;
             errorMessage = errorMessage + "title, "
-        }
-        if(!(phoneRegex.test(phoneNumber))){
-            errorCounter++;
-            errorMessage = errorMessage + "phone number, "
-        }
-        if(!(emailRegex.test(email))){
-            errorCounter++;
-            errorMessage = errorMessage + "email, "
         }
 
         if(errorCounter > 0){

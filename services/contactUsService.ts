@@ -97,6 +97,7 @@ export const postNewCarer = async (
   phone: string
 ) => {
   try {
+    console.log(userId, token, name, title, email, phone)
     const response = await axios.post(`${API_URL}/carers/create/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`,
   {
     userId, title, name, email, phone
