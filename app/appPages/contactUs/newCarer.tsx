@@ -61,6 +61,7 @@ export default function CreateNewCarer() {
 
     const checkIfFilledCorrectly = () => {
         const nameTitleRegex = /^([A-Z]*[a-z]+)/;
+        const phoneRegex = /^([+]\d\d)*\d{9,12}/;
         let errorCounter = 0;
         let errorMessage = "Please enter something for the field(s): "
 
@@ -72,6 +73,12 @@ export default function CreateNewCarer() {
             errorCounter++;
             errorMessage = errorMessage + "title, "
         }
+        if(!(phoneNumber === undefined || phoneNumber === "")){
+            if(!phoneRegex.test(phoneNumber)){
+                errorCounter++;
+                errorMessage = errorMessage + " phone number"
+            }
+          }
 
         if(errorCounter > 0){
             setErrorDisplayMessage(errorMessage);

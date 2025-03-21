@@ -48,14 +48,18 @@ export default function editCarerPage() {
   }, [username]);
 
   const fetchCarer = async (username: string, token: string, carerId: number) => {
-    const carer: Carer = await fetchSingleCarer(username, token, carerId);
-    setCarer(carer);
-    // Prefill the input fields after fetching the carer data
-    if (carer && carer.data) {
-      setName(carer.data.name);
-      setTitle(carer.data.title);
-      setPhoneNumber(carer.data.phone);
-      setEmail(carer.data.email);
+    try{
+      const carer: Carer = await fetchSingleCarer(username, token, carerId);
+      setCarer(carer);
+      // Prefill the input fields after fetching the carer data
+      if (carer && carer.data) {
+        setName(carer.data.name);
+        setTitle(carer.data.title);
+        setPhoneNumber(carer.data.phone);
+        setEmail(carer.data.email);
+      }
+    } catch(error: any) {
+      Alert.alert("Error", "Could not find carer to edit")
     }
   };
 
@@ -92,6 +96,7 @@ export default function editCarerPage() {
 
   const checkIfFilledCorrectly = () => {
     const nameTitleRegex = /^([A-Z]*[a-z]+)/;
+    const phoneRegex = /^([+]\d\d)*\d{9,12}/;
     let errorCount = 0;
     let possibleErrorMessage = "Please enter valid data for:"
 
@@ -104,6 +109,12 @@ export default function editCarerPage() {
       setTitle(String(carer?.data.title));
       errorCount++;
       possibleErrorMessage = possibleErrorMessage + " title"
+    }
+    if(!(phoneNumber === undefined || phoneNumber === "")){
+      if(!phoneRegex.test(phoneNumber)){
+        errorCount++;
+        possibleErrorMessage = possibleErrorMessage + " phone number"
+      }
     }
 
     if(errorCount > 0){
