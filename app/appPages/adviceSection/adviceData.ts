@@ -1,5 +1,5 @@
-export const categoryData = [
-    { id: "1", title: "Test 1", content: "Content Test 1" },
+let categoryDataList = [
+    { id: "1", title: "Vaccinations", content: "Content Test 1" },
     { id: "2", title: "Test 2", content: "Content Test 2" },
     { id: "3", title: "Test 3", content: "Content Test 3" },
     { id: "4", title: "Test 4", content: "Content Test 4" },
@@ -13,8 +13,10 @@ export const categoryData = [
     { id: "12", title: "Test 12", content: "Content Test 12" },
     { id: "13", title: "Test 13", content: "Content Test 13" },
   ];
+  categoryDataList.sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
+  export const categoryData = categoryDataList;
 
-  export const prematureCategoryData = [
+  export const prematureCategoryDataList = [
     { id: "1", title: "PreTest 1", content: "PreContent Test 1" },
     { id: "2", title: "PreTest 2", content: "PreContent Test 2" },
     { id: "3", title: "PreTest 3", content: "PreContent Test 3" },
@@ -29,3 +31,5 @@ export const categoryData = [
     { id: "12", title: "PreTest 12", content: "PreContent Test 12" },
     { id: "13", title: "PreTest 13", content: "PreContent Test 13" },
   ];
+  prematureCategoryDataList.sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
+  export const prematureCategoryData = prematureCategoryDataList;
