@@ -44,6 +44,19 @@ export default function SettingsPage() {
     }
   };
 
+  const accountSettings = () => {
+    try {
+      console.log("Account Settings Button Pressed");
+      router.push({ pathname: "./account", params: { username, token } });
+    } catch (error) {
+      console.error("Navigation Error", error);
+      Alert.alert(
+        "Navigation Error",
+        "Could not navigate to the Account Settings page"
+      );
+    }
+  };
+
   return (
     <ThemedView style={styles.container}>
       <ThemedText type="title" style={styles.textTitle}>
@@ -63,13 +76,21 @@ export default function SettingsPage() {
         <Switch value={darkModeEnabled} onValueChange={toggleDarkMode} />
       </ThemedView>
 
+      {/* AboutApp nav button */}
       <ThemedView style={styles.header}>
         <TouchableOpacity style={styles.actionButton} onPress={aboutApp}>
           <ThemedText style={styles.actionButtonText}>About App</ThemedText>
         </TouchableOpacity>
       </ThemedView>
 
-      {/* Bottom Navigation */}
+      {/* Account Settings Nav Button */}
+      <ThemedView style={styles.header}>
+        <TouchableOpacity style={styles.actionButton} onPress={accountSettings}>
+          <ThemedText style={styles.actionButtonText}>My Account</ThemedText>
+        </TouchableOpacity>
+      </ThemedView>
+
+      {/* Navigation Bar */}
       <Navbar />
     </ThemedView>
   );
