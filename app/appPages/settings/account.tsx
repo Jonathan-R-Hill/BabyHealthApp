@@ -38,9 +38,25 @@ export default function AccountPage() {
 
   // logout
   const handleLogout = () => {
-    // needs logic
-    router.push({ pathname: "./loginScreen" });
-  };
+    Alert.alert(
+        "Logout",
+        "Are you sure you want to logout?",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+          {
+            text: "Logout",
+            style: "destructive",
+            onPress: () => {
+              router.replace("/loginSection/loginScreen");
+            },
+          },
+        ],
+        { cancelable: true }
+      );
+    };
 
   return (
     <ThemedView style={styles.container}>
