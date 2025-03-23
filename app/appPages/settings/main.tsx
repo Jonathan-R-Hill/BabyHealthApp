@@ -47,7 +47,7 @@ export default function SettingsPage() {
   const accountSettings = () => {
     try {
       console.log("Account Settings Button Pressed");
-      router.push({ pathname: "./account", params: { username, token } });
+      router.push({ pathname: "./account/accountSettings", params: { username, token } });
     } catch (error) {
       console.error("Navigation Error", error);
       Alert.alert(
