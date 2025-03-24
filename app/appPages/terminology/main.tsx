@@ -4,22 +4,16 @@ import {
   TouchableOpacity,
   StyleSheet,
   Text,
-  Alert,
+  TextInput,
   FlatList,
-  ScrollView,
 } from "react-native";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 import Navbar from "../../Navbar";
 import termData from "./terminologyData";
-//Data for the terminology
-const categoryDataUse = termData
 
 export default function TerminologySection() {
-  const router = useRouter();
-
   const [expandedSections, setExpandedSections] = useState<string[]>([]);
-
-  const { username, token } = useLocalSearchParams();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const toggleSection = (id: string) => {
     setExpandedSections((prev) =>
@@ -29,39 +23,65 @@ export default function TerminologySection() {
     );
   };
 
-  const renderSection = ({ item }: { item: (typeof categoryDataUse)[0] }) => {
-    const isExpanded = expandedSections.includes(item.id);
+  const filteredData = termData.filter((item) => {
     return (
-      <View style={styles.section}>
-        <TouchableOpacity
-          onPress={() => toggleSection(item.id)}
-          style={styles.sectionHeader}
-        >
-          <Text style={styles.sectionTitle}>{item.title}</Text>
-        </TouchableOpacity>
-        {isExpanded && (
-          <Text style={styles.sectionContent}>{item.content}</Text>
-        )}
-      </View>
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.content.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
+
+  const renderSection = ({ item }: { item: (typeof termData)[0] }) => {
+    const isExpanded = expandedSections.includes(item.id);
+    const truncatedContent =
+      item.content.length > 100
+        ? `${item.content.substring(0, 100)}...`
+        : item.content;
+
+    return (
+      <TouchableOpacity
+        style={styles.card}
+        onPress={() => toggleSection(item.id)}
+      >
+        <Text style={styles.cardTitle}>{item.title}</Text>
+        <Text style={styles.cardContent}>
+          {isExpanded ? item.content : truncatedContent}
+          {!isExpanded && item.content.length > 100 && (
+            <Text style={styles.expandText}> expand on tap</Text>
+          )}
+        </Text>
+      </TouchableOpacity>
     );
   };
-
 
   return (
     <View style={styles.container}>
       {/* Title */}
       <Text style={styles.title}>Terminology</Text>
 
-      {/* Categories for terminology */}
-      <View style={styles.listContainer}>
-        {/*<ScrollView>*/}
-          <FlatList
-            data={categoryDataUse}
-            renderItem={renderSection}
-            keyExtractor={(item) => item.id}
-          />
-       {/* </ScrollView> */}
+      {/* Search Bar */}
+      <View style={styles.searchContainer}>
+        <Ionicons
+          name="search"
+          size={20}
+          color="#888"
+          style={styles.searchIcon}
+        />
+        <TextInput
+          style={styles.searchBar}
+          placeholder="Search for Terminology"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
       </View>
+
+      {/* Terminology List */}
+      <FlatList
+        data={filteredData}
+        renderItem={renderSection}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.listContainer}
+      />
+
       {/* Navbar */}
       <Navbar />
     </View>
@@ -71,57 +91,61 @@ export default function TerminologySection() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    paddingVertical: 20,
+    backgroundColor: "#F4F4F4",
+    paddingHorizontal: 15,
   },
   title: {
-    fontSize: 40,
+    fontSize: 22,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#000000",
-    marginBottom: 20,
+    color: "#4A4A4A",
+    marginVertical: 10,
   },
-  chartButton: {
-    backgroundColor: "#3498db",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginBottom: 20,
+  searchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#FFF",
+    borderRadius: 25,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    marginVertical: 10,
+    borderWidth: 1,
+    borderColor: "#E0E0E0",
   },
-  chartButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
+  searchIcon: {
+    marginRight: 10,
+  },
+  searchBar: {
+    flex: 1,
+    fontSize: 16,
+    color: "#333",
   },
   listContainer: {
-    flex: 1,
-    alignSelf: "stretch",
-    marginHorizontal: 10,
-    marginBottom: 30,
-    paddingBottom: 25,
+    paddingBottom: 100,
   },
-  section: {
+  card: {
+    backgroundColor: "#FFF",
+    borderRadius: 10,
+    padding: 15,
     marginBottom: 10,
-    borderWidth: 1,
-    borderColor: "#3498db",
-    borderRadius: 5,
-    padding: 5,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 4,
+    elevation: 3,
   },
-  sectionHeader: {
-    backgroundColor: "#3498db",
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 5,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    color: "#fff",
+  cardTitle: {
+    fontSize: 18,
     fontWeight: "bold",
-    textAlign: "center",
+    color: "#333",
+    marginBottom: 5,
   },
-  sectionContent: {
-    paddingTop: 10,
+  cardContent: {
     fontSize: 16,
-    textAlign: "center",
+    color: "#666",
   },
-  
+  expandText: {
+    color: "#E74C3C",
+    fontWeight: "600",
+  },
 });

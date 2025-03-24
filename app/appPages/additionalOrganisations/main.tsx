@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   TouchableOpacity,
@@ -7,115 +7,97 @@ import {
   Linking,
   FlatList,
 } from "react-native";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import Navbar from "../../Navbar";
-import {orgData} from "./orgData"
+import { orgData } from "./orgData";
 
-export default function additionalOrgs() {
-  const router = useRouter();
-
+export default function AdditionalOrgs() {
   const handlePress = (url: string) => {
-    Linking.openURL(url).catch((err) => console.error('Failed to open URL:', err));
+    Linking.openURL(url).catch((err) =>
+      console.error("Failed to open URL:", err)
+    );
   };
 
   return (
-      <View style={styles.container}>
-        {/* Title */}
-        <Text style={styles.title}>Additional Organisations</Text>
+    <View style={styles.container}>
+      {/* Header */}
+      <Text style={styles.title}>Organisations</Text>
 
-        {/* Org List*/}
-        <View style={styles.listContainer}>
-        <FlatList
-            data={orgData}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => (
-              <View style={styles.listItem}>
-              <Text style={styles.orgName}>{item.orgName}</Text>
-              <Text style={styles.orgDesc} numberOfLines={3}>{item.orgDesc}</Text>
-              <View style={styles.row}>
-              <Text style={styles.label}>Website: </Text>
-              <TouchableOpacity onPress={() => handlePress(item.orgLink)}>
-                <Text style={styles.linkText}>{item.orgLink}</Text>
-              </TouchableOpacity>
-              </View>
-              <View style={styles.row}>
-              <Text style={styles.label}>Email: </Text>
-              <Text style={styles.contactInfo}>{item.orgEmail}</Text>
-              </View>
-              <View style={styles.row}>
-              <Text style={styles.label}>Phone Number: </Text>
-              <Text style={styles.contactInfo}>{item.orgPhone}</Text>
-              </View>
-            </View>
+      {/* Organisation List */}
+      <FlatList
+        data={orgData}
+        keyExtractor={(item, index) => index.toString()}
+        contentContainerStyle={styles.listContainer}
+        renderItem={({ item }) => (
+          <View style={styles.card}>
+            <Text style={styles.orgName}>{item.orgName}</Text>
+            <Text style={styles.orgDesc}>{item.orgDesc}</Text>
+
+            {item.orgPhone && (
+              <Text style={styles.orgDetails}>Helpline: {item.orgPhone}</Text>
             )}
-        />
-        </View>
 
-        {/* Navbar */}
+            <TouchableOpacity onPress={() => handlePress(item.orgLink)}>
+              <Text style={styles.linkText}>{item.orgLink}</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      />
+
+      {/* Navbar */}
       <Navbar />
     </View>
-);
+  );
 }
+
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems: "center",
-      paddingVertical: 20,
-    },
-    title: {
-      fontSize: 40,
-      fontWeight: "bold",
-      textAlign: "center",
-      color: "#000000",
-      marginBottom: 20,
-    },
-    listContainer: {
-      flex: 1, 
-      justifyContent: 'center', 
-      alignItems: 'center',
-      paddingBottom: 25,
-    },
-    listItem: {
-      borderRadius: 8, 
-      padding: 15, 
-      marginBottom: 10, 
-      width: "90%", 
-    },
-    orgName: {
-      fontSize: 24,
-      fontWeight: "bold",
-      marginBottom: 5,
-      alignSelf: "center"
-    },
-    orgDesc: {
-      fontSize: 18,
-      marginBottom: 10,
-      alignSelf: "center"
-    },
-    linkText: {
-      color: "blue",
-      fontSize: 18,
-      textDecorationLine: "underline",
-      marginBottom: 3,
-      alignSelf: "center"
-    },
-    contactInfo: {
-      fontSize: 18,
-      marginBottom: 3,
-      alignSelf: "center"
-    },
-    label: {
-      fontSize: 18,
-      fontWeight: "bold",
-      marginBottom: 3,
-      alignSelf: "center"
-    },
-    row: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-      marginBottom: 10,
-    },
-  
-  });
-  
+  container: {
+    flex: 1,
+    backgroundColor: "#F4F4F4",
+    paddingVertical: 20,
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#4A4A4A",
+    marginBottom: 10,
+  },
+  listContainer: {
+    paddingHorizontal: 15,
+    paddingBottom: 20,
+  },
+  card: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 10,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  orgName: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 5,
+  },
+  orgDesc: {
+    fontSize: 16,
+    color: "#555",
+    marginBottom: 10,
+  },
+  orgDetails: {
+    fontSize: 14,
+    color: "#333",
+    marginBottom: 5,
+  },
+  linkText: {
+    color: "#007BFF",
+    fontSize: 14,
+    textDecorationLine: "underline",
+  },
+});
+
