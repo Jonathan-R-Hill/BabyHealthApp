@@ -9,11 +9,10 @@ const pages = {
   Charts: "/appPages/charts/weightChart",
   Diary: "/appPages/diary/main",
   "Baby Care": "/appPages/adviceSection/main",
-  Settings: "/appPages/settings/main",
+  Settings: "/appPages/settings/appSettings",
   "Baby Log": "/appPages/babyLog/main",
-  "Contacts": "/appPages/contactUs/main",
-  Terminology: "/appPages/terminology/main",
-  "Additional Organisations": "/appPages/additionalOrganisations/main",
+  "Contact Us": "/appPages/contactUs/main", 
+  Terminology: "/appPages/terminology/main"
 };
 
 const Navbar: React.FC = () => {
