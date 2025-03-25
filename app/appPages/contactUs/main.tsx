@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
+import { ReusableButton } from "@/components/ReusableButton";
 
 import Navbar from "../../Navbar";
 
@@ -71,9 +72,9 @@ export default function HandleContactUs() {
           </TouchableOpacity>
         </View>
         <View style={styles.header}>
-          <TouchableOpacity style={styles.chartButton} onPress={ContactDevs}>
+          <ReusableButton onPress={ContactDevs}>
             <Text style={styles.chartButtonText}>Contact A Developer</Text>
-          </TouchableOpacity>
+          </ReusableButton>
         </View>
       </ScrollView>
       {/* Bottom Navigation */}
