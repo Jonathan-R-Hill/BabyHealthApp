@@ -12,6 +12,7 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 
 import Navbar from "../../Navbar";
 import { submitBug } from "../../../services/contactUsService";
+import { ReusableTextInput } from "@/components/ReusableTextInputBox";
 
 export default function reportBugMain() {
   const router = useRouter();
@@ -59,8 +60,7 @@ export default function reportBugMain() {
 
         {/*Text Box Placement*/}
         <View style={styles.inputBoxContainer}>
-          <TextInput
-            style={styles.inputBox}
+          <ReusableTextInput
             placeholder="Report bugs/issues here"
             value={bugText}
             onChangeText={setBugText}
@@ -69,6 +69,7 @@ export default function reportBugMain() {
             keyboardType="default"
             multiline={true}
             placeholderTextColor={"#84868a"}
+            style={{height: "70%"}}
           />
           <TouchableOpacity
             style={styles.chartButton}
@@ -115,17 +116,6 @@ const styles = StyleSheet.create({
     color: "#000000",
     fontSize: 40,
     fontWeight: "bold",
-    textAlign: "center",
-  },
-  inputBox: {
-    height: "80%",
-    width: "100%",
-    borderColor: "blue",
-    borderWidth: 1,
-    marginBottom: 16,
-    borderRadius: 4,
-    paddingHorizontal: 8,
-    backgroundColor: "#e8e6e1",
     textAlign: "center",
   },
   inputBoxContainer: {
