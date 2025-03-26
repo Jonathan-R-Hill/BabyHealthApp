@@ -39,11 +39,11 @@ export default function AddBaby() {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-  
-  return (
-    <View style={styles.container}>
-      <Header />
-      <ScrollView style={styles.}
-    </View>
-  );
 }
+//   return (
+//     <View style={styles.container}>
+//       <Header />
+//       <ScrollView style={styles.}
+//     </View>
+//   );
+// }
