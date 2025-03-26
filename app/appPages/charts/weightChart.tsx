@@ -115,11 +115,11 @@ const BabyCharts = () => {
         // showVerticalLines
         spacing={20}
         initialSpacing={0}
-        color1="skyblue"
-        textColor1="green"
+        color="skyblue"
+        textColor="green"
         hideDataPoints
-        dataPointsColor1="blue"
-        startFillColor1="skyblue"
+        dataPointsColor="blue"
+        startFillColor="skyblue"
         startOpacity={0.8}
         endOpacity={0.3}
         stepValue={1000}
@@ -136,11 +136,11 @@ const BabyCharts = () => {
         // showVerticalLines
         spacing={20}
         initialSpacing={0}
-        color1="skyblue"
-        textColor1="green"
+        color="skyblue"
+        textColor="green"
         hideDataPoints
-        dataPointsColor1="blue"
-        startFillColor1="skyblue"
+        dataPointsColor="blue"
+        startFillColor="skyblue"
         startOpacity={0.8}
         endOpacity={0.3}
         stepValue={100}
