@@ -12,6 +12,8 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 
 import Navbar from "../../Navbar";
 import { submitFeature } from "../../../services/contactUsService";
+import { ReusableButton } from "@/components/ReusableButton";
+import { ReusableTextInput } from "@/components/ReusableTextInputBox";
 
 export default function requestFeatureMain() {
   const router = useRouter();
@@ -25,16 +27,13 @@ export default function requestFeatureMain() {
     if(errorChecking()){
     submitFeature(String(username), requestText, String(token))
       .then(() => {
-        console.log("Diary entry created successfully!");
-      })
-      .then(() => {
         router.push({
           pathname: "./developerContactUs",
           params: { username, token },
         });
       })
       .catch((error) => {
-        console.error("Error creating diary entry:", error);
+        console.error("Error requesting feature:", error);
       });
     }
   };
@@ -59,23 +58,22 @@ export default function requestFeatureMain() {
 
         {/*Text Box Placement*/}
         <View style={styles.inputBoxContainer}>
-          <TextInput
-            style={styles.inputBox}
-            placeholder="Request a feature here"
-            value={requestText}
-            onChangeText={setRequestText}
-            autoCapitalize="none"
-            autoCorrect={true}
-            keyboardType="default"
-            multiline={true}
-            placeholderTextColor={"#84868a"}
+          <ReusableTextInput
+              placeholder="Report bugs/issues here"
+              value={requestText}
+              onChangeText={setRequestText}
+              autoCapitalize="none"
+              autoCorrect={true}
+              keyboardType="default"
+              multiline={true}
+              placeholderTextColor={"#84868a"}
+              style={{height: "70%"}}
           />
-          <TouchableOpacity
-            style={styles.chartButton}
+          <ReusableButton
             onPress={handleReportSend}
           >
             <Text style={styles.chartButtonText}>Send Report</Text>
-          </TouchableOpacity>
+          </ReusableButton>
         </View>
       </ScrollView>
 
