@@ -12,7 +12,8 @@ const pages = {
   Settings: "/appPages/settings/appSettings",
   "Baby Log": "/appPages/babyLog/main",
   "Contact Us": "/appPages/contactUs/main", 
-  Terminology: "/appPages/terminology/main"
+  Terminology: "/appPages/terminology/main",
+  "Additional Organisations": "/appPages/additionalOrganisations/main"
 };
 
 const Navbar: React.FC = () => {
