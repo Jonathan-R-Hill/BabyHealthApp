@@ -19,8 +19,6 @@ export default function HandleContactUs() {
 
   const ContactDevs = () => {
     try {
-      console.log("Contact Devs Button Pressed");
-
       router.push({
         pathname: "./developerContactUs",
         params: { username, token },
@@ -33,7 +31,6 @@ export default function HandleContactUs() {
 
   const ContactCarer = () => {
     try {
-      console.log("Contact Carer Button Pressed");
       router.push({ pathname: "./contactCarer", params: { username, token } });
     } catch (error) {
       console.error("Navigation Error", error);
@@ -67,9 +64,9 @@ export default function HandleContactUs() {
 
         {/*Button Placement*/}
         <View style={styles.header}>
-          <TouchableOpacity style={styles.chartButton} onPress={ContactCarer}>
+          <ReusableButton onPress={ContactCarer}>
             <Text style={styles.chartButtonText}>Contact A Carer</Text>
-          </TouchableOpacity>
+          </ReusableButton>
         </View>
         <View style={styles.header}>
           <ReusableButton onPress={ContactDevs}>

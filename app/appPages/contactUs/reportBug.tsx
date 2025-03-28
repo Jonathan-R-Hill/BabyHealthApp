@@ -13,6 +13,7 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 import Navbar from "../../Navbar";
 import { submitBug } from "../../../services/contactUsService";
 import { ReusableTextInput } from "@/components/ReusableTextInputBox";
+import { ReusableButton } from "@/components/ReusableButton";
 
 export default function reportBugMain() {
   const router = useRouter();
@@ -26,16 +27,13 @@ export default function reportBugMain() {
     if(errorChecking()){
     submitBug(String(username), bugText, String(token))
       .then(() => {
-        console.log("Diary entry created successfully!");
-      })
-      .then(() => {
         router.push({
           pathname: "./developerContactUs",
           params: { username, token },
         });
       })
       .catch((error) => {
-        console.error("Error creating diary entry:", error);
+        console.error("Error reporting bug:", error);
       });
     }
   };
@@ -71,12 +69,11 @@ export default function reportBugMain() {
             placeholderTextColor={"#84868a"}
             style={{height: "70%"}}
           />
-          <TouchableOpacity
-            style={styles.chartButton}
+          <ReusableButton
             onPress={handleReportSend}
           >
             <Text style={styles.chartButtonText}>Send Report</Text>
-          </TouchableOpacity>
+          </ReusableButton>
         </View>
       </ScrollView>
 

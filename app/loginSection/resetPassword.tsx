@@ -88,7 +88,7 @@ export default function resetPassword(){
                 <Text style={styles.warning}>
                 {validPassword
                     ? "Password is up to safety standards"
-                    : "Password must contain: 8 characters, a capital, a number and a special character (eg: @,>]"}
+                    : "Password must contain: 8 characters, a capital, a number and a special character (eg: @ and !]"}
                 </Text>
                 <View style={styles.innerHeader}>
                 <Text style={styles.label}>Enter Password</Text>
