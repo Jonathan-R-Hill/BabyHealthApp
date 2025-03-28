@@ -1,5 +1,66 @@
-import axois from "axios";
+import axios from "axios";
 import { targetURL } from "../config";
 
 const API_URL = targetURL;
 
+const asyncValidateUser = async (email: string, password: string) => {
+    try {
+      const response = await axios.post(
+        `${API_URL}/get/validateUser`,
+        { userId: email, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+  
+      console.log(response.data);
+  
+      if (!response.data.token) {
+        return false; // If no token, invalid login
+      }
+  
+      return response.data.token;
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || "Failed to authenticate user");
+    }
+  };
+
+const asyncUpdateEmail = async (email: string, code: string, password: string) => {
+    try {
+
+
+        const auth = await asyncValidateUser(email, password);
+        if (!auth) {
+            console.error("Invalid password");
+            return false;
+        }
+
+        const response = await axios.post(
+        `${API_URL}/accounts/updateEmail/${encodeURIComponent(email)}/${encodeURIComponent(code)}`,
+        {
+            userId: email,
+            code
+        },
+        {
+            headers: {
+            "Content-Type": "application/json",
+            },
+            withCredentials: true,
+        }
+        );
+
+        console.log("Code authenticated successfully:", response.data);
+        return response.data;
+    } catch (error: any) {
+        console.log("Error:", error.response?.data?.message
+        )
+        return false;
+    }
+};
+
+
+
+export { asyncUpdateEmail };
