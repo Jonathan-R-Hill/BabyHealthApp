@@ -1,14 +1,44 @@
-import { Pressable, PressableProps } from "react-native";
+import { Children } from "react";
+import { Pressable, PressableProps, Text } from "react-native";
 
-export function ReusableButton({...otherProps}:(PressableProps)){
+// I'm creating a type for the props my ReusableButton will accept.
+type ReusableButtonProps = PressableProps & {//PressableProbs AND... 
+    title?: string; //A text label for the button (e.g. "Login")
+    children?: React.ReactNode; //The child element inside the ReusableButton component.
+};
 
-    return <Pressable style={{backgroundColor: "#65558F", 
+/**This is a fancy purple button.
+ * 
+ * It accepts normal button stuff plus either:
+ * - A title string
+ * - Or some custom JSX inside it
+ * 
+ * All Pressable props like onPress, disabled, etc., are supported.
+ * It handles layout & centring so the content looks nice inside the button.
+ * 
+ * Quick use: just pass title="Login".
+ * Advanced use: customise everything using children.
+ */
+export function ReusableButton({ title, children, ...otherProps}: ReusableButtonProps){
+//In params, "Desctructure" the probs to apply them directly to <Pressable>
+
+    return <Pressable style={{
+        backgroundColor: "#65558F", 
         borderRadius: 20, 
         paddingVertical: 10,
         paddingHorizontal: 20,
         minHeight: 40,
-        height: "30%",
-        width: "80%",
+        // height: "30%", /* Disabled to adjust the height of the element to the size of the child element rather than the parent element. */
+        width: "100%", //Leave the default width at 100% and individually adjust it for specific buttons if needed.
         maxHeight: 300,
-        maxWidth: 600,}} {...otherProps}></Pressable>
+        alignItems: "center", //This keeps the child element centered.
+        justifyContent: "center" //Think of this as alignItem's emotional support property.
+        //maxWidth: 600
+    }} {...otherProps}> 
+        {title ? ( //Conditional statement: if title exists, show it in a white <Text> element.
+            <Text style={{ color: "white" }}>{title}</Text>
+        ) : ( 
+            children //Otherwise show whatever that was passed as children like a normal <Text> as we alr have.
+        )}
+    </Pressable>
 }
