@@ -8,6 +8,8 @@ import {
   Text,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { ReusableButton } from "@/components/ReusableButton";
+import { ReusableTextInput } from "@/components/ReusableTextInputBox";
 import { asyncLogin, asyncValidateUser } from "../../services/loginService";
 
 const LoginScreen = () => {
@@ -57,63 +59,102 @@ const LoginScreen = () => {
       areAllValid();
     }, [username, password]);
 
-  return (
-    <View style={styles.container}>
-      {/*Login Error Message*/}
-      <Text style={styles.warning}>{invalidLoginError 
-        ? "Error Logging In. Please re-enter and double check your details when entered" : 
-        ""}</Text>
+    return (
+      <View style={styles.container}>
+        {/* App Title */}
+        <Text style={styles.titleContainer}>
+          <Text style={styles.titleLine}>
+            <Text style={styles.titleMini}>M</Text>
+            <Text style={styles.titleMiniAccent1}>i</Text>
+            <Text style={styles.titleMini}>n</Text>
+            <Text style={styles.titleMiniAccent2}>i</Text>
+          </Text>
+          <Text style={styles.titleMoments}>Moments</Text>
+        </Text>
 
-      {/* Username Input */}
-      <Text style={styles.label}>User Name</Text>
-      <TextInput
-        style={styles.inputBox}
-        placeholder="Enter your username"
-        value={username}
-        onChangeText={setUsername}
-        autoCapitalize="none"
-        autoCorrect={false}
-        keyboardType="default"
-      />
+        {/*Login Error Message*/}
+        <Text style={styles.warning}>{invalidLoginError 
+          ? "Error Logging In. Please re-enter and double check your details when entered" : 
+          ""}</Text>
 
-      {/* Password Input */}
-      <Text style={styles.label}>Password</Text>
-      <TextInput
-        style={styles.inputBox}
-        placeholder="Enter your password"
-        value={password}
-        onChangeText={setPassword}
-        autoCapitalize="none"
-        autoCorrect={false}
-        secureTextEntry // Hides the text
-      />
+        {/* Username Input */}
+        <ReusableTextInput
+          title="Username"
+          placeholder="Enter your username"
+          value={username}
+          onChangeText={setUsername}
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
 
-      {/* Login Button */}
-      <Button title="Login" onPress={handleLogin} color= {allValid ? "#3498db" : "#7c7d7c"} disabled={!allValid}/>
+        {/* Password Input */}
+        <ReusableTextInput
+          title="Password"
+          placeholder="Enter your password"
+          value={password}
+          onChangeText={setPassword}
+          autoCapitalize="none"
+          autoCorrect={false}
+          secureTextEntry // Hides the text
+        />
 
-      {/* Links for "Create Account" and "Forgot Password" */}
-      <View style={styles.linksContainer}>
-        <TouchableOpacity onPress={handleCreateAccount}>
-          <Text style={styles.linkText}>Create Account</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleForgotPassword}>
-          <Text style={styles.linkText}>Forgot Password?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleVerifyAccount}>
-          <Text style={styles.linkText}>Verify Account</Text>
-        </TouchableOpacity>
+        {/* Login Button */}
+        <ReusableButton title="Login" onPress={handleLogin}/>
+
+        {/* Links for "Create Account" and "Forgot Password" */}
+        <View style={styles.linksContainer}>
+          <TouchableOpacity onPress={handleCreateAccount}>
+            <Text style={styles.linkText}>Create Account</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleForgotPassword}>
+            <Text style={styles.linkText}>Forgot Password?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleVerifyAccount}>
+            <Text style={styles.linkText}>Verify Account</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
   );
 };
 
 // Styles for the component
 const styles = StyleSheet.create({
   container: {
+    marginTop: -100,
     flex: 1,
     justifyContent: "center",
     padding: 16,
     backgroundColor: "#fff",
+  },
+  titleContainer: {
+    textAlign: "left",
+    marginBottom: 20,
+    lineHeight: 60, // Controlling line height
+  },
+  titleLine: {
+    fontSize: 65,
+    display: "flex",
+  },
+  titleMini: {
+    color: "#6B46C1",
+    fontWeight: "bold",
+    fontSize: 65,
+  },
+  titleMiniAccent1: {
+    color: "#CC47A6",
+    fontWeight: "bold",
+    fontSize: 65,
+  },
+  titleMiniAccent2: {
+    color: "#4E47CC",
+    fontWeight: "bold",
+    fontSize: 65,
+  },
+  titleMoments: {
+    color: "#6B46C1",
+    fontWeight: "bold",
+    fontSize: 65,
+    lineHeight: 70, // Control vertical spacing
   },
   label: {
     fontSize: 16,
@@ -143,7 +184,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     fontWeight: "bold",
     color: "red",
-  },
+  }
 });
 
 export default LoginScreen;

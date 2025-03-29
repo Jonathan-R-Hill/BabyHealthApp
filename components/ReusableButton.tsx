@@ -31,11 +31,11 @@ export function ReusableButton({ title, children, ...otherProps}: ReusableButton
         width: "100%", //Leave the default width at 100% and individually adjust it for specific buttons if needed.
         maxHeight: 300,
         alignItems: "center", //This keeps the child element centered.
-        justifyContent: "center" //Think of this as alignItem's emotional support property.
+        justifyContent: "center", //Think of this as alignItem's emotional support property.
         //maxWidth: 600
     }} {...otherProps}> 
         {title ? ( //Conditional statement: if title exists, show it in a white <Text> element.
-            <Text style={{ color: "white" }}>{title}</Text>
+            <Text style={{ color: "white", fontWeight: "600" }}>{title}</Text>
         ) : ( 
             children //Otherwise show whatever that was passed as children like a normal <Text> as we alr have.
         )}

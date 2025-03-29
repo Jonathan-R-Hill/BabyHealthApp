@@ -9,40 +9,40 @@ import {
 import { useRouter } from "expo-router";
 
 export default function CreateAccountApprovalScreen() {
-    const router = useRouter();
+  const router = useRouter();
 
-    const redirectToLogin = () => {
-        try{
-            console.log("button pressed, routing to login screen");
-            router.push("./loginScreen");
-        }catch(error) {
-            console.log("routing failure", error);
-            alert("unable to send you to the login page");
-        }
-    };
+  const redirectToLogin = () => {
+    try{
+        console.log("button pressed, routing to login screen");
+        router.push("./loginScreen");
+    }catch(error) {
+        console.log("routing failure", error);
+        alert("unable to send you to the login page");
+    }
+  };
 
-    return (
-          <View style={styles.container}>
-            <ScrollView style={styles.scrollStyle}>
-              {/*Logo placement*/}
-              <View style={styles.header}>
-                <View style={styles.profileIcon}></View>
-              </View>
+  return (
+    <View style={styles.container}>
+      <ScrollView style={styles.scrollStyle}>
+        {/*Logo placement*/}
+        <View style={styles.header}>
+          <View style={styles.profileIcon}></View>
+        </View>
 
-              {/*Text*/}
-              <View style={styles.header}>
-                <Text style={styles.textTitle}>Account Created Sucessfully</Text>
-              </View>
+        {/*Text*/}
+        <View style={styles.header}>
+          <Text style={styles.textTitle}>Account Created Sucessfully</Text>
+        </View>
 
-              {/*Button*/}
-              <View style={styles.header}>
-                <TouchableOpacity style={styles.chartButton} onPress={redirectToLogin}>
-                  <Text style={styles.chartButtonText}>Return To Login</Text>
-                </TouchableOpacity>
-              </View>
-            </ScrollView>
-          </View>
-    );
+        {/*Button*/}
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.chartButton} onPress={redirectToLogin}>
+            <Text style={styles.chartButtonText}>Return To Login</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

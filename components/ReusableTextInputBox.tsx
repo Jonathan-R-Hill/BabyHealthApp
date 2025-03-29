@@ -68,17 +68,17 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         backgroundColor: "#FFFFFF",
         textAlign: "left",
-      },
-      inputDefault: {
+    },
+    inputDefault: {
         height: 40,
         fontSize: 14,
-      },
-      inputMedium: {
+    },
+    inputMedium: {
         height: 50,
         fontSize: 16,
-      },
-      inputBig: {
+    },
+    inputBig: {
         height: 60,
         fontSize: 18,
-      },
+    },
 });
