@@ -10,6 +10,7 @@ import {
 import { useRouter } from "expo-router";
 import { ReusableButton } from "@/components/ReusableButton";
 import { ReusableTextInput } from "@/components/ReusableTextInputBox";
+import { ReusableTextInputAnimated } from "@/components/ReusableTextInputBoxAnimated";
 import { asyncLogin, asyncValidateUser } from "../../services/loginService";
 import { Divider } from "@/components/Divider";
 
@@ -79,7 +80,7 @@ const LoginScreen = () => {
           ""}</Text>
 
         {/* Username Input */}
-        <ReusableTextInput
+        <ReusableTextInputAnimated
           title="Username"
           placeholder="Enter your username"
           value={username}
@@ -89,7 +90,7 @@ const LoginScreen = () => {
         />
 
         {/* Password Input */}
-        <ReusableTextInput
+        <ReusableTextInputAnimated
           title="Password"
           placeholder="Enter your password"
           value={password}
