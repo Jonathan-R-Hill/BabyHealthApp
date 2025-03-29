@@ -1,4 +1,3 @@
-import { Children } from "react";
 import { Pressable, PressableProps, Text } from "react-native";
 
 // I'm creating a type for the props my ReusableButton will accept.
