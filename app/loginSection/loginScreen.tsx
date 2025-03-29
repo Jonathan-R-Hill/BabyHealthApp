@@ -11,6 +11,7 @@ import { useRouter } from "expo-router";
 import { ReusableButton } from "@/components/ReusableButton";
 import { ReusableTextInput } from "@/components/ReusableTextInputBox";
 import { asyncLogin, asyncValidateUser } from "../../services/loginService";
+import { Divider } from "@/components/Divider";
 
 const LoginScreen = () => {
   const [username, setUsername] = useState("test@test.test"); // Pre-fill with test username
@@ -96,6 +97,7 @@ const LoginScreen = () => {
           autoCapitalize="none"
           autoCorrect={false}
           secureTextEntry // Hides the text
+          style={styles.moreMargin}
         />
 
         {/* Login Button */}
@@ -103,14 +105,19 @@ const LoginScreen = () => {
 
         {/* Links for "Create Account" and "Forgot Password" */}
         <View style={styles.linksContainer}>
+          <Text style={styles.nonLinkText}>Don't have an account?</Text>
           <TouchableOpacity onPress={handleCreateAccount}>
             <Text style={styles.linkText}>Create Account</Text>
           </TouchableOpacity>
+        </View>
+        <Divider/>
+        <View style={styles.linksContainer}>
           <TouchableOpacity onPress={handleForgotPassword}>
-            <Text style={styles.linkText}>Forgot Password?</Text>
+            <Text style={styles.linkText}>Forgotten your password?</Text>
           </TouchableOpacity>
+          <Text style={styles.linkText}>|</Text>
           <TouchableOpacity onPress={handleVerifyAccount}>
-            <Text style={styles.linkText}>Verify Account</Text>
+            <Text style={styles.linkText}>Verify your account</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -120,7 +127,7 @@ const LoginScreen = () => {
 // Styles for the component
 const styles = StyleSheet.create({
   container: {
-    marginTop: -100,
+    marginTop: -90,
     flex: 1,
     justifyContent: "center",
     padding: 16,
@@ -170,20 +177,33 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   linksContainer: {
-    marginTop: 16,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginVertical: 14,
+    marginHorizontal: 10,
     alignItems: "center",
   },
   linkText: {
     fontSize: 14,
-    color: "#007BFF", // A blue color for links
+    color: "#6B46C1", // A blue color for links
+    marginVertical: 5,
+    marginHorizontal: 5,
+    // textDecorationLine: "underline", //fuck that shit 
+  },
+  nonLinkText: {
+    fontSize: 14,
     marginVertical: 4,
-    textDecorationLine: "underline",
+    marginHorizontal: 5,
   },
   warning: {
     fontSize: 16,
     marginBottom: 8,
     fontWeight: "bold",
     color: "red",
+  },
+  moreMargin: {
+    marginBottom: 10
   }
 });
 
