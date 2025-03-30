@@ -77,7 +77,7 @@ export default function CreateDiaryEntry() {
 
   return (
     <View style={styles.container}>
-      <Header showLabel={true} />
+      <Header title="Diary" />
       <ScrollView style={styles.diaryContainer}>
         {/* Button to create a new diary entry */}
         <TouchableOpacity

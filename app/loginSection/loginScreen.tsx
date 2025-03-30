@@ -82,7 +82,7 @@ const LoginScreen = () => {
         {/* Username Input */}
         <ReusableTextInputAnimated
           title="Username"
-          placeholder="Enter your username"
+          placeholder="Username"
           value={username}
           onChangeText={setUsername}
           autoCapitalize="none"
@@ -92,7 +92,7 @@ const LoginScreen = () => {
         {/* Password Input */}
         <ReusableTextInputAnimated
           title="Password"
-          placeholder="Enter your password"
+          placeholder="Password"
           value={password}
           onChangeText={setPassword}
           autoCapitalize="none"
