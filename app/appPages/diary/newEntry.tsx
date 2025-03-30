@@ -12,6 +12,9 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 import { postDiaryEntry } from "../../../services/diaryService";
 import Header from "../../Header";
 import Navbar from "../../Navbar";
+import { ReusableTextInput } from "@/components/ReusableTextInputBox";
+import { ReusableButton } from "@/components/ReusableButton";
+import { ReusableTextInputAnimated } from "@/components/ReusableTextInputBoxAnimated";
 
 // Define the type for form errors
 type Errors = {
@@ -56,75 +59,67 @@ export default function CreateDiaryEntry() {
 
   return (
     <View style={styles.container}>
-      <Header />
+      <Header title="New Diary Entry" onBackPress={router.back} />
       <ScrollView style={styles.diaryContainer}>
-        {/* Header Section */}
-        <View style={styles.header}>
-          <View style={styles.profileIcon}></View>
-          <Text style={styles.headerTitle}>Create Diary Entry</Text>
-        </View>
 
         {/* Form Fields */}
-        <Text style={styles.label}>Title</Text>
-        <TextInput
-          style={styles.input}
+        {errors.title && <Text style={styles.errorText}>{errors.title}</Text>}
+        <ReusableTextInputAnimated
+          title = "Title"
           placeholder="Enter title"
-          value={title}
           onChangeText={setTitle}
         />
-        {errors.title && <Text style={styles.errorText}>{errors.title}</Text>}
-
-        <Text style={styles.label}>Text</Text>
-        <TextInput
-          style={[styles.input, styles.textArea]}
-          placeholder="Write your diary entry..."
-          value={text}
+        
+        {errors.text && <Text style={styles.errorText}>{errors.text}</Text>}
+        <ReusableTextInputAnimated
+          title = "Diary Entry"
+          size="medium"
+          placeholder="Write your diary..."
           onChangeText={setText}
           multiline
         />
-        {errors.text && <Text style={styles.errorText}>{errors.text}</Text>}
 
-        <Text style={styles.label}>Weight (g)</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter weight"
-          value={weight}
+        {errors.weight && <Text style={styles.errorText}>{errors.weight}</Text>}
+        <ReusableTextInputAnimated
+          title = "Weight"
+          placeholder="Weight (g)"
           onChangeText={setWeight}
           keyboardType="numeric"
         />
-        {errors.weight && <Text style={styles.errorText}>{errors.weight}</Text>}
-
-        <Text style={styles.label}>Food (type)</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter food type"
-          value={foodType}
-          onChangeText={setFoodType}
-        />
+        
         {errors.foodType && (
           <Text style={styles.errorText}>{errors.foodType}</Text>
         )}
-
-        <Text style={styles.label}>Food amount (g)</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter food amount"
-          value={foodAmount}
-          onChangeText={setFoodAmount}
-          keyboardType="numeric"
+        <ReusableTextInputAnimated
+          title = "Food Type"
+          placeholder="Food type"
+          onChangeText={setFoodType}
         />
+        
         {errors.foodAmount && (
           <Text style={styles.errorText}>{errors.foodAmount}</Text>
         )}
-
-        {/* Image Upload Section */}
+        <ReusableTextInputAnimated
+          title = "Food amount (g)"
+          placeholder="Food amount (g)"
+          onChangeText={setFoodAmount}
+          keyboardType="numeric"
+        />
+        
+        {
+        /* Image Upload Section */
+        /* TODO: Remove this placeholder and implement the photo upload feature */
+        }
         <TouchableOpacity style={styles.imageUploader}>
           <Image style={styles.imageIcon} />
           <Text style={styles.imageText}>Add pic</Text>
         </TouchableOpacity>
 
         {/* Submit Button */}
-        <TouchableOpacity
+        <ReusableButton
+          title = "Create"
+          edge = "edgy"
+
           onPress={() => {
             if (validateForm()) {
               const userId = String(username);
@@ -160,10 +155,7 @@ export default function CreateDiaryEntry() {
                 });
             }
           }}
-          style={styles.createButton}
-        >
-          <Text style={styles.createButtonText}>+ Create a new entry</Text>
-        </TouchableOpacity>
+        />
       </ScrollView>
       <Navbar />
     </View>
@@ -176,6 +168,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   diaryContainer: {
+    paddingTop: 15,
     flex: 1,
     paddingHorizontal: 10,
   },
@@ -215,10 +208,10 @@ const styles = StyleSheet.create({
   errorText: {
     color: "red",
     fontSize: 14,
-    marginVertical: 5,
+    marginBottom: 5,
   },
   imageUploader: {
-    marginTop: 15,
+    marginBottom: 15,
     alignItems: "center",
     justifyContent: "center",
     height: 150,
@@ -233,19 +226,20 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   imageText: {
+    marginTop: -30,
     fontSize: 16,
     color: "#999",
   },
-  createButton: {
-    backgroundColor: "#3498db",
-    paddingVertical: 15,
-    marginVertical: 10,
-    borderRadius: 5,
-    alignItems: "center",
-  },
-  createButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
+  // createButton: {
+  //   backgroundColor: "#3498db",
+  //   paddingVertical: 15,
+  //   marginVertical: 10,
+  //   borderRadius: 5,
+  //   alignItems: "center",
+  // },
+  // createButtonText: {
+  //   color: "#fff",
+  //   fontSize: 16,
+  //   fontWeight: "bold",
+  // },
 });
