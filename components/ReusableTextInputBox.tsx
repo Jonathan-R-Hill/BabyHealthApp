@@ -74,11 +74,13 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     inputMedium: {
-        height: 50,
-        fontSize: 16,
+        paddingTop: 10,
+        height: 120,
+        fontSize: 15,
     },
     inputBig: {
-        height: 60,
-        fontSize: 18,
+        paddingTop: 10,
+        height: 250,
+        fontSize: 16,
     },
 });

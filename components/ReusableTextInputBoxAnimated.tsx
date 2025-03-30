@@ -108,8 +108,6 @@ export function ReusableTextInputAnimated({
         outputRange: [14, 12], // shrink font
     });
 
-
-
     return (
         <View style={styles.container}>
             {/*Render a label that displays the value of "title" if it isn't null.*/}
@@ -121,10 +119,10 @@ export function ReusableTextInputAnimated({
                     fontSize: labelFontSize,
                     opacity: labelAnim, // fades in
                 }
-            ]}
-            >
+            ]}>
                 {title}
             </Animated.Text>
+
             <TextInput
                 value={value}
                 style={[styles.inputBase, sizeStyles[size], style]}
@@ -168,11 +166,13 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     inputMedium: {
-        height: 50,
-        fontSize: 16,
+        paddingTop: 10,
+        height: 120,
+        fontSize: 15,
     },
     inputBig: {
-        height: 60,
-        fontSize: 18,
+        paddingTop: 10,
+        height: 250,
+        fontSize: 16,
     },
 });
