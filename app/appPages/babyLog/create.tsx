@@ -148,14 +148,14 @@ export default function AddBaby() {
               const userId = String(username);
               const weightValue = parseFloat(weight);
 
-              console.log("Submitting:", { userId, name, gender, dateOfBirth, weight, token});
+              console.log("Submitting:", { userId, token, name, gender, dateOfBirth, weight });
               postBaby(
                 userId,
+                String(token),
                 name,
                 gender,
                 dateOfBirth,
                 weightValue,
-                String(token)
               )
                 .then(() => {
                   console.log("Baby added successfully!");

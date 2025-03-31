@@ -66,20 +66,20 @@ export const fetchBabies = async (userId: string,  token: string) => {
  */
 export const postBaby = async (
     userId: string,
+    token: string,
     name: string,
     gender: string,
     dateOfBirth: Date,
-    weight: number,
-    token: string
+    weight: number
 ) => {
     try {
-        const response = await axios.post(`${API_URL}/post/newbaby`, {
+        const response = await axios.post(`${API_URL}/post/newbaby/${userId}/${token}`, {
             userId,
+            token,
             name,
             gender,
             dateOfBirth,
             weight,
-            token,
         });
         return response.data;
     } catch (error: any) {

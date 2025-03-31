@@ -15,11 +15,14 @@ import Header from "../../Header";
 import { fetchBabies } from "../../../services/babyProfileService"; 
 
 export interface Baby {
-  babyId: number;
+  _id: string;
+  details: { userId: string; babyId: number; }
+  data: {
   name: string;
   gender: string;
   dateOfBirth: Date;
   weight: number;
+  }
 }
 
 export default function CreateBaby() {
@@ -31,7 +34,11 @@ export default function CreateBaby() {
     try {
       const data: Baby[] = await fetchBabies(username, token);
       console.log("Fetched data", data);
-      setBabies(data);
+      console.log("Fetched data:", JSON.stringify(data, null, 2));
+      setBabies(data.map(baby => ({
+        ...baby,
+        ...baby.data
+      })));
     } catch (error) {
       Alert.alert("Error.", "Could not load Babies")
     }
@@ -95,24 +102,24 @@ export default function CreateBaby() {
         {/* Display babies */}
       {babies && babies.length > 0 ? (
         babies.map((baby) => (
-          <View key={baby.babyId} style={styles.babyCard}>
-            <Text style={styles.babyName}>{baby.name}</Text>
+          <View key={baby.details.babyId} style={styles.babyCard}>
+            <Text style={styles.babyName}>{baby.data.name}</Text>
             <Text style={styles.babyDetails}>
-              {baby.gender} - {new Date(baby.dateOfBirth).toLocaleDateString()}
+              {baby.data.gender} - {new Date(baby.data.dateOfBirth).toLocaleDateString()}
             </Text>
 
             {/* Buttons for actions */}
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.actionButton}
-                onPress={() => handleNavigateToView(baby.babyId)}
+                onPress={() => handleNavigateToView(baby.details.babyId)}
               >
                 <Text style={styles.buttonText}>View</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={styles.actionButton}
-                onPress={() => handleNavigateToUpdate(baby.babyId)}
+                onPress={() => handleNavigateToUpdate(baby.details.babyId)}
               >
                 <Text style={styles.buttonText}>Edit</Text>
               </TouchableOpacity>
