@@ -20,7 +20,7 @@ export const fetchBaby = async (
 ) => {
     try {
         const response = await axios.get<Baby[]>(
-            `${API_URL}/get/baby/${encodeURIComponent(userId)}/${encodeURIComponent(
+            `${API_URL}/get/singlebaby/${encodeURIComponent(userId)}/${encodeURIComponent(
                 babyId
         )}/${encodeURIComponent(token)}`
         );
@@ -40,10 +40,10 @@ export const fetchBaby = async (
  * @throws {Error}
  */
 
-export const fetchBabies = async (userId: string, token: string) => {
+export const fetchBabies = async (userId: string,  token: string) => {
     try {
         const response = await axios.get(
-            `${API_URL}/get/baby/${encodeURIComponent(userId)}/${encodeURIComponent(
+            `${API_URL}/get/babies/${encodeURIComponent(userId)}/${encodeURIComponent(
                 token
             )}`
         );
@@ -60,19 +60,26 @@ export const fetchBabies = async (userId: string, token: string) => {
  * @param {string} name
  * @param {string} gender
  * @param {Date} dateOfBirth
+ * @param {number} weight
+ * @returns {Promise<object>}
+ * @throws {Error}
  */
-export const addBaby = async (
+export const postBaby = async (
     userId: string,
     name: string,
     gender: string,
-    dateOfBirth: Date
+    dateOfBirth: Date,
+    weight: number,
+    token: string
 ) => {
     try {
-        const response = await axios.post(`${API_URL}/post/baby`, {
+        const response = await axios.post(`${API_URL}/post/newbaby`, {
             userId,
             name,
             gender,
-            dateOfBirth
+            dateOfBirth,
+            weight,
+            token,
         });
         return response.data;
     } catch (error: any) {

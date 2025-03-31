@@ -14,12 +14,12 @@ import Header from "../../Header";
 
 import { fetchBabies } from "../../../services/babyProfileService"; 
 
-// Attempt Simple just to see how it works
 export interface Baby {
   babyId: number;
   name: string;
   gender: string;
   dateOfBirth: Date;
+  weight: number;
 }
 
 export default function CreateBaby() {
@@ -30,6 +30,7 @@ export default function CreateBaby() {
   const getBabies = async (username: string, token: string) => {
     try {
       const data: Baby[] = await fetchBabies(username, token);
+      console.log("Fetched data", data);
       setBabies(data);
     } catch (error) {
       Alert.alert("Error.", "Could not load Babies")
@@ -39,9 +40,9 @@ export default function CreateBaby() {
   // Fetch Baby/Babies when username is available
   useEffect(() => {
     if (username) {
-      fetchBabies(String(username), String(token))
+      getBabies(String(username), String(token))
     }
-  }, [username]);
+  }, [username, token]);
 
   // Navigate to create baby page
   const handleNavigateToCreate = () => {
@@ -81,7 +82,7 @@ export default function CreateBaby() {
 
   return (
     <View style={styles.container}>
-      <Header showLabel={true} />
+      <Header title="Baby Profile"/>
       <ScrollView style={styles.babyContainer}>
         {/* Button to create a new baby */}
         <TouchableOpacity
@@ -92,13 +93,14 @@ export default function CreateBaby() {
         </TouchableOpacity>
   
         {/* Display babies */}
-        {babies.map((baby) => (
+      {babies && babies.length > 0 ? (
+        babies.map((baby) => (
           <View key={baby.babyId} style={styles.babyCard}>
             <Text style={styles.babyName}>{baby.name}</Text>
             <Text style={styles.babyDetails}>
               {baby.gender} - {new Date(baby.dateOfBirth).toLocaleDateString()}
             </Text>
-            
+
             {/* Buttons for actions */}
             <View style={styles.buttonContainer}>
               <TouchableOpacity
@@ -107,7 +109,7 @@ export default function CreateBaby() {
               >
                 <Text style={styles.buttonText}>View</Text>
               </TouchableOpacity>
-  
+
               <TouchableOpacity
                 style={styles.actionButton}
                 onPress={() => handleNavigateToUpdate(baby.babyId)}
@@ -116,7 +118,10 @@ export default function CreateBaby() {
               </TouchableOpacity>
             </View>
           </View>
-        ))}
+        ))
+      ) : (
+        <Text style={styles.noBabiesText}>No babies available.</Text>
+      )}
       </ScrollView>
       <Navbar />
     </View>
@@ -220,5 +225,9 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 14,
     fontWeight: "bold",
+  },
+  noBabiesText: {
+    color: "#fff",
+    fontSize: 16,
   },
 });

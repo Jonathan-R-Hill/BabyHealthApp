@@ -11,7 +11,8 @@
     "ios.userInterfaceStyles": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.drepico.BabyHealthApp"
     },
     "android": {
       "adaptiveIcon": {
@@ -45,9 +46,9 @@
         "origin": false
       },
       "eas": {
-        "projectId": "474de84d-1a58-4330-8ca3-4309fcd525f0"
+        "projectId": "ac911191-6376-4893-9499-9a847f269e62"
       }
     },
-    "owner": "mhmyhan"
+    "owner": "palecharlie"
   }
 }
