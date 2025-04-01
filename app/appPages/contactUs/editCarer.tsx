@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   createButton: {
-    backgroundColor: "#3498db",
+    backgroundColor: "#65558F",
     paddingVertical: 15,
     marginVertical: 10,
     borderRadius: 5,

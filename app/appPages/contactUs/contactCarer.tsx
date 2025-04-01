@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 10,
     },
     createButton: {
-      backgroundColor: "#3498db",
+      backgroundColor: "#65558F",
       paddingVertical: 15,
       marginVertical: 10,
       borderRadius: 5,
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     carerEntry: {
       flexDirection: "column",
       justifyContent: "space-between",
-      backgroundColor: "#3498db",
+      backgroundColor: "#65558F",
       padding: 15,
       marginVertical: 5,
       borderRadius: 5,

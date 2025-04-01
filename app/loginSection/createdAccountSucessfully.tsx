@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
       borderRadius: 20,
     },
     chartButton: {
-      backgroundColor: "#3498db",
+      backgroundColor: "#65558F",
       paddingVertical: 10,
       paddingHorizontal: 20,
       borderRadius: 5,

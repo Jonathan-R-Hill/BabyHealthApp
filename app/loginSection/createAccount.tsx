@@ -191,7 +191,7 @@ export default function CreateAccountScreen() {
           <TouchableOpacity
             style={[
               styles.chartButton,
-              { backgroundColor: allValid ? "#3498db" : "#7c7d7c" },
+              { backgroundColor: allValid ? "#65558F" : "#7c7d7c" },
             ]}
             onPress={createNewAccount}
             disabled={!allValid}
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     maxWidth: 400,
   },
   chartButton: {
-    backgroundColor: "#3498db",
+    backgroundColor: "#65558F",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
