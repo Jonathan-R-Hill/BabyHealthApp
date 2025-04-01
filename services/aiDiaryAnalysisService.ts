@@ -1,22 +1,45 @@
-import axios from "axios"; // Import axios for making HTTP requests
-import { targetURL } from "../config"; // Import the base API URL from the config file
+import axios from "axios";
+import { targetURL } from "../config";
 import { fetchWeightRecord } from "./chartServices";
 
-const API_URL = targetURL; // Assign the imported URL to a constant
+const API_URL = targetURL;
 
 export const fetchAiWeightAnalysis = async (userId: string, token: string) => {
-    try {
-        const weightRecord = await fetchWeightRecord(userId, token);
-        const response = await axios.get(
-            `${API_URL}/post/ai/analyseBabyWeight/${encodeURIComponent(
-                weightRecord
-            )}`
-        )
-        return response.data; // Return the retrieved data
-    } catch (error: any) {
-      // Handle errors and return a meaningful message
-      throw new Error(
-        error.response?.data?.message || "Failed to fetch weight analysis at service level."
-      );
+  try {
+    const weightRecords = await fetchWeightRecord(userId, token);
+
+    if (!Array.isArray(weightRecords) || weightRecords.length === 0) {
+      throw new Error("Invalid weight records received.");
     }
-}
+
+    const weights = weightRecords.map((record) => record.weight);
+    const timestamps = weightRecords.map((record) => record.date);
+
+    // console.log("Transformed weight data:", { weights, timestamps });
+
+    const response = await axios.post(
+      `${API_URL}/post/ai/analyseBabyWeight/${userId}/${token}`,
+      {
+        weight: weights,
+        timestamps: timestamps,
+        foodConsumed: [],
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log("AI analysis response:", response.data);
+    return response.data;
+  } catch (error: any) {
+    console.error(
+      "Error fetching AI weight analysis:",
+      error.response?.data || error.message
+    );
+    throw new Error(
+      error.response?.data?.message || "Failed to fetch weight analysis."
+    );
+  }
+};
