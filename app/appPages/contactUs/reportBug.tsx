@@ -1,13 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-  TextInput,
-  ScrollView,
-} from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 
 import Navbar from "../../Navbar";
@@ -15,6 +7,9 @@ import { submitBug } from "../../../services/contactUsService";
 import { ReusableTextInput } from "@/components/ReusableTextInputBox";
 import { ReusableButton } from "@/components/ReusableButton";
 import Header from "@/app/Header";
+
+const { width: screenWidth } = Dimensions.get("window");
+const isLargeScreen = screenWidth > 1200;
 
 export default function reportBugMain() {
   const router = useRouter();
@@ -25,31 +20,31 @@ export default function reportBugMain() {
   let [errorMessage, setErrorMessage] = useState("");
 
   const handleReportSend = async () => {
-    if(errorChecking()){
-    submitBug(String(username), bugText, String(token))
-      .then(() => {
-        router.push({
-          pathname: "./developerContactUs",
-          params: { username, token },
+    if (errorChecking()) {
+      submitBug(String(username), bugText, String(token))
+        .then(() => {
+          router.push({
+            pathname: "./developerContactUs",
+            params: { username, token },
+          });
+        })
+        .catch((error) => {
+          console.error("Error reporting bug:", error);
         });
-      })
-      .catch((error) => {
-        console.error("Error reporting bug:", error);
-      });
     }
   };
 
   const errorChecking = () => {
-    if(bugText === undefined || bugText === ""){
+    if (bugText === undefined || bugText === "") {
       setErrorMessage("Please enter text into the box");
       return false;
-    };
+    }
     return true;
   };
 
   return (
     <View style={styles.container}>
-      <Header title="Report bugs or issues"/>
+      <Header title="Report bugs or issues" />
       <ScrollView style={styles.scrollStyle}>
         {/*Title Placement*/}
         {/* <View style={styles.header}>
@@ -70,10 +65,14 @@ export default function reportBugMain() {
             multiline={true}
             placeholderTextColor={"#84868a"}
             size="big"
+            title=""
+            style={
+              isLargeScreen
+                ? { width: 500, height: 300 }
+                : { width: 300, height: 200 }
+            }
           />
-          <ReusableButton
-            onPress={handleReportSend}
-          >
+          <ReusableButton onPress={handleReportSend}>
             <Text style={styles.chartButtonText}>Send Report</Text>
           </ReusableButton>
         </View>
@@ -113,7 +112,7 @@ const styles = StyleSheet.create({
     maxWidth: "90%",
     justifyContent: "center",
     paddingHorizontal: 20,
-    marginLeft: "3.5%"
+    marginLeft: "3.5%",
   },
   scrollStyle: {
     flex: 1,

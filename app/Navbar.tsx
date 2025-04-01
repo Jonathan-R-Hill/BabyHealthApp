@@ -58,7 +58,7 @@ const Navbar: React.FC = () => {
         return <Ionicons name="mail-outline" size={size} color="#fff" />;
       case "Terminology":
         return <Ionicons name="search" size={size} color="#fff" />;
-        case "Additional Organisations":
+      case "Additional Organisations":
         return <Ionicons name="business" size={size} color="#fff" />;
       default:
         return <Ionicons name="ellipsis-horizontal" size={size} color="#fff" />;
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#65558F",
     borderTopWidth: 1,
     borderTopColor: "#ccc",
-    paddingTop: 0,
+    paddingTop: 1,
     marginTop: 30,
   },
   mainButtonsContainer: {

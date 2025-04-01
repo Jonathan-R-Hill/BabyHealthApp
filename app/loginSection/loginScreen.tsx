@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
+  Dimensions,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { ReusableButton } from "@/components/ReusableButton";
@@ -14,11 +15,15 @@ import { ReusableTextInputAnimated } from "@/components/ReusableTextInputBoxAnim
 import { asyncLogin, asyncValidateUser } from "../../services/loginService";
 import { Divider } from "@/components/Divider";
 
+const { width: screenWidth } = Dimensions.get("window");
+const isLargeScreen = screenWidth > 1200;
+
 const LoginScreen = () => {
   const [username, setUsername] = useState("test@test.test"); // Pre-fill with test username
   const [password, setPassword] = useState("Testdata1!"); // Pre-fill with test password
   let [invalidLoginError, setInvalidLoginError] = useState(false); //assume the login does not require an error message
-  let [allValid, setAllValid] = useState(false) //assume nothing is valid to begin with
+  let [allValid, setAllValid] = useState(false); //assume nothing is valid to begin with
+
   const router = useRouter();
 
   const handleLogin = async () => {
@@ -54,74 +59,77 @@ const LoginScreen = () => {
   };
 
   const areAllValid = () => {
-    setAllValid(username !== "" && password !== "")
-  }
+    setAllValid(username !== "" && password !== "");
+  };
 
   useEffect(() => {
-      areAllValid();
-    }, [username, password]);
+    areAllValid();
+  }, [username, password]);
 
-    return (
-      <View style={styles.container}>
-        {/* App Title */}
-        <Text style={styles.titleContainer}>
-          <Text style={styles.titleLine}>
-            <Text style={styles.titleMini}>M</Text>
-            <Text style={styles.titleMiniAccent1}>i</Text>
-            <Text style={styles.titleMini}>n</Text>
-            <Text style={styles.titleMiniAccent2}>i</Text>
-          </Text>
-          <Text style={styles.titleMoments}>Moments</Text>
+  return (
+    <View style={styles.container}>
+      {/* App Title */}
+      <Text style={styles.titleContainer}>
+        <Text style={styles.titleLine}>
+          <Text style={styles.titleMini}>M</Text>
+          <Text style={styles.titleMiniAccent1}>i</Text>
+          <Text style={styles.titleMini}>n</Text>
+          <Text style={styles.titleMiniAccent2}>i</Text>
         </Text>
+        {"\n"}
+        <Text style={styles.titleMoments}>Moments</Text>
+      </Text>
 
-        {/*Login Error Message*/}
-        <Text style={styles.warning}>{invalidLoginError 
-          ? "Error Logging In. Please re-enter and double check your details when entered" : 
-          ""}</Text>
+      {/*Login Error Message*/}
+      <Text style={styles.warning}>
+        {invalidLoginError
+          ? "Error Logging In. Please re-enter and double check your details when entered"
+          : ""}
+      </Text>
 
-        {/* Username Input */}
-        <ReusableTextInputAnimated
-          title="Username"
-          placeholder="Username"
-          value={username}
-          onChangeText={setUsername}
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
+      {/* Username Input */}
+      <ReusableTextInputAnimated
+        title="Username"
+        placeholder="Username"
+        value={username}
+        onChangeText={setUsername}
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
 
-        {/* Password Input */}
-        <ReusableTextInputAnimated
-          title="Password"
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          autoCapitalize="none"
-          autoCorrect={false}
-          secureTextEntry // Hides the text
-          style={styles.moreMargin}
-        />
+      {/* Password Input */}
+      <ReusableTextInputAnimated
+        title="Password"
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        autoCapitalize="none"
+        autoCorrect={false}
+        secureTextEntry // Hides the text
+        style={styles.moreMargin}
+      />
 
-        {/* Login Button */}
-        <ReusableButton title="Login" onPress={handleLogin}/>
+      {/* Login Button */}
+      <ReusableButton title="Login" onPress={handleLogin} />
 
-        {/* Links for "Create Account" and "Forgot Password" */}
-        <View style={styles.linksContainer}>
-          <Text style={styles.nonLinkText}>Don't have an account?</Text>
-          <TouchableOpacity onPress={handleCreateAccount}>
-            <Text style={styles.linkText}>Create Account</Text>
-          </TouchableOpacity>
-        </View>
-        <Divider/>
-        <View style={styles.linksContainer}>
-          <TouchableOpacity onPress={handleForgotPassword}>
-            <Text style={styles.linkText}>Forgotten your password?</Text>
-          </TouchableOpacity>
-          <Text style={styles.linkText}>|</Text>
-          <TouchableOpacity onPress={handleVerifyAccount}>
-            <Text style={styles.linkText}>Verify your account</Text>
-          </TouchableOpacity>
-        </View>
+      {/* Links for "Create Account" and "Forgot Password" */}
+      <View style={styles.linksContainer}>
+        <Text style={styles.nonLinkText}>Don't have an account?</Text>
+        <TouchableOpacity onPress={handleCreateAccount}>
+          <Text style={styles.linkText}>Create Account</Text>
+        </TouchableOpacity>
       </View>
+      <Divider />
+      <View style={styles.linksContainer}>
+        <TouchableOpacity onPress={handleForgotPassword}>
+          <Text style={styles.linkText}>Forgotten your password?</Text>
+        </TouchableOpacity>
+        <Text style={styles.linkText}>|</Text>
+        <TouchableOpacity onPress={handleVerifyAccount}>
+          <Text style={styles.linkText}>Verify your account</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
@@ -135,11 +143,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   titleContainer: {
-    textAlign: "left",
+    textAlign: isLargeScreen ? "center" : "left",
+    alignSelf: isLargeScreen ? "center" : "flex-start",
     display: "flex",
     flexDirection: "column",
     marginBottom: 20,
-    lineHeight: 60, // Controlling line height
+    lineHeight: 80, // Controlling line height
   },
   titleLine: {
     fontSize: 65,
@@ -192,7 +201,7 @@ const styles = StyleSheet.create({
     color: "#6B46C1", // A blue color for links
     marginVertical: 5,
     marginHorizontal: 5,
-    // textDecorationLine: "underline", //fuck that shit 
+    // textDecorationLine: "underline", //fuck that shit
   },
   nonLinkText: {
     fontSize: 14,
@@ -206,8 +215,8 @@ const styles = StyleSheet.create({
     color: "red",
   },
   moreMargin: {
-    marginBottom: 10
-  }
+    marginBottom: 10,
+  },
 });
 
 export default LoginScreen;

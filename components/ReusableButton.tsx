@@ -10,6 +10,9 @@ import {
 // Get screen width
 const { width: screenWidth } = Dimensions.get("window");
 
+// Determine button width dynamically
+const buttonWidth = screenWidth <= 1200 ? "100%" : "60%";
+
 type ReusableButtonProps = PressableProps & {
   title?: string;
   edge?: "round" | "edgy";
@@ -37,7 +40,7 @@ export function ReusableButton({
             paddingVertical: 10,
             paddingHorizontal: 20,
             minHeight: 40,
-            width: "60%",
+            width: buttonWidth, // Dynamic width
             maxHeight: 300,
             alignItems: "center",
             justifyContent: "center",
@@ -58,7 +61,6 @@ export function ReusableButton({
 
 const styles = StyleSheet.create({
   centerContainer: {
-    // flex: 1, // Takes full height of screen
     justifyContent: "center", // Centers vertically
     alignItems: "center", // Centers horizontally
     paddingTop: 5,

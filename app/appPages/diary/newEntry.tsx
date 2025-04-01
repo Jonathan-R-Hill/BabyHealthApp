@@ -61,18 +61,17 @@ export default function CreateDiaryEntry() {
     <View style={styles.container}>
       <Header title="New Diary Entry" onBackPress={router.back} />
       <ScrollView style={styles.diaryContainer}>
-
         {/* Form Fields */}
         {errors.title && <Text style={styles.errorText}>{errors.title}</Text>}
         <ReusableTextInputAnimated
-          title = "Title"
+          title="Title"
           placeholder="Enter title"
           onChangeText={setTitle}
         />
-        
+
         {errors.text && <Text style={styles.errorText}>{errors.text}</Text>}
         <ReusableTextInputAnimated
-          title = "Diary Entry"
+          title="Diary Entry"
           size="medium"
           placeholder="Write your diary..."
           onChangeText={setText}
@@ -81,35 +80,33 @@ export default function CreateDiaryEntry() {
 
         {errors.weight && <Text style={styles.errorText}>{errors.weight}</Text>}
         <ReusableTextInputAnimated
-          title = "Weight"
+          title="Weight"
           placeholder="Weight (g)"
           onChangeText={setWeight}
           keyboardType="numeric"
         />
-        
+
         {errors.foodType && (
           <Text style={styles.errorText}>{errors.foodType}</Text>
         )}
         <ReusableTextInputAnimated
-          title = "Food Type"
+          title="Food Type"
           placeholder="Food type"
           onChangeText={setFoodType}
         />
-        
+
         {errors.foodAmount && (
           <Text style={styles.errorText}>{errors.foodAmount}</Text>
         )}
         <ReusableTextInputAnimated
-          title = "Food amount (g)"
+          title="Food amount (g)"
           placeholder="Food amount (g)"
           onChangeText={setFoodAmount}
           keyboardType="numeric"
         />
-        
-        {
-        /* Image Upload Section */
-        /* TODO: Remove this placeholder and implement the photo upload feature */
-        }
+
+        {/* Image Upload Section */
+        /* TODO: Remove this placeholder and implement the photo upload feature */}
         <TouchableOpacity style={styles.imageUploader}>
           <Image style={styles.imageIcon} />
           <Text style={styles.imageText}>Add pic</Text>
@@ -117,9 +114,8 @@ export default function CreateDiaryEntry() {
 
         {/* Submit Button */}
         <ReusableButton
-          title = "Create"
-          edge = "edgy"
-
+          title="Create"
+          edge="edgy"
           onPress={() => {
             if (validateForm()) {
               const userId = String(username);

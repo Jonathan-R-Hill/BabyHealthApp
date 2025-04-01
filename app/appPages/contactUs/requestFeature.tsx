@@ -1,13 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-  TextInput,
-  ScrollView,
-} from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 
 import Navbar from "../../Navbar";
@@ -15,6 +7,9 @@ import { submitFeature } from "../../../services/contactUsService";
 import { ReusableButton } from "@/components/ReusableButton";
 import { ReusableTextInput } from "@/components/ReusableTextInputBox";
 import Header from "@/app/Header";
+
+const { width: screenWidth } = Dimensions.get("window");
+const isLargeScreen = screenWidth > 1200;
 
 export default function requestFeatureMain() {
   const router = useRouter();
@@ -25,25 +20,25 @@ export default function requestFeatureMain() {
   let [errorMessage, setErrorMessage] = useState("");
 
   const handleReportSend = async () => {
-    if(errorChecking()){
-    submitFeature(String(username), requestText, String(token))
-      .then(() => {
-        router.push({
-          pathname: "./developerContactUs",
-          params: { username, token },
+    if (errorChecking()) {
+      submitFeature(String(username), requestText, String(token))
+        .then(() => {
+          router.push({
+            pathname: "./developerContactUs",
+            params: { username, token },
+          });
+        })
+        .catch((error) => {
+          console.error("Error requesting feature:", error);
         });
-      })
-      .catch((error) => {
-        console.error("Error requesting feature:", error);
-      });
     }
   };
 
   const errorChecking = () => {
-    if(requestText === undefined || requestText === ""){
+    if (requestText === undefined || requestText === "") {
       setErrorMessage("Please enter text into the box");
       return false;
-    };
+    }
     return true;
   };
 
@@ -54,26 +49,30 @@ export default function requestFeatureMain() {
         {/* <View style={styles.header}>
           <Text style={styles.textTitle}>Request A Feature</Text>
         </View> */}
-        <Header title="Request A Feature"/>
+        <Header title="Request A Feature" />
 
         <Text style={styles.errorText}>{errorMessage}</Text>
 
         {/*Text Box Placement*/}
         <View style={styles.inputBoxContainer}>
           <ReusableTextInput
-              placeholder="Report bugs/issues here"
-              value={requestText}
-              onChangeText={setRequestText}
-              autoCapitalize="none"
-              autoCorrect={true}
-              keyboardType="default"
-              multiline={true}
-              placeholderTextColor={"#84868a"}
-              size="big"
+            placeholder="Report bugs/issues here"
+            value={requestText}
+            onChangeText={setRequestText}
+            autoCapitalize="none"
+            autoCorrect={true}
+            keyboardType="default"
+            multiline={true}
+            placeholderTextColor={"#84868a"}
+            size="big"
+            title=""
+            style={
+              isLargeScreen
+                ? { width: 500, height: 300 }
+                : { width: 300, height: 200 }
+            }
           />
-          <ReusableButton
-            onPress={handleReportSend}
-          >
+          <ReusableButton onPress={handleReportSend}>
             <Text style={styles.chartButtonText}>Send Report</Text>
           </ReusableButton>
         </View>
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
     maxWidth: "90%",
     justifyContent: "center",
     paddingHorizontal: 20,
-    marginLeft: "3.5%"
+    marginLeft: "3.5%",
   },
   scrollStyle: {
     flex: 1,
