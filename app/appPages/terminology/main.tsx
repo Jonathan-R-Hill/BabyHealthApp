@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F4F4F4",
-    paddingHorizontal: 15,
+    //paddingHorizontal: 15,
   },
   title: {
     fontSize: 22,
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     paddingBottom: 100,
+    paddingHorizontal: 15,
   },
   card: {
     backgroundColor: "#FFF",
