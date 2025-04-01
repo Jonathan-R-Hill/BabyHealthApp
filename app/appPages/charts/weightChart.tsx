@@ -7,6 +7,7 @@ import { fetchWeightRecord, fetchMilkRecord } from "@/services/chartServices";
 import { useLocalSearchParams } from "expo-router";
 import Header from "@/app/Header";
 import Navbar from "@/app/Navbar";
+import { fetchAiWeightAnalysis } from "@/services/aiDiaryAnalysisService";
  
 type WeightRecord = {
   date: string;
@@ -24,10 +25,11 @@ const BabyCharts = () => {
   const [ milkData, setMilkData ] = useState<MilkRecord[]>([]);
 
   useEffect(() => {
-      fetchWeightData(username as string, token as string).then(() => {
-      fetchMilkData(username as string, token as string);
-    });    
-  }, []);
+    fetchWeightData(username as string, token as string)
+      .then(() => fetchAiWeightAnalysis(username as string, token as string))
+      .then(() => fetchMilkData(username as string, token as string));
+  }, []); 
+  
   
   async function fetchWeightData(username: string, token: string) {
     try {
