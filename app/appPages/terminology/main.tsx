@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     color: "#666",
   },
   expandText: {
-    color: "#E74C3C",
+    color: "#666",
     fontWeight: "600",
   },
 });
