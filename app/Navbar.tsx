@@ -5,7 +5,6 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 // Define navigation pages and their corresponding paths
 const pages = {
-  Chatbot: "/appPages/bot/main",
   Charts: "/appPages/charts/weightChart",
   Diary: "/appPages/diary/main",
   "Baby Care": "/appPages/adviceSection/main",
@@ -13,7 +12,8 @@ const pages = {
   "Baby Log": "/appPages/babyLog/main",
   "Contact Us": "/appPages/contactUs/main", 
   Terminology: "/appPages/terminology/main",
-  "Additional Organisations": "/appPages/additionalOrganisations/main"
+  "Additional Organisations": "/appPages/additionalOrganisations/main",
+  // Chatbot: "/appPages/bot/main",
 };
 
 const Navbar: React.FC = () => {
@@ -69,7 +69,7 @@ const Navbar: React.FC = () => {
   };
 
   // Define the main navigation items
-  const mainItems = ["Chatbot", "Charts", "Diary", "Baby Care"];
+  const mainItems = ["Terminology", "Charts", "Diary", "Baby Care"];
 
   return (
     <View style={styles.navbarContainer}>
