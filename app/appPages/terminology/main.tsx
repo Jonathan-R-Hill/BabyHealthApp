@@ -47,7 +47,7 @@ export default function TerminologySection() {
         <Text style={styles.cardContent}>
           {isExpanded ? item.content : truncatedContent}
           {!isExpanded && item.content.length > 100 && (
-            <Text style={styles.expandText}> expand on tap</Text>
+            <Text style={styles.expandText}> expand</Text>
           )}
         </Text>
       </TouchableOpacity>
@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     paddingVertical: 5,
     paddingHorizontal: 15,
+    marginHorizontal: 15,
     marginVertical: 10,
     borderWidth: 1,
     borderColor: "#E0E0E0",
