@@ -14,6 +14,7 @@ import Navbar from "../../Navbar";
 import { submitBug } from "../../../services/contactUsService";
 import { ReusableTextInput } from "@/components/ReusableTextInputBox";
 import { ReusableButton } from "@/components/ReusableButton";
+import Header from "@/app/Header";
 
 export default function reportBugMain() {
   const router = useRouter();
@@ -50,9 +51,10 @@ export default function reportBugMain() {
     <View style={styles.container}>
       <ScrollView style={styles.scrollStyle}>
         {/*Title Placement*/}
-        <View style={styles.header}>
+        {/* <View style={styles.header}>
           <Text style={styles.textTitle}>Report bugs or issues</Text>
-        </View>
+        </View> */}
+        <Header title="Report bugs or issues"/>
 
         <Text style={styles.errorText}>{errorMessage}</Text>
 

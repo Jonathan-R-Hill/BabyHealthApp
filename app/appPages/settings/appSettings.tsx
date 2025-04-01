@@ -12,6 +12,7 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 import Navbar from "../../Navbar";
 import { ThemedView } from "@/components/ThemedView"
 import { ThemedText } from "@/components/ThemedText"
+import Header from "@/app/Header";
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -59,6 +60,7 @@ export default function SettingsPage() {
 
   return (
     <ThemedView style={styles.container}>
+      <Header title="Settings"/>
       <ThemedText type="title" style={styles.textTitle}>
         Settings
       </ThemedText>

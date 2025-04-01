@@ -11,6 +11,8 @@ import {
 import { useLocalSearchParams, useRouter } from "expo-router";
 import Navbar from "../../Navbar";
 import {categoryData} from "./adviceData";
+import Header from "@/app/Header";
+import { ReusableButton } from "@/components/ReusableButton";
 //Data for the advice categories
 const categoryDataUse = categoryData
 
@@ -62,12 +64,21 @@ export default function AdviceSection() {
   return (
     <View style={styles.container}>
       {/* Title */}
-      <Text style={styles.title}>General Baby Care Advice</Text>
+      {/* <Text style={styles.title}>General Baby Care Advice</Text> */}
+      <Header title="General Baby Care Advice" />
 
       {/* Button Placement */}
-      <TouchableOpacity style={styles.chartButton} onPress={prematureAdvice}>
+
+      {/* <TouchableOpacity style={styles.chartButton} onPress={prematureAdvice}>
         <Text style={styles.chartButtonText}>Go to premature birth advice</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+
+      <ReusableButton
+      title="Go to premature birth advice"
+      // style={{margintop}}
+      onPress={prematureAdvice}
+      style={styles.chartButton}
+      />
 
       {/* Categories for advice */}
       <View style={styles.listContainer}>
@@ -89,8 +100,8 @@ export default function AdviceSection() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    paddingVertical: 20,
+    // alignItems: "center",
+    // paddingVertical: 20,
   },
   title: {
     fontSize: 40,
@@ -100,11 +111,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   chartButton: {
-    backgroundColor: "#3498db",
+    backgroundColor: "#65558F", 
     paddingVertical: 10,
     paddingHorizontal: 20,
+    marginLeft: 170,
+    marginRight: 15,
     borderRadius: 5,
-    marginBottom: 20,
+    marginVertical: 10,
   },
   chartButtonText: {
     color: "#fff",

@@ -10,6 +10,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import Navbar from "../../Navbar";
 import termData from "./terminologyData";
+import Header from "@/app/Header";
 
 export default function TerminologySection() {
   const [expandedSections, setExpandedSections] = useState<string[]>([]);
@@ -56,7 +57,8 @@ export default function TerminologySection() {
   return (
     <View style={styles.container}>
       {/* Title */}
-      <Text style={styles.title}>Terminology</Text>
+      {/* <Text style={styles.title}>Terminology</Text> */}
+      <Header title="Terminology"/>
 
       {/* Search Bar */}
       <View style={styles.searchContainer}>

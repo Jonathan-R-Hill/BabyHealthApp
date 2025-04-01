@@ -11,6 +11,7 @@ import {
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { postNewCarer } from "../../../services/contactUsService";
 import Navbar from "../../Navbar";
+import Header from "@/app/Header";
 
 export default function CreateNewCarer() {
     let [name, setName] = useState("");
@@ -92,6 +93,7 @@ export default function CreateNewCarer() {
     return (
         
         <View style={styles.container}>
+            <Header title="Add new carer"/>
             <ScrollView style={styles.scrollViewContainer}>
                 <Text style={styles.errorText}>{errorDisplayMessage}</Text>
 

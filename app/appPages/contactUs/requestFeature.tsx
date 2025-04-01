@@ -14,6 +14,7 @@ import Navbar from "../../Navbar";
 import { submitFeature } from "../../../services/contactUsService";
 import { ReusableButton } from "@/components/ReusableButton";
 import { ReusableTextInput } from "@/components/ReusableTextInputBox";
+import Header from "@/app/Header";
 
 export default function requestFeatureMain() {
   const router = useRouter();
@@ -50,9 +51,10 @@ export default function requestFeatureMain() {
     <View style={styles.container}>
       <ScrollView style={styles.scrollStyle}>
         {/*Title Placement*/}
-        <View style={styles.header}>
+        {/* <View style={styles.header}>
           <Text style={styles.textTitle}>Request A Feature</Text>
-        </View>
+        </View> */}
+        <Header title="Request A Feature"/>
 
         <Text style={styles.errorText}>{errorMessage}</Text>
 

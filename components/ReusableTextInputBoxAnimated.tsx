@@ -100,13 +100,13 @@ export function ReusableTextInputAnimated({
     */
     const labelTranslateY = labelAnim.interpolate({
         inputRange: [0, 1],
-        outputRange: [12, -20], // move label upward when focused/filled
+        outputRange: [12, -19], // move label upward when focused/filled
     });
 
-    const labelFontSize = labelAnim.interpolate({
-        inputRange: [0, 1],
-        outputRange: [14, 12], // shrink font
-    });
+    // const labelFontSize = labelAnim.interpolate({
+    //     inputRange: [0, 1],
+    //     outputRange: [14, 12], // shrink font
+    // });
 
     return (
         <View style={styles.container}>
@@ -116,7 +116,7 @@ export function ReusableTextInputAnimated({
                 styles.label,
                 {
                     transform: [{ translateY: labelTranslateY }],
-                    fontSize: labelFontSize,
+                    // fontSize: labelFontSize,
                     opacity: labelAnim, // fades in
                 }
             ]}>
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
         textAlign: "left",
     },
     inputDefault: {
-        height: 40,
+        height: 50,
         fontSize: 14,
     },
     inputMedium: {

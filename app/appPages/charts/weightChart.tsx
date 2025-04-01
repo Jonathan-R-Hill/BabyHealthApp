@@ -5,6 +5,8 @@ import {
 } from "react-native-gifted-charts"
 import { fetchWeightRecord, fetchMilkRecord } from "@/services/chartServices";
 import { useLocalSearchParams } from "expo-router";
+import Header from "@/app/Header";
+import Navbar from "@/app/Navbar";
  
 type WeightRecord = {
   date: string;
@@ -107,6 +109,7 @@ const BabyCharts = () => {
 
   return (
     <View> 
+      <Header title="Health Charts" />
       <LineChart
         areaChart
         curved
@@ -149,6 +152,7 @@ const BabyCharts = () => {
         // yAxisLabelTexts={['0', '50', '100', '150', '200', '250', '300']}
         xAxisLabelTextStyle={{ fontSize: 11, color: 'black' }}
         />
+      <Navbar/>
     </View>
   );
 };

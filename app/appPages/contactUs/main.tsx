@@ -11,6 +11,7 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 import { ReusableButton } from "@/components/ReusableButton";
 
 import Navbar from "../../Navbar";
+import Header from "@/app/Header";
 
 export default function HandleContactUs() {
   const router = useRouter();
@@ -42,9 +43,10 @@ export default function HandleContactUs() {
     <View style={styles.container}>
       <ScrollView>
         {/*Title Placement*/}
-        <View style={styles.header}>
+        {/* <View style={styles.header}>
           <Text style={styles.textTitle}>NHS Contacts</Text>
-        </View>
+        </View> */}
+        <Header title="NHS Contacts"/>
 
         {/*Logo placement*/}
         <View style={styles.header}>

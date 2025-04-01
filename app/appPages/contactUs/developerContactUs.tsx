@@ -10,6 +10,7 @@ import {
 import { useRouter, useLocalSearchParams } from "expo-router";
 
 import Navbar from "../../Navbar";
+import Header from "@/app/Header";
 
 export default function DevContactMain() {
   const router = useRouter();
@@ -61,8 +62,9 @@ export default function DevContactMain() {
 
   return (
     <View style={styles.container}>
+      <Header title="Contact a developer"/>
       <ScrollView style={styles.scrollStyle}>
-        <Text style={styles.textTitle}>Developer Contact</Text>
+        {/* <Text style={styles.textTitle}>Developer Contact</Text> */}
 
         {/*Button Placement*/}
         <View style={styles.header}>

@@ -15,6 +15,7 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 import { updateCarer, fetchSingleCarer, deleteCarer } from "../../../services/contactUsService";
 
 import Navbar from "../../Navbar";
+import Header from "@/app/Header";
 
 interface Carer {
   details: {
@@ -163,6 +164,7 @@ export default function editCarerPage() {
 
   return (
     <View style={styles.container}>
+      <Header title="Contact a carer"/>
       <ScrollView style={styles.scrollViewContainer}>
         <Text style={styles.errorText}>{errorDisplayMessage}</Text>
 

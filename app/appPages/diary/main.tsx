@@ -13,6 +13,7 @@ import Navbar from "../../Navbar";
 import Header from "../../Header";
 
 import { fetchAllDiaryEntries } from "../../../services/diaryService";
+import { ReusableButton } from "@/components/ReusableButton";
 
 // Define the structure of a diary entry
 interface DiaryEntry {
@@ -80,12 +81,18 @@ export default function CreateDiaryEntry() {
       <Header title="Diary" />
       <ScrollView style={styles.diaryContainer}>
         {/* Button to create a new diary entry */}
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={handleNavigateToEntry}
           style={styles.createButton}
         >
           <Text style={styles.createButtonText}>+ Create a new entry</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
+
+        <ReusableButton
+          title="Create a new entry"
+          onPress={handleNavigateToEntry}
+          edge="edgy"
+        />
         
         {/* Display diary entries */}
         {diaryEntries.map((entry) => {

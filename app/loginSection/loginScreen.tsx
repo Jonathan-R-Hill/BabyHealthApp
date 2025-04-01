@@ -136,6 +136,8 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     textAlign: "left",
+    display: "flex",
+    flexDirection: "column",
     marginBottom: 20,
     lineHeight: 60, // Controlling line height
   },

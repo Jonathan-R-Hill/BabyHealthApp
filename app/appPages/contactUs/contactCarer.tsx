@@ -12,6 +12,7 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 import { getDataOnCarers } from "../../../services/contactUsService";
 
 import Navbar from "../../Navbar";
+import Header from "@/app/Header";
 
 interface Carer {
     details: {
@@ -67,6 +68,7 @@ export default function CarerPage()
 
       return (
         <View style = {styles.container}>
+            <Header title="Contact a carer"/>
             <ScrollView style = {styles.scrollView}>
               <TouchableOpacity
                   onPress={routeToAddCarer}

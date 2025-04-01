@@ -8,6 +8,7 @@ import {
   FlatList,
 } from "react-native";
 import { useLocalSearchParams } from "expo-router";
+import Header from "@/app/Header";
 import Navbar from "../../Navbar";
 import { orgData } from "./orgData";
 
@@ -21,8 +22,8 @@ export default function AdditionalOrgs() {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <Text style={styles.title}>Organisations</Text>
-
+      {/* <Text style={styles.title}>Organisations</Text> */}
+      <Header title="Organisations"/>
       {/* Organisation List */}
       <FlatList
         data={orgData}
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F4F4F4",
-    paddingVertical: 20,
+    // paddingVertical: 20,
   },
   title: {
     fontSize: 30,
