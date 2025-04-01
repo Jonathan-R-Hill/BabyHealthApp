@@ -7,6 +7,7 @@ import {
   View,
 } from "react-native";
 
+// Get screen width
 const { width: screenWidth } = Dimensions.get("window");
 
 type ReusableButtonProps = PressableProps & {
@@ -57,10 +58,10 @@ export function ReusableButton({
 
 const styles = StyleSheet.create({
   centerContainer: {
-    flex: 1, // Takes full height of screen
+    // flex: 1, // Takes full height of screen
     justifyContent: "center", // Centers vertically
     alignItems: "center", // Centers horizontally
-    paddingTop: 10,
+    paddingTop: 5,
   },
   roundEdge: {
     marginBottom: 25,

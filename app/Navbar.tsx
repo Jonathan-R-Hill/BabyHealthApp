@@ -10,7 +10,7 @@ const pages = {
   "Baby Care": "/appPages/adviceSection/main",
   Settings: "/appPages/settings/appSettings",
   "Baby Log": "/appPages/babyLog/main",
-  "Contact Us": "/appPages/contactUs/main", 
+  "Contact Us": "/appPages/contactUs/main",
   Terminology: "/appPages/terminology/main",
   "Additional Organisations": "/appPages/additionalOrganisations/main",
   // Chatbot: "/appPages/bot/main",
@@ -129,6 +129,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#3498db",
     borderTopWidth: 1,
     borderTopColor: "#ccc",
+    paddingTop: 0,
+    marginTop: 30,
   },
   mainButtonsContainer: {
     flexDirection: "row",
