@@ -56,6 +56,8 @@ const Navbar: React.FC = () => {
         );
       case "Contact Us":
         return <Ionicons name="mail-outline" size={size} color="#fff" />;
+      case "Terminology":
+        return <Ionicons name="search" size={size} color="#fff" />;
       default:
         return <Ionicons name="ellipsis-horizontal" size={size} color="#fff" />;
     }
