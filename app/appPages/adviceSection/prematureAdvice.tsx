@@ -14,7 +14,7 @@ import { prematureCategoryData } from "./adviceData";
 import Header from "@/app/Header";
 import { ReusableButton } from "@/components/ReusableButton";
 //Data for the advice categories
-const categoryData = prematureCategoryData
+const categoryData = prematureCategoryData;
 
 export default function PrematureAdviceSection() {
   const router = useRouter();
@@ -78,11 +78,11 @@ export default function PrematureAdviceSection() {
       {/* Categories for advice */}
       <View style={styles.listContainer}>
         {/* <ScrollView> */}
-          <FlatList
-            data={categoryData}
-            renderItem={renderSection}
-            keyExtractor={(item) => item.id}
-          />
+        <FlatList
+          data={categoryData}
+          renderItem={renderSection}
+          keyExtractor={(item) => item.id}
+        />
         {/* </ScrollView> */}
       </View>
 
@@ -106,13 +106,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   chartButton: {
-    backgroundColor: "#65558F", 
+    backgroundColor: "#65558F",
     paddingVertical: 10,
     paddingHorizontal: 20,
-    marginLeft: 170,
-    marginRight: 15,
+    marginLeft: 0,
+    marginRight: 0,
     borderRadius: 5,
     marginVertical: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    // width: "50%"
   },
   chartButtonText: {
     color: "#fff",

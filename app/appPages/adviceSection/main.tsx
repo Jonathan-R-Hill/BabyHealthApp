@@ -10,11 +10,11 @@ import {
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import Navbar from "../../Navbar";
-import {categoryData} from "./adviceData";
+import { categoryData } from "./adviceData";
 import Header from "@/app/Header";
 import { ReusableButton } from "@/components/ReusableButton";
 //Data for the advice categories
-const categoryDataUse = categoryData
+const categoryDataUse = categoryData;
 
 export default function AdviceSection() {
   const router = useRouter();
@@ -74,21 +74,21 @@ export default function AdviceSection() {
       </TouchableOpacity> */}
 
       <ReusableButton
-      title="Go to premature birth advice"
-      // style={{margintop}}
-      onPress={prematureAdvice}
-      style={styles.chartButton}
+        title="Go to premature birth advice"
+        // style={{margintop}}
+        onPress={prematureAdvice}
+        style={styles.chartButton}
       />
 
       {/* Categories for advice */}
       <View style={styles.listContainer}>
         {/*<ScrollView>*/}
-          <FlatList
-            data={categoryDataUse}
-            renderItem={renderSection}
-            keyExtractor={(item) => item.id}
-          />
-       {/* </ScrollView> */}
+        <FlatList
+          data={categoryDataUse}
+          renderItem={renderSection}
+          keyExtractor={(item) => item.id}
+        />
+        {/* </ScrollView> */}
       </View>
 
       {/* Navbar */}
@@ -111,13 +111,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   chartButton: {
-    backgroundColor: "#65558F", 
+    backgroundColor: "#65558F",
     paddingVertical: 10,
     paddingHorizontal: 20,
-    marginLeft: 170,
-    marginRight: 15,
+    marginLeft: 0,
+    marginRight: 0,
     borderRadius: 5,
     marginVertical: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    // width: "50%"
   },
   chartButtonText: {
     color: "#fff",
