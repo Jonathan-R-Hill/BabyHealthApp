@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { postBaby } from "../../../services/babyProfileService";
 import Navbar from "../../Navbar";
 import Header from "../../Header";
@@ -55,9 +55,11 @@ export default function AddBaby() {
   //   }
   // };
 
-  const handleDateConfirm = (selectedDate: Date) => {
-    setDateOfBirth(selectedDate);
-    setShowDatePicker(false); // Close the modal after selecting the date
+  const handleDateConfirm = (_event: any, selectedDate?: Date) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setDateOfBirth(selectedDate);
+    }
   };
   
   return (
@@ -86,31 +88,34 @@ export default function AddBaby() {
           <Picker.Item label="Female" value="female" />
         </Picker>
 
-        {/* <View style={styles.container}>
-          <Button title="Date of Birth" onPress={() => setShowDatePicker(true)} />
-          <Text style={styles.text}>Selected Date: {dateOfBirth.toDateString()}</Text>
+        <Text style={styles.label}>Date of Birth</Text>
 
+        {/* Date Picker for Mobile (using DateTimePicker) */}
+        {Platform.OS !== "web" && (
+          <View>
+            {/* Show button only when the date picker is not displayed */}
+            {!showDatePicker && (
+              <TouchableOpacity
+                onPress={() => setShowDatePicker(true)}
+                style={styles.dateButton}
+              >
+                {/* Display the selected date */}
+                <Text style={styles.dateText}>
+                  {dateOfBirth ? dateOfBirth.toDateString() : "Select Date"}
+                </Text>
+              </TouchableOpacity>
+            )}
+
+            {/* Show the DateTimePicker if the button is pressed */}
             {showDatePicker && (
               <DateTimePicker
                 value={dateOfBirth}
                 mode="date"
                 display="default"
-                onChange={onChange}
-                style={styles.picker}
+                onChange={handleDateConfirm} // Ensure date is set properly
               />
             )}
-        </View> */}
-
-
-      <Text style={styles.label}>Date of Birth</Text>
-        {/* Date Picker for Mobile (using Modal) */}
-        {Platform.OS !== "web" && (
-          <DateTimePickerModal
-            isVisible={showDatePicker}
-            mode="date"
-            onConfirm={handleDateConfirm}
-            onCancel={() => setShowDatePicker(false)}
-          />
+          </View>
         )}
 
         {/* Date Picker for Web (using HTML input type="date") */}
@@ -281,6 +286,7 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontSize: 16,
+    color: "#fff",
   },  
   webDateInput: {
     padding: 10,

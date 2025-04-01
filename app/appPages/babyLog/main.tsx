@@ -212,7 +212,6 @@ const styles = StyleSheet.create({
   
   babyDetails: {
     fontSize: 14,
-    color: "#65558F",
   },
   
   buttonContainer: {
