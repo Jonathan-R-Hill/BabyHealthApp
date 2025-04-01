@@ -55,7 +55,7 @@ export default function HandleContactUs() {
         
 
         {/*Text Placement*/}
-        <View style={styles.header}>
+        <View style={styles.profileHeader}>
           <Text style={styles.textGeneral}>
             Phone Number: <Text style={styles.numberText}>0300 311 2233</Text>
           </Text>
@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignSelf:"center",
+    alignItems:"center",
     flex: 1,
   }, 
   profileIcon: {
