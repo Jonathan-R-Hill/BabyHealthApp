@@ -37,7 +37,7 @@ export function ReusableButton({
             paddingVertical: 10,
             paddingHorizontal: 20,
             minHeight: 40,
-            width: screenWidth * 0.6,
+            width: "60%",
             maxHeight: 300,
             alignItems: "center",
             justifyContent: "center",
