@@ -7,14 +7,16 @@ import {
   Alert,
   FlatList,
   ScrollView,
+  TextInput,
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import Navbar from "../../Navbar";
 import { categoryData } from "./adviceData";
 import Header from "@/app/Header";
 import { ReusableButton } from "@/components/ReusableButton";
+import { Ionicons } from "@expo/vector-icons";
 //Data for the advice categories
-const categoryDataUse = categoryData;
+const categoryDataUse = categoryData
 
 export default function AdviceSection() {
   const router = useRouter();
@@ -22,6 +24,15 @@ export default function AdviceSection() {
   const [expandedSections, setExpandedSections] = useState<string[]>([]);
 
   const { username, token } = useLocalSearchParams();
+
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredData = categoryDataUse.filter((item) => {
+    return (
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.content.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
 
   const toggleSection = (id: string) => {
     setExpandedSections((prev) =>
@@ -31,7 +42,7 @@ export default function AdviceSection() {
     );
   };
 
-  const renderSection = ({ item }: { item: (typeof categoryDataUse)[0] }) => {
+  const renderSection = ({ item }: { item: (typeof filteredData)[0] }) => {
     const isExpanded = expandedSections.includes(item.id);
     return (
       <View style={styles.section}>
@@ -80,11 +91,27 @@ export default function AdviceSection() {
         style={styles.chartButton}
       />
 
+      {/*Searchbar*/}
+      <View style={styles.searchContainer}>
+        <Ionicons
+          name="search"
+          size={20}
+          color="#888"
+          style={styles.searchIcon}
+        />
+        <TextInput
+          style={styles.searchBar}
+          placeholder="Search for Terminology"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
+      </View>
+
       {/* Categories for advice */}
       <View style={styles.listContainer}>
         {/*<ScrollView>*/}
         <FlatList
-          data={categoryDataUse}
+          data={filteredData}
           renderItem={renderSection}
           keyExtractor={(item) => item.id}
         />
@@ -156,5 +183,24 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     fontSize: 16,
     textAlign: "center",
+  },
+  searchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#FFF",
+    borderRadius: 25,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
+    marginVertical: 10,
+    borderWidth: 1,
+    borderColor: "#E0E0E0",
+  },
+  searchIcon: {
+    marginRight: 10,
+  },
+  searchBar: {
+    flex: 1,
+    fontSize: 16,
+    color: "#333",
   },
 });
