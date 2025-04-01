@@ -100,7 +100,7 @@ export function ReusableTextInputAnimated({
     */
     const labelTranslateY = labelAnim.interpolate({
         inputRange: [0, 1],
-        outputRange: [12, -19], // move label upward when focused/filled
+        outputRange: [12, -22], // move label upward when focused/filled
     });
 
     // const labelFontSize = labelAnim.interpolate({
