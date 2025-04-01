@@ -49,9 +49,10 @@ export default function HandleContactUs() {
         <Header title="NHS Contacts"/>
 
         {/*Logo placement*/}
-        <View style={styles.header}>
+        <View style={styles.profileHeader}>
           <View style={styles.profileIcon}></View>
         </View>
+        
 
         {/*Text Placement*/}
         <View style={styles.header}>
@@ -105,14 +106,21 @@ const styles = StyleSheet.create({
     padding: 15,
     flexDirection: "column",
     justifyContent: "flex-start",
-    alignItems: "center",
     flex: 1,
   },
+  profileHeader: {
+    padding: 15,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignSelf:"center",
+    flex: 1,
+  }, 
   profileIcon: {
     width: 80,
     height: 80,
     backgroundColor: "#ccc",
     borderRadius: 20,
+    margin: 10,
   },
   chartButton: {
     backgroundColor: "#3498db",

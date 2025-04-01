@@ -76,23 +76,24 @@ export default function CarerPage()
                   <Text style={styles.createButtonText}>+ Create a new entry</Text>
               </TouchableOpacity>
 
-              {carers.map((carer) => {
-                  const fullname = (carer.data.title + " " + carer.data.name);
+              <View style={styles.carerContainer}>
+                {carers.map((carer) => {
+                    const fullname = (carer.data.title + " " + carer.data.name);
 
-                  return (
-                    <View key={carer.details.carerId}>
-                      <View style={styles.carerEntry}>
-                        <Text style={styles.carerText}>Name: {fullname}</Text>
-                        <Text style={styles.carerText}>Phone Number: {carer.data.phone}</Text>
-                        <Text style={styles.carerText}>Email: {carer.data.email}</Text>
-                        <TouchableOpacity onPress={()=>routeToEditCarer(carer.details.carerId)}>
-                          <Text style={styles.linkText}>Edit Or Delete Carer</Text>
-                        </TouchableOpacity>
+                    return (
+                      <View key={carer.details.carerId}>
+                        <View style={styles.carerEntry}>
+                          <Text style={styles.carerText}>Name: {fullname}</Text>
+                          <Text style={styles.carerText}>Phone Number: {carer.data.phone}</Text>
+                          <Text style={styles.carerText}>Email: {carer.data.email}</Text>
+                          <TouchableOpacity onPress={()=>routeToEditCarer(carer.details.carerId)}>
+                            <Text style={styles.linkText}>Edit Or Delete Carer</Text>
+                          </TouchableOpacity>
+                        </View>
                       </View>
-                    </View>
-                  );
-              })}
-                
+                    );
+                })}
+            </View>    
             </ScrollView>
             <Navbar />
         </View>
@@ -138,4 +139,7 @@ const styles = StyleSheet.create({
       marginVertical: 4,
       textDecorationLine: "underline",
     },
+    carerContainer: {
+      paddingBottom: 80
+    }
 });

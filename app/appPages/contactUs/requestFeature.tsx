@@ -69,7 +69,7 @@ export default function requestFeatureMain() {
               keyboardType="default"
               multiline={true}
               placeholderTextColor={"#84868a"}
-              style={{height: "70%"}}
+              size="big"
           />
           <ReusableButton
             onPress={handleReportSend}
@@ -103,22 +103,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    width: "100%",
-    height: "100%",
-  },
-  header: {
-    padding: 10,
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center",
   },
   chartButton: {
     backgroundColor: "#3498db",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
-    marginLeft: "auto",
     minHeight: 40,
   },
   chartButtonText: {
@@ -131,26 +121,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  inputBox: {
-    height: "80%",
-    width: "100%",
-    borderColor: "blue",
-    borderWidth: 1,
-    marginBottom: 16,
-    borderRadius: 4,
-    paddingHorizontal: 8,
-    backgroundColor: "#e8e6e1",
-    textAlign: "center",
-  },
   inputBoxContainer: {
     height: "80%",
     width: "90%",
     maxWidth: "90%",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+    marginLeft: "3.5%"
   },
   scrollStyle: {
-    flexDirection: "column",
-    width: "90%",
-    maxWidth: 600,
+    flex: 1,
   },
   errorText: {
     color: "red",
