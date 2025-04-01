@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     color: "#999",
   },
   createButton: {
-    backgroundColor: "#3498db",
+    backgroundColor: "#65558F",
     paddingVertical: 15,
     width: "75%",
     borderRadius: 5,
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
   }, 
   dateButton: {
     padding: 10,
-    backgroundColor: "#ddd",
+    backgroundColor: "#65558F",
     borderRadius: 5,
     alignItems: "center",
     marginBottom: 10,
@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
     width: "75%",
   },
   submitButton: {
-    backgroundColor: "#3498db",
+    backgroundColor: "#65558F",
     padding: 15,
     width: "75%",
     alignItems: "center",

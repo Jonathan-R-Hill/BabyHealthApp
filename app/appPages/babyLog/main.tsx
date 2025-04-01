@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   createButton: {
-    backgroundColor: "#3498db",
+    backgroundColor: "#65558F",
     paddingVertical: 15,
     marginVertical: 10,
     borderRadius: 5,
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
   
   babyDetails: {
     fontSize: 14,
-    color: "#555",
+    color: "#65558F",
   },
   
   buttonContainer: {
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
   },
   
   actionButton: {
-    backgroundColor: "#3498db",
+    backgroundColor: "#65558F",
     paddingVertical: 8,
     paddingHorizontal: 15,
     borderRadius: 5,
