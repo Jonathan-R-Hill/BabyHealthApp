@@ -62,12 +62,8 @@ export default function AddBaby() {
   
   return (
     <View style={styles.container}>
-      <Header />
+      <Header title="Add Baby"/>
       <ScrollView style={styles.babyContainer}>
-        <View style={styles.header}>
-          <View style={styles.profileIcon}></View>
-          <Text style={styles.headerTitle}>Add Baby</Text>
-        </View>
 
       <Text style={styles.label}>Name</Text>
       <TextInput
@@ -105,13 +101,8 @@ export default function AddBaby() {
             )}
         </View> */}
 
-        {/* Date Picker Trigger Button */}
-        <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.dateButton}>
-          <Text style={styles.dateText}>
-            Date of Birth: {dateOfBirth.toDateString()}
-          </Text>
-        </TouchableOpacity>
 
+      <Text style={styles.label}>Date of Birth</Text>
         {/* Date Picker for Mobile (using Modal) */}
         {Platform.OS !== "web" && (
           <DateTimePickerModal
@@ -217,18 +208,22 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginVertical: 8,
     fontWeight: "bold",
+    width: "75%",
   },
   input: {
-    borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
     padding: 10,
     fontSize: 16,
     backgroundColor: "#f9f9f9",
+    width: "75%",
+    marginBottom: 10,
   },
   textArea: {
     height: 75,
     textAlignVertical: "top",
+    width: "75%",
+    marginBottom: 10,
   },
   errorText: {
     color: "red",
@@ -257,9 +252,10 @@ const styles = StyleSheet.create({
   createButton: {
     backgroundColor: "#3498db",
     paddingVertical: 15,
-    marginVertical: 10,
+    width: "75%",
     borderRadius: 5,
     alignItems: "center",
+    marginBottom: 10,
   },
   createButtonText: {
     color: "#fff",
@@ -267,8 +263,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   picker: {
-    height: 200,
-    width: "100%"
+    height: "20%",
+    width: "75%",
+    marginBottom: 10,
   },
   text: {
     marginTop: 10,
@@ -292,12 +289,12 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 5,
     backgroundColor: "#f9f9f9",
-    width: "100%",
+    width: "75%",
   },
   submitButton: {
     backgroundColor: "#3498db",
     padding: 15,
-    borderRadius: 5,
+    width: "75%",
     alignItems: "center",
     marginVertical: 10,
   },
