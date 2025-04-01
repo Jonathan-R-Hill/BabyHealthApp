@@ -155,13 +155,14 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 10,
-    borderWidth: 1,
-    borderColor: "#3498db",
-    borderRadius: 5,
+    // borderWidth: 5,
+    // borderColor: "#65558",
+    // borderRadius: 5,
     padding: 5,
+    // backgroundColor: "#5b5a5e",
   },
   sectionHeader: {
-    backgroundColor: "#3498db",
+    backgroundColor: "#65558F",
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 5,
