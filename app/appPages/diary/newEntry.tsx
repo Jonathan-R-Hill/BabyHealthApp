@@ -99,7 +99,7 @@ export default function CreateDiaryEntry() {
           <Text style={styles.errorText}>{errors.foodAmount}</Text>
         )}
         <ReusableTextInputAnimated
-          title="Food amount (g)"
+          title="Food amount"
           placeholder="Food amount (g)"
           onChangeText={setFoodAmount}
           keyboardType="numeric"

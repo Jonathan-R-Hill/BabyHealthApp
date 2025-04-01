@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, Dimensions } from "react-native";
+import { View, Text, ScrollView, Dimensions, StyleSheet } from "react-native";
 import {
   LineChart,
 } from "react-native-gifted-charts"
@@ -108,53 +108,69 @@ const BabyCharts = () => {
   });
 
   return (
-    <View> 
+    <View style={styles.container}> 
       <Header title="Health Charts" />
-      <LineChart
-        areaChart
-        curved
-        data={weightChartData}
-        height={250}
-        // showVerticalLines
-        spacing={20}
-        initialSpacing={0}
-        color="skyblue"
-        textColor="green"
-        hideDataPoints
-        dataPointsColor="blue"
-        startFillColor="skyblue"
-        startOpacity={0.8}
-        endOpacity={0.3}
-        stepValue={1000}
-        maxValue={6000}
-        noOfSections={6}
-        yAxisLabelTexts={['0', '1kg', '2kg', '3kg', '4kg', '5kg', '6kg']}
-        xAxisLabelTextStyle={{ fontSize: 11, color: 'black' }}
-        />
-        <LineChart
-        areaChart
-        curved
-        data={milkChartData}
-        height={250}
-        // showVerticalLines
-        spacing={20}
-        initialSpacing={0}
-        color="skyblue"
-        textColor="green"
-        hideDataPoints
-        dataPointsColor="blue"
-        startFillColor="skyblue"
-        startOpacity={0.8}
-        endOpacity={0.3}
-        stepValue={100}
-        maxValue={300}
-        noOfSections={10}
-        // yAxisLabelTexts={['0', '50', '100', '150', '200', '250', '300']}
-        xAxisLabelTextStyle={{ fontSize: 11, color: 'black' }}
-        />
+      <ScrollView>
+        <View style={styles.chart}>
+          <LineChart
+            areaChart
+            curved
+            data={weightChartData}
+            height={250}
+            // showVerticalLines
+            spacing={20}
+            initialSpacing={0}
+            color="skyblue"
+            textColor="green"
+            hideDataPoints
+            dataPointsColor="blue"
+            startFillColor="skyblue"
+            startOpacity={0.8}
+            endOpacity={0.3}
+            stepValue={1000}
+            maxValue={6000}
+            noOfSections={6}
+            yAxisLabelTexts={['0', '1kg', '2kg', '3kg', '4kg', '5kg', '6kg']}
+            xAxisLabelTextStyle={{ fontSize: 11, color: 'black' }}
+          />
+        </View>
+        <View style={styles.chart}>
+          <LineChart
+            areaChart
+            curved
+            data={milkChartData}
+            height={250}
+            // showVerticalLines
+            spacing={20}
+            initialSpacing={0}
+            color="skyblue"
+            textColor="green"
+            hideDataPoints
+            dataPointsColor="blue"
+            startFillColor="skyblue"
+            startOpacity={0.8}
+            endOpacity={0.3}
+            stepValue={100}
+            maxValue={300}
+            noOfSections={10}
+            // yAxisLabelTexts={['0', '50', '100', '150', '200', '250', '300']}
+            xAxisLabelTextStyle={{ fontSize: 11, color: 'black' }}
+          />
+        </View>
+      </ScrollView>
       <Navbar/>
     </View>
   );
 };
  
 export default BabyCharts;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  chart: {
+    marginVertical: 20,
+  }
+})
