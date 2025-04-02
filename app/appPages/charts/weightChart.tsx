@@ -4,11 +4,11 @@ import {
   LineChart,
 } from "react-native-gifted-charts"
 import { fetchWeightRecord, fetchMilkRecord } from "@/services/chartServices";
+import { fetchAiWeightAnalysis, fetchAiFoodConsumptionAnalysis } from "@/services/aiDiaryAnalysisService";
 import { useLocalSearchParams } from "expo-router";
 import Header from "@/app/Header";
 import Navbar from "@/app/Navbar";
-import { fetchAiWeightAnalysis } from "@/services/aiDiaryAnalysisService";
- 
+
 type WeightRecord = {
   date: string;
   weight: number;
@@ -22,14 +22,16 @@ type MilkRecord = {
 const BabyCharts = () => {
   const { username, token } = useLocalSearchParams(); 
   const [ weightData, setWeightData ] = useState<WeightRecord[]>([]);
+  const [ weightAnalysisResponse, setWeightResponse] = useState<string | null>(null);
   const [ milkData, setMilkData ] = useState<MilkRecord[]>([]);
+  const [ foodAnalysisResponse, setFoodResponse] = useState<string | null>(null);
 
   useEffect(() => {
     fetchWeightData(username as string, token as string)
-      .then(() => fetchAiWeightAnalysis(username as string, token as string))
-      .then(() => fetchMilkData(username as string, token as string));
+      .then(() => setAiWeightAnalysis(username as string, token as string))
+      .then(() => fetchMilkData(username as string, token as string))
+      .then(() => setAiFoodAnalysis(username as string, token as string))
   }, []); 
-  
   
   async function fetchWeightData(username: string, token: string) {
     try {
@@ -47,6 +49,15 @@ const BabyCharts = () => {
     }
   }
 
+  async function setAiWeightAnalysis(username: string, token: string) {
+    try {
+      const weightAnalysis = await fetchAiWeightAnalysis(username, token);
+      setWeightResponse(weightAnalysis.analysis); 
+    } catch (error) {
+      console.error("Error fetching AI weight analysis:", error);
+    }
+  }
+
   async function fetchMilkData(username: string, token: string) {      
     try {
       console.log("token: " + token);
@@ -61,6 +72,15 @@ const BabyCharts = () => {
       }
     } catch (error) {
       console.error("Error fetching milk data at frontend:", error);
+    }
+  }
+
+  async function setAiFoodAnalysis(username: string, token: string) {
+    try {
+      const foodAnalysisResponse = await fetchAiFoodConsumptionAnalysis(username, token);
+      setFoodResponse(foodAnalysisResponse.analysis); 
+    } catch (error) {
+      console.error("Error fetching AI food analysis:", error);
     }
   }
 
@@ -136,6 +156,10 @@ const BabyCharts = () => {
             xAxisLabelTextStyle={{ fontSize: 11, color: 'black' }}
           />
         </View>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>✨Weight Analysis</Text>
+          <Text style={styles.cardContent}>{weightAnalysisResponse || "Fetching AI insights..."}</Text>
+        </View>
         <View style={styles.chart}>
           <LineChart
             areaChart
@@ -159,6 +183,10 @@ const BabyCharts = () => {
             xAxisLabelTextStyle={{ fontSize: 11, color: 'black' }}
           />
         </View>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>✨Food Consumption Analysis</Text>
+          <Text style={styles.cardContent}>{foodAnalysisResponse || "Fetching AI insights..."}</Text>
+        </View>
       </ScrollView>
       <Navbar/>
     </View>
@@ -174,5 +202,38 @@ const styles = StyleSheet.create({
   },
   chart: {
     marginVertical: 20,
-  }
+    marginHorizontal:0,
+  },
+  analysisHeader: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginTop: 10,
+  },
+  analysisText: {
+    fontSize: 14,
+    color: "gray",
+    marginTop: 5,
+  },
+  card: {
+    backgroundColor: "#FFF",
+    borderRadius: 10,
+    padding: 15,
+    marginHorizontal: 15,
+    marginBottom: 10,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 5,
+  },
+  cardContent: {
+    fontSize: 16,
+    color: "#666",
+  },
 })
