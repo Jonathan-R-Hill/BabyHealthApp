@@ -93,7 +93,7 @@ export default function CreateDiaryEntry() {
           onPress={handleNavigateToEntry}
           edge="edgy"
         />
-        
+
         {/* Display diary entries */}
         {diaryEntries.map((entry) => {
           const entryDate = new Date(entry.details.date);
@@ -173,14 +173,14 @@ const styles = StyleSheet.create({
     right: 10,
     top: "50%",
     height: 1,
-    width: "90%", 
+    width: "90%",
     backgroundColor: "#2c3e50", // Same color as year header text
     opacity: 0.4, // Make it subtle
   },
   diaryEntry: {
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#3498db",
+    backgroundColor: "#65558f",
     padding: 15,
     marginVertical: 5,
     borderRadius: 5,
