@@ -6,6 +6,8 @@ import {
   ActivityIndicator,
   Alert,
   ScrollView,
+  TouchableOpacity,
+  Image
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Navbar from "../../Navbar";
@@ -86,24 +88,31 @@ export default function DiaryEntryDetails() {
   // Display the diary entry details
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <Text style={styles.dateText}>
-          {new Date(entry.details.date).toLocaleDateString()}
-        </Text>
-        <Text style={styles.content}>{entry.data.text}</Text>
-        <Text style={styles.infoText}>
-          <Text style={styles.infoLabel}>Weight: </Text>
-          {entry.data.weight}g
-        </Text>
-        <Text style={styles.infoText}>
-          <Text style={styles.infoLabel}>Food Type: </Text>
-          {entry.data.foodType}
-        </Text>
-        <Text style={styles.infoText}>
-          <Text style={styles.infoLabel}>Food Amount: </Text>
-          {entry.data.foodAmount}ml
-        </Text>
-      </ScrollView>
+      <Header title="Diary Page"/>
+      <View style={styles.contentContainer}>
+        <ScrollView>
+          <Text style={styles.dateText}>
+            {new Date(entry.details.date).toLocaleDateString()}
+          </Text>
+          <Text style={styles.content}>{entry.data.text}</Text>
+          <Text style={styles.infoText}>
+            <Text style={styles.infoLabel}>Weight: </Text>
+            {entry.data.weight}g
+          </Text>
+          <Text style={styles.infoText}>
+            <Text style={styles.infoLabel}>Food Type: </Text>
+            {entry.data.foodType}
+          </Text>
+          <Text style={styles.infoText}>
+            <Text style={styles.infoLabel}>Food Amount: </Text>
+            {entry.data.foodAmount}ml
+          </Text>
+          <TouchableOpacity style={styles.imageUploader}>
+            <Image style={styles.imageIcon} />
+            <Text style={styles.imageText}>Picture placeholder</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
       <Navbar />
     </View>
   );
@@ -113,6 +122,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    // padding: 20,
+  },
+  contentContainer: {
     padding: 20,
   },
   dateText: {
@@ -127,14 +139,35 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: 16,
-    marginBottom: 5,
+    marginBottom: 15,
   },
   infoLabel: {
-    fontWeight: "bold",
+    fontWeight: 500,
   },
   errorText: {
     fontSize: 16,
     color: "red",
     textAlign: "center",
+  },
+  imageUploader: {
+    marginTop: 10,
+    marginBottom: 15,
+    alignItems: "center",
+    justifyContent: "center",
+    height: 200,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    backgroundColor: "#f9f9f9",
+  },
+  imageIcon: {
+    width: 40,
+    height: 40,
+    marginBottom: 5,
+  },
+  imageText: {
+    marginTop: -30,
+    fontSize: 16,
+    color: "#999",
   },
 });

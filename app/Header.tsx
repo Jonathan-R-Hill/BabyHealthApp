@@ -55,8 +55,9 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   backButton: {
-    paddingLeft: 12,
-    width: 40,
+    paddingLeft: 15,
+    width: 30,
+    // backgroundColor: "#ffffff",
   },
   titleText: {
     flex: 1,
