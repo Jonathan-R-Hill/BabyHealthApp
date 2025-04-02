@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { RadioButton } from "react-native-paper";
 import {
   View,
   Text,
@@ -86,14 +87,26 @@ export default function CreateDiaryEntry() {
           keyboardType="numeric"
         />
 
-        {errors.foodType && (
-          <Text style={styles.errorText}>{errors.foodType}</Text>
-        )}
-        <ReusableTextInputAnimated
-          title="Food Type"
-          placeholder="Food type"
-          onChangeText={setFoodType}
-        />
+        <View style={styles.radioContainer}>
+          <Text style={styles.fieldLabel}>Food Type</Text>
+          <View style={styles.radioGroup}>
+            {["Breast Milk", "Instant Formula", "Other"].map((option) => (
+              <TouchableOpacity
+                key={option}
+                style={styles.radioItem}
+                onPress={() => setFoodType(option)}
+              >
+                <RadioButton
+                  value={option}
+                  status={foodType === option ? "checked" : "unchecked"}
+                  onPress={() => setFoodType(option)}
+                  color="#5A3E92" // Purple-like colour matching the image
+                />
+                <Text style={styles.radioLabel}>{option}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
 
         {errors.foodAmount && (
           <Text style={styles.errorText}>{errors.foodAmount}</Text>
@@ -226,16 +239,31 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#999",
   },
-  // createButton: {
-  //   backgroundColor: "#3498db",
-  //   paddingVertical: 15,
-  //   marginVertical: 10,
-  //   borderRadius: 5,
-  //   alignItems: "center",
-  // },
-  // createButtonText: {
-  //   color: "#fff",
-  //   fontSize: 16,
-  //   fontWeight: "bold",
-  // },
+  radioContainer: {
+    marginTop: 10,
+    marginBottom: 15,
+    marginLeft: 10,
+    // alignContent: "center",
+    // justifyContent: "center"
+    // display: "flex",
+  },
+  fieldLabel: {
+    fontSize: 14,
+    fontWeight: "bold",
+    marginBottom: 5,
+    color: "#666",
+  },
+  radioGroup: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  radioItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginRight: 15,
+  },
+  radioLabel: {
+    fontSize: 14,
+    color: "#666",
+  },
 });
