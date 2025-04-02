@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, Dimensions, StyleSheet } from "react-native";
-import {
-  LineChart,
-} from "react-native-gifted-charts"
+import { LineChart } from "react-native-gifted-charts";
 import { fetchWeightRecord, fetchMilkRecord } from "@/services/chartServices";
-import { fetchAiWeightAnalysis, fetchAiFoodConsumptionAnalysis } from "@/services/aiDiaryAnalysisService";
+import {
+  fetchAiWeightAnalysis,
+  fetchAiFoodConsumptionAnalysis,
+} from "@/services/aiDiaryAnalysisService";
 import { useLocalSearchParams } from "expo-router";
 import Header from "@/app/Header";
 import Navbar from "@/app/Navbar";
@@ -17,22 +18,24 @@ type WeightRecord = {
 type MilkRecord = {
   date: string;
   foodAmount: number;
-}
+};
 
 const BabyCharts = () => {
-  const { username, token } = useLocalSearchParams(); 
-  const [ weightData, setWeightData ] = useState<WeightRecord[]>([]);
-  const [ weightAnalysisResponse, setWeightResponse] = useState<string | null>(null);
-  const [ milkData, setMilkData ] = useState<MilkRecord[]>([]);
-  const [ foodAnalysisResponse, setFoodResponse] = useState<string | null>(null);
+  const { username, token } = useLocalSearchParams();
+  const [weightData, setWeightData] = useState<WeightRecord[]>([]);
+  const [weightAnalysisResponse, setWeightResponse] = useState<string | null>(
+    null
+  );
+  const [milkData, setMilkData] = useState<MilkRecord[]>([]);
+  const [foodAnalysisResponse, setFoodResponse] = useState<string | null>(null);
 
   useEffect(() => {
     fetchWeightData(username as string, token as string)
       .then(() => setAiWeightAnalysis(username as string, token as string))
       .then(() => fetchMilkData(username as string, token as string))
-      .then(() => setAiFoodAnalysis(username as string, token as string))
-  }, []); 
-  
+      .then(() => setAiFoodAnalysis(username as string, token as string));
+  }, []);
+
   async function fetchWeightData(username: string, token: string) {
     try {
       console.log("token: " + token);
@@ -52,13 +55,13 @@ const BabyCharts = () => {
   async function setAiWeightAnalysis(username: string, token: string) {
     try {
       const weightAnalysis = await fetchAiWeightAnalysis(username, token);
-      setWeightResponse(weightAnalysis.analysis); 
+      setWeightResponse(weightAnalysis.analysis);
     } catch (error) {
       console.error("Error fetching AI weight analysis:", error);
     }
   }
 
-  async function fetchMilkData(username: string, token: string) {      
+  async function fetchMilkData(username: string, token: string) {
     try {
       console.log("token: " + token);
       //fetch record returns an array of WeightRecord objects, parsed at service level
@@ -66,7 +69,7 @@ const BabyCharts = () => {
 
       console.log("milk request token: " + token);
       console.log(data);
-      
+
       if (data && data.length > 0) {
         setMilkData(data);
       }
@@ -77,8 +80,11 @@ const BabyCharts = () => {
 
   async function setAiFoodAnalysis(username: string, token: string) {
     try {
-      const foodAnalysisResponse = await fetchAiFoodConsumptionAnalysis(username, token);
-      setFoodResponse(foodAnalysisResponse.analysis); 
+      const foodAnalysisResponse = await fetchAiFoodConsumptionAnalysis(
+        username,
+        token
+      );
+      setFoodResponse(foodAnalysisResponse.analysis);
     } catch (error) {
       console.error("Error fetching AI food analysis:", error);
     }
@@ -99,9 +105,11 @@ const BabyCharts = () => {
     const entry = {
       value: record.weight,
       label: showLabel
-        ? (showMonth ? date.toLocaleDateString("en-GB", { month: "short" }).charAt(0) : date.getDate().toString())
+        ? showMonth
+          ? date.toLocaleDateString("en-GB", { month: "short" }).charAt(0)
+          : date.getDate().toString()
         : "", // Hide alternate labels if >15 entries
-      // showXAxisIndex: showLabel, 
+      // showXAxisIndex: showLabel,
     };
 
     console.log("Processed Entry:", entry); // Log each processed object
@@ -120,9 +128,11 @@ const BabyCharts = () => {
     const entry = {
       value: record.foodAmount,
       label: showLabel
-        ? (showMonth ? date.toLocaleDateString("en-GB", { month: "short" }).charAt(0) : date.getDate().toString())
+        ? showMonth
+          ? date.toLocaleDateString("en-GB", { month: "short" }).charAt(0)
+          : date.getDate().toString()
         : "", // Hide alternate labels if >15 entries
-      // showXAxisIndex: showLabel, 
+      // showXAxisIndex: showLabel,
     };
 
     console.log("Processed Entry:", entry); // Log each processed object
@@ -130,7 +140,7 @@ const BabyCharts = () => {
   });
 
   return (
-    <View style={styles.container}> 
+    <View style={styles.container}>
       <Header title="Health Charts" />
       <ScrollView>
         <View style={styles.chart}>
@@ -152,13 +162,15 @@ const BabyCharts = () => {
             stepValue={1000}
             maxValue={6000}
             noOfSections={6}
-            yAxisLabelTexts={['0', '1kg', '2kg', '3kg', '4kg', '5kg', '6kg']}
-            xAxisLabelTextStyle={{ fontSize: 11, color: 'black' }}
+            yAxisLabelTexts={["0", "1kg", "2kg", "3kg", "4kg", "5kg", "6kg"]}
+            xAxisLabelTextStyle={{ fontSize: 11, color: "black" }}
           />
         </View>
         <View style={styles.card}>
           <Text style={styles.cardTitle}>✨Weight Analysis</Text>
-          <Text style={styles.cardContent}>{weightAnalysisResponse || "Fetching AI insights..."}</Text>
+          <Text style={styles.cardContent}>
+            {weightAnalysisResponse || "Fetching AI insights..."}
+          </Text>
         </View>
         <View style={styles.chart}>
           <LineChart
@@ -180,19 +192,21 @@ const BabyCharts = () => {
             maxValue={300}
             noOfSections={10}
             // yAxisLabelTexts={['0', '50', '100', '150', '200', '250', '300']}
-            xAxisLabelTextStyle={{ fontSize: 11, color: 'black' }}
+            xAxisLabelTextStyle={{ fontSize: 11, color: "black" }}
           />
         </View>
         <View style={styles.card}>
           <Text style={styles.cardTitle}>✨Food Consumption Analysis</Text>
-          <Text style={styles.cardContent}>{foodAnalysisResponse || "Fetching AI insights..."}</Text>
+          <Text style={styles.cardContent}>
+            {foodAnalysisResponse || "Fetching AI insights..."}
+          </Text>
         </View>
       </ScrollView>
-      <Navbar/>
+      <Navbar />
     </View>
   );
 };
- 
+
 export default BabyCharts;
 
 const styles = StyleSheet.create({
@@ -202,7 +216,7 @@ const styles = StyleSheet.create({
   },
   chart: {
     marginVertical: 20,
-    marginHorizontal:0,
+    marginHorizontal: 0,
   },
   analysisHeader: {
     fontSize: 16,
@@ -219,7 +233,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 15,
     marginHorizontal: 15,
-    marginBottom: 10,
+    marginBottom: 70,
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 3 },
@@ -236,4 +250,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#666",
   },
-})
+});

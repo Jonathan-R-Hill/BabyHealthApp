@@ -44,7 +44,10 @@ export const fetchAiWeightAnalysis = async (userId: string, token: string) => {
   }
 };
 
-export const fetchAiFoodConsumptionAnalysis = async (userId: string, token: string) => {
+export const fetchAiFoodConsumptionAnalysis = async (
+  userId: string,
+  token: string
+) => {
   try {
     const foodRecords = await fetchMilkRecord(userId, token);
 
@@ -60,9 +63,9 @@ export const fetchAiFoodConsumptionAnalysis = async (userId: string, token: stri
     const response = await axios.post(
       `${API_URL}/post/ai/analyseBabyFood/${userId}/${token}`,
       {
-        foodAmount: foodAmounts,
+        weight: [],
         timestamps: timestamps,
-        foodConsumed: [],
+        foodConsumed: foodAmounts,
       },
       {
         headers: {
