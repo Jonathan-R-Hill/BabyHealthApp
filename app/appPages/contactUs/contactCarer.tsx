@@ -86,7 +86,7 @@ export default function CarerPage()
                           <Text style={styles.carerText}>Name: {fullname}</Text>
                           <Text style={styles.carerText}>Phone Number: {carer.data.phone}</Text>
                           <Text style={styles.carerText}>Email: {carer.data.email}</Text>
-                          <TouchableOpacity onPress={()=>routeToEditCarer(carer.details.carerId)}>
+                          <TouchableOpacity onPress={()=>routeToEditCarer(carer.details.carerId)} style={styles.createButtonSmall}>
                             <Text style={styles.linkText}>Edit Or Delete Carer</Text>
                           </TouchableOpacity>
                         </View>
@@ -110,10 +110,10 @@ const styles = StyleSheet.create({
       paddingHorizontal: 10,
     },
     createButton: {
-      backgroundColor: "#65558F",
+      backgroundColor: "#504475",
       paddingVertical: 15,
       marginVertical: 10,
-      borderRadius: 5,
+      borderRadius: 27,
       alignItems: "center",
     },
     createButtonText: {
@@ -138,8 +138,18 @@ const styles = StyleSheet.create({
       color: "#b9cc10", // A yellow colour
       marginVertical: 4,
       textDecorationLine: "underline",
+      textAlignVertical: "center",
+      textAlign: "center"
     },
     carerContainer: {
       paddingBottom: 80
-    }
+    },
+    createButtonSmall: {
+      backgroundColor: "#504475",
+      paddingVertical: 10,
+      marginVertical: 5,
+      borderRadius: 27,
+      alignItems: "center",
+      height: "40%",
+    },
 });

@@ -92,6 +92,7 @@ export default function CreateDiaryEntry() {
           title="Create a new entry"
           onPress={handleNavigateToEntry}
           edge="edgy"
+          colour="#504475"
         />
 
         {/* Display diary entries */}
