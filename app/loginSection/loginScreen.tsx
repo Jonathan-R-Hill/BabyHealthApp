@@ -213,6 +213,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     fontWeight: "bold",
     color: "red",
+    textAlign: "center",
   },
   moreMargin: {
     marginBottom: 10,

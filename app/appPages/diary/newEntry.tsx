@@ -165,6 +165,7 @@ export default function CreateDiaryEntry() {
             }
           }}
         />
+        <View style={{marginBottom: 80}}></View>
       </ScrollView>
       <Navbar />
     </View>
