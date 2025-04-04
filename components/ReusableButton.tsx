@@ -17,12 +17,14 @@ type ReusableButtonProps = PressableProps & {
   title?: string;
   edge?: "round" | "edgy";
   children?: React.ReactNode;
+  colour?: string;
 };
 
 export function ReusableButton({
   title,
   edge,
   children,
+  colour = "#65558F",
   ...otherProps
 }: ReusableButtonProps) {
   const sizeStyles = {
@@ -35,7 +37,7 @@ export function ReusableButton({
       <Pressable
         style={[
           {
-            backgroundColor: "#65558F",
+            backgroundColor: colour,
             borderRadius: 20,
             paddingVertical: 10,
             paddingHorizontal: 20,
