@@ -112,7 +112,7 @@ const BabyCharts = () => {
       // showXAxisIndex: showLabel,
     };
 
-    console.log("Processed Entry:", entry); // Log each processed object
+    // console.log("Processed Entry:", entry); // Log each processed object
     return entry;
   });
 
@@ -135,7 +135,7 @@ const BabyCharts = () => {
       // showXAxisIndex: showLabel,
     };
 
-    console.log("Processed Entry:", entry); // Log each processed object
+    // console.log("Processed Entry:", entry); // Log each processed object
     return entry;
   });
 

@@ -55,7 +55,7 @@ export const fetchAiFoodConsumptionAnalysis = async (
       throw new Error("Invalid weight records received.");
     }
 
-    const foodAmounts = foodRecords.map((record) => record.weight);
+    const foodAmounts = foodRecords.map((record) => record.foodAmount);
     const timestamps = foodRecords.map((record) => record.date);
 
     // console.log("Transformed weight data:", { weights, timestamps });
@@ -63,7 +63,6 @@ export const fetchAiFoodConsumptionAnalysis = async (
     const response = await axios.post(
       `${API_URL}/post/ai/analyseBabyFood/${userId}/${token}`,
       {
-        weight: [],
         timestamps: timestamps,
         foodConsumed: foodAmounts,
       },
