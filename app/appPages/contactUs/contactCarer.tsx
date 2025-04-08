@@ -55,7 +55,8 @@ export default function CarerPage()
       //handles page routing
       const routeToAddCarer = () => {
         try {
-            router.push({ pathname: "./newCarer", params: { username, token } });
+            const forwardPathName = "newCarer"
+            router.push({ pathname: "./aboutUs/privacyPage", params: { username, token, forwardPathName} });
         } catch (error) {
             Alert.alert("Error", "Unable to route")
         }

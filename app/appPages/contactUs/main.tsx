@@ -39,6 +39,15 @@ export default function HandleContactUs() {
     }
   };
 
+  const NavigateToPrivacy = () => {
+    try {
+      router.push({ pathname: "./aboutUs/privacyPage", params: { username, token } });
+    } catch (error) {
+      console.error("Navigation Error", error);
+      Alert.alert("Navigation Error", "Could not navigate to correct page");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -74,6 +83,11 @@ export default function HandleContactUs() {
         <View style={styles.header}>
           <ReusableButton onPress={ContactDevs}>
             <Text style={styles.chartButtonText}>Contact A Developer</Text>
+          </ReusableButton>
+        </View>
+        <View style={styles.header}>
+          <ReusableButton onPress={NavigateToPrivacy}>
+            <Text style={styles.chartButtonText}>Privacy Policy</Text>
           </ReusableButton>
         </View>
       </ScrollView>
