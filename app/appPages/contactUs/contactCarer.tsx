@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  Dimensions,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 
@@ -26,12 +27,14 @@ interface Carer {
         phone: string
     }
 }
+const { height: screenHeight } = Dimensions.get("window");
 
 export default function CarerPage()
 {
     const router = useRouter();
     const [carers, setCarers] = useState<Carer[]>([]);
     const { username, token } = useLocalSearchParams();
+    
     
     //looks at backend to get all carers' data
     const fetchAllCarers = async (username: string, token: string) => {
@@ -76,7 +79,7 @@ export default function CarerPage()
                   <Text style={styles.createButtonText}>+ Create a new entry</Text>
               </TouchableOpacity>
 
-              <View style={styles.carerContainer}>
+              <View>
                 {carers.map((carer) => {
                     const fullname = (carer.data.title + " " + carer.data.name);
 
@@ -93,8 +96,9 @@ export default function CarerPage()
                       </View>
                     );
                 })}
-            </View>    
+            </View>
             </ScrollView>
+            <View style={styles.carerContainer}></View>
             <Navbar />
         </View>
       );
@@ -134,12 +138,9 @@ const styles = StyleSheet.create({
       fontSize: 16,
     },
     linkText: {
-      fontSize: 14,
+      fontSize: 12,
       color: "#b9cc10", // A yellow colour
-      marginVertical: 4,
       textDecorationLine: "underline",
-      textAlignVertical: "center",
-      textAlign: "center"
     },
     carerContainer: {
       paddingBottom: 80
@@ -150,6 +151,6 @@ const styles = StyleSheet.create({
       marginVertical: 5,
       borderRadius: 27,
       alignItems: "center",
-      height: "40%",
+      height: (screenHeight * 0.05)
     },
 });
