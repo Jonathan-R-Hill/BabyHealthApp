@@ -95,7 +95,7 @@ export default function PrematureAdviceSection() {
         />
         <TextInput
           style={styles.searchBar}
-          placeholder="Search for Terminology"
+          placeholder="Search for Advice"
           value={searchQuery}
           onChangeText={setSearchQuery}
         />

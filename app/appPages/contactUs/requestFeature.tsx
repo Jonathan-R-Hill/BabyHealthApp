@@ -56,7 +56,7 @@ export default function requestFeatureMain() {
         {/*Text Box Placement*/}
         <View style={styles.inputBoxContainer}>
           <ReusableTextInput
-            placeholder="Report bugs/issues here"
+            placeholder="Request Feature Here"
             value={requestText}
             onChangeText={setRequestText}
             autoCapitalize="none"
