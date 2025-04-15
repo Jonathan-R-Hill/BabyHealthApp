@@ -30,7 +30,13 @@ export default function privacyPage()
 
     const continueToPage = () => {
         try{
-            router.push(`.././${path}`)
+            if(path === undefined || path === "undefined")
+            {
+              navigation.goBack()
+            }
+            else{
+              router.push({ pathname: `.././${path}`, params: { username, token} })
+            }
         }
         catch(error){
             console.log("Could not navigate back")
