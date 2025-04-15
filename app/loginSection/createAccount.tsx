@@ -68,7 +68,7 @@ export default function CreateAccountScreen() {
 
   useEffect(() => {
     areAllValid();
-  }, [createEmail, displayMessage, confirmPassword, confirmEmail]);
+  }, [createEmail, displayMessage, confirmPassword, confirmEmail, emailDisplayMessage]);
 
   useEffect(() => {
     if (createPassword && confirmPassword) {
