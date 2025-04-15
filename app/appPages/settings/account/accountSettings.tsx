@@ -11,6 +11,7 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 import Navbar from "../../../Navbar";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
+import { asyncValidateUser } from "@/services/accountService";
 
 export default function AccountPage() {
   const router = useRouter();
@@ -34,20 +35,7 @@ export default function AccountPage() {
     }
   };
 
-  const changePassword = () => {
-    try {
-      console.log("Update Password Nav Button Pressed");
-      router.push({
-        pathname: "./changePassword",
-        params: { username, token },
-      });
-    } catch (error) {
-      console.error("Navigation Error", error);
-      Alert.alert(
-        "Navigation Error",
-        "Could not navigate to the Update Password page"
-      );
-    }
+  
 
     // Update Password
     const handleUpdatePassword = () => {
@@ -76,6 +64,7 @@ export default function AccountPage() {
             text: "Logout",
             style: "destructive",
             onPress: () => {
+              asyncValidateUser;
               router.replace("/loginSection/loginScreen");
             },
           },
@@ -219,4 +208,4 @@ export default function AccountPage() {
       flex: 2,
     },
   });
-}
+
