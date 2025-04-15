@@ -14,9 +14,6 @@ const { width: screenWidth } = Dimensions.get("window");
 const inputWidth = screenWidth <= 1200 ? "100%" : "60%";
 
 type ReusableTextInputProps = TextInputProps & {
-  /**
-   * Optional label displayed above the input field.
-   */
   title?: string;
 
   /**
@@ -26,6 +23,9 @@ type ReusableTextInputProps = TextInputProps & {
    * - "big": Largest preset input.
    */
   size?: "default" | "medium" | "big";
+  textSize?: number;
+  textColour?: string;
+  backgroundColour?: string;
 };
 
 /**
@@ -35,6 +35,9 @@ export function ReusableTextInput({
   title,
   style,
   size = "default",
+  textSize = 16,
+  textColour = "black",
+  backgroundColour = "white",
   ...otherProps
 }: ReusableTextInputProps) {
   const sizeStyles = {
@@ -46,11 +49,18 @@ export function ReusableTextInput({
   return (
     <View style={styles.container}>
       {/* Render a label that displays the value of "title" if it isn't null. */}
-      <Text style={styles.label}>{title ?? "Enter..."}</Text>
+      <Text style={[styles.label, { color: textColour }]}>
+        {title ?? "Enter..."}
+      </Text>
       <TextInput
         style={[
           styles.inputBase,
-          { width: inputWidth },
+          {
+            width: inputWidth,
+            fontSize: textSize,
+            color: textColour,
+            backgroundColor: backgroundColour,
+          },
           sizeStyles[size],
           style,
         ]}
@@ -63,21 +73,19 @@ export function ReusableTextInput({
 const styles = StyleSheet.create({
   container: {
     marginBottom: 16,
-    alignSelf: "center", // Centers the input horizontally
+    alignSelf: "center",
   },
   label: {
     marginBottom: 4,
     marginLeft: 3,
     fontSize: 14,
     fontWeight: "500",
-    color: "#333",
   },
   inputBase: {
     borderColor: "#B3B3B3",
     borderWidth: 2,
     borderRadius: 12,
     paddingHorizontal: 12,
-    backgroundColor: "#FFFFFF",
     textAlign: "left",
   },
   inputDefault: {

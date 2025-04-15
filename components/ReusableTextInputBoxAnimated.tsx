@@ -18,9 +18,6 @@ const buttonWidth = isSmallScreen ? "100%" : "60%";
 const alignItems = isSmallScreen ? "center" : "flex-start";
 
 type ReusableTextInputProps = TextInputProps & {
-  /**
-   * Optional label displayed above the input field.
-   */
   title?: string;
 
   /**
@@ -30,10 +27,12 @@ type ReusableTextInputProps = TextInputProps & {
    * - "big": Largest preset input.
    */
   size?: "default" | "medium" | "big";
+  textSize?: number;
+  textColour?: string;
+  backgroundColour?: string;
 };
 
 /**
- * EXPERIMENTAL:
  * Animated version of the reusable text input component with a label and adjustable input sizes.
  *
  * @component
@@ -50,22 +49,22 @@ type ReusableTextInputProps = TextInputProps & {
  * @returns A styled input field with an optional title and adjustable size.
  */
 export function ReusableTextInputAnimated({
-  title = "Enter...", //Fallback if no label is provided.
+  title = "Enter...", // Fallback if no label is provided.
   style,
   size = "default",
-  value, //text input value
+  value, // text input value
   onFocus,
   onBlur,
   onChangeText,
+  textSize = 16, // Default text size 16
+  textColour = "black", // Default text colour black
+  backgroundColour = "white", // Default background colour white
   ...otherProps
 }: ReusableTextInputProps) {
-  //Whether the input is focused
   const [isFocused, setIsFocused] = useState(false);
-
-  //Whether there's any text in the input
   const [hasText, setHasText] = useState(!!value);
 
-  //Animate value (0 = not focused/no text, 1 = focused or has text)
+  // Animate value (0 = not focused/no text, 1 = focused or has text)
   const labelAnim = useRef(new Animated.Value(!!value ? 1 : 0)).current;
 
   /**
@@ -85,13 +84,11 @@ export function ReusableTextInputAnimated({
    * Still call any external `onFocus`/`onBlur` passed in.
    */
   const handleFocus = (e: any) => {
-    //Tapping into the box
     setIsFocused(true);
     onFocus?.(e);
   };
 
   const handleBlur = (e: any) => {
-    //Tapping away from the box
     setIsFocused(false);
     onBlur?.(e);
   };
@@ -120,20 +117,14 @@ export function ReusableTextInputAnimated({
     outputRange: [12, -22], // move label upward when focused/filled
   });
 
-  // const labelFontSize = labelAnim.interpolate({
-  //     inputRange: [0, 1],
-  //     outputRange: [14, 12], // shrink font
-  // });
-
   return (
     <View style={styles.container}>
-      {/*Render a label that displays the value of "title" if it isn't null.*/}
+      {/* Render a label that displays the value of "title" if it isn't null. */}
       <Animated.Text
         style={[
           styles.label,
           {
             transform: [{ translateY: labelTranslateY }],
-            // fontSize: labelFontSize,
             opacity: labelAnim, // fades in
           },
         ]}
@@ -143,7 +134,16 @@ export function ReusableTextInputAnimated({
 
       <TextInput
         value={value}
-        style={[styles.inputBase, sizeStyles[size], style]}
+        style={[
+          styles.inputBase,
+          sizeStyles[size],
+          {
+            fontSize: textSize,
+            color: textColour,
+            backgroundColor: backgroundColour,
+          },
+          style,
+        ]}
         onFocus={handleFocus}
         onBlur={handleBlur}
         onChangeText={handleChangeText}
@@ -156,7 +156,7 @@ export function ReusableTextInputAnimated({
 const styles = StyleSheet.create({
   container: {
     marginBottom: 16,
-    position: "relative", //required for absolute label positioning
+    position: "relative", // required for absolute label positioning
     width: buttonWidth,
     alignSelf: isSmallScreen ? "stretch" : "center",
   },
@@ -178,7 +178,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 12,
     paddingHorizontal: 12,
-    backgroundColor: "#FFFFFF",
     textAlign: "left",
   },
   inputDefault: {

@@ -13,11 +13,28 @@ const { width: screenWidth } = Dimensions.get("window");
 // Determine button width dynamically
 const buttonWidth = screenWidth <= 1200 ? "100%" : "60%";
 
+// Define valid font weights
+type FontWeight =
+  | "normal"
+  | "bold"
+  | "100"
+  | "200"
+  | "300"
+  | "400"
+  | "500"
+  | "600"
+  | "700"
+  | "800"
+  | "900";
+
 type ReusableButtonProps = PressableProps & {
   title?: string;
   edge?: "round" | "edgy";
   children?: React.ReactNode;
   colour?: string;
+  textSize?: number;
+  textColour?: string;
+  fontWeights?: FontWeight;
 };
 
 export function ReusableButton({
@@ -25,6 +42,9 @@ export function ReusableButton({
   edge,
   children,
   colour = "#65558F",
+  textSize = 16,
+  textColour = "white",
+  fontWeights = "bold",
   ...otherProps
 }: ReusableButtonProps) {
   const sizeStyles = {
@@ -42,7 +62,7 @@ export function ReusableButton({
             paddingVertical: 10,
             paddingHorizontal: 20,
             minHeight: 40,
-            width: buttonWidth, // Dynamic width
+            width: buttonWidth,
             maxHeight: 300,
             alignItems: "center",
             justifyContent: "center",
@@ -52,7 +72,15 @@ export function ReusableButton({
         {...otherProps}
       >
         {title ? (
-          <Text style={{ color: "white", fontWeight: "600" }}>{title}</Text>
+          <Text
+            style={{
+              color: textColour,
+              fontWeight: fontWeights,
+              fontSize: textSize,
+            }}
+          >
+            {title}
+          </Text>
         ) : (
           children
         )}
@@ -63,8 +91,8 @@ export function ReusableButton({
 
 const styles = StyleSheet.create({
   centerContainer: {
-    justifyContent: "center", // Centers vertically
-    alignItems: "center", // Centers horizontally
+    justifyContent: "center",
+    alignItems: "center",
     paddingTop: 5,
   },
   roundEdge: {
