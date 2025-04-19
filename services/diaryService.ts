@@ -96,7 +96,9 @@ export const deleteSingleDiaryEntry = async (
   token: string
 ) => {
   try {
-    const url = `${API_URL}/diary/${encodeURIComponent(userId)}/${entryId}/${encodeURIComponent(token)}`;
+    const url = `${API_URL}/delete/diary/${encodeURIComponent(
+      userId
+    )}/${encodeURIComponent(entryId)}/${encodeURIComponent(token)}`;
     const response = await axios.delete(url);
     return response.data;
   } catch (error: any) {
