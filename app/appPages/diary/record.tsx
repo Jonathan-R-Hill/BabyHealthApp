@@ -12,7 +12,8 @@ import {
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Navbar from "../../Navbar";
 import Header from "../../Header";
-import { fetchSingleDiaryEntry } from "../../../services/diaryService";
+import { deleteSingleDiaryEntry, fetchSingleDiaryEntry } from "../../../services/diaryService";
+import { ReusableButton } from "@/components/ReusableButton";
 
 // Define the structure of a diary entry
 interface DiaryEntry {
@@ -85,6 +86,25 @@ export default function DiaryEntryDetails() {
     );
   }
 
+// Navigate to the new diary entry creation page
+const handleDeleteEntry = async () => {
+  if (typeof username === "string" && typeof id === "string" && typeof token === "string") {
+    const entryId = parseInt(id, 10);
+    if (!isNaN(entryId)) {
+      try {
+        const response = await deleteSingleDiaryEntry(username, entryId, token);
+        return response.data;
+      } catch (error) {
+        Alert.alert("Error", "Failed to delete the entry.");
+      }
+    } else {
+      Alert.alert("Error", "Invalid entry ID.");
+    }
+  } else {
+    Alert.alert("Error", "Missing or invalid parameters.");
+  }
+};
+
   // Display the diary entry details
   return (
     <View style={styles.container}>
@@ -111,6 +131,18 @@ export default function DiaryEntryDetails() {
             <Image style={styles.imageIcon} />
             <Text style={styles.imageText}>Picture placeholder</Text>
           </TouchableOpacity>
+          {/* <ReusableButton
+            title="Edit"
+            onPress={handleEditEntry}
+            edge="edgy"
+            colour="#504475"
+          /> */}
+          <ReusableButton
+            title="Delete"
+            onPress={handleDeleteEntry}
+            edge="edgy"
+            colour="#504475"
+          />
         </ScrollView>
       </View>
       <Navbar />

@@ -89,3 +89,19 @@ export const postDiaryEntry = async (
     );
   }
 };
+
+export const deleteSingleDiaryEntry = async (
+  userId: string,
+  entryId: number,
+  token: string
+) => {
+  try {
+    const url = `${API_URL}/diary/${encodeURIComponent(userId)}/${entryId}/${encodeURIComponent(token)}`;
+    const response = await axios.delete(url);
+    return response.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response ? error.response.data.message : error.message
+    );
+  }
+};
