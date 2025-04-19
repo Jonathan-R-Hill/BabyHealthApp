@@ -93,6 +93,11 @@ const handleDeleteEntry = async () => {
     if (!isNaN(entryId)) {
       try {
         const response = await deleteSingleDiaryEntry(username, entryId, token);
+        console.log("Diary entry deleted.");
+        router.push({
+          pathname: "./main",
+          params: { username, token },
+        });
         return response.data;
       } catch (error) {
         Alert.alert("Error", "Failed to delete the entry.");
