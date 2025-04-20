@@ -15,12 +15,12 @@ import Header from "../../Header";
 import { deleteSingleDiaryEntry, fetchSingleDiaryEntry } from "../../../services/diaryService";
 import { ReusableButton } from "@/components/ReusableButton";
 
-// Define the structure of a diary entry
 interface DiaryEntry {
   details: {
     date: string;
     entry_id: number;
     userId: string;
+    diaryTitle: string;
   };
   data: {
     foodAmount: number;
@@ -36,7 +36,6 @@ export default function DiaryEntryDetails() {
   const [entry, setEntry] = useState<DiaryEntry | null>(null); // State to store diary entry data
   const [loading, setLoading] = useState(true); // State to track loading status
 
-  // Function to fetch a single diary entry
   const fetchDiaryEntry = async (
     username: string,
     entry_id: number,
@@ -86,29 +85,37 @@ export default function DiaryEntryDetails() {
     );
   }
 
-// Navigate to the new diary entry creation page
-const handleDeleteEntry = async () => {
-  if (typeof username === "string" && typeof id === "string" && typeof token === "string") {
-    const entryId = parseInt(id, 10);
-    if (!isNaN(entryId)) {
-      try {
-        const response = await deleteSingleDiaryEntry(username, entryId, token);
-        console.log("Diary entry deleted.");
-        router.push({
-          pathname: "./main",
-          params: { username, token },
-        });
-        return response.data;
-      } catch (error) {
-        Alert.alert("Error", "Failed to delete the entry.");
+  // Navigate to the new diary entry creation page
+  const handleDeleteEntry = async () => {
+    if (typeof username === "string" && typeof id === "string" && typeof token === "string") {
+      const entryId = parseInt(id, 10);
+      if (!isNaN(entryId)) {
+        try {
+          const response = await deleteSingleDiaryEntry(username, entryId, token);
+          console.log("Diary entry deleted.");
+          router.push({
+            pathname: "./main",
+            params: { username, token },
+          });
+          return response.data;
+        } catch (error) {
+          Alert.alert("Error", "Failed to delete the entry.");
+        }
+      } else {
+        Alert.alert("Error", "Invalid entry ID.");
       }
     } else {
-      Alert.alert("Error", "Invalid entry ID.");
+      Alert.alert("Error", "Missing or invalid parameters.");
     }
-  } else {
-    Alert.alert("Error", "Missing or invalid parameters.");
+  };
+
+  const handleEditEntry = async () => {
+    console.log(`Redirected to edit page (ID: ${id}).`);
+    router.push({
+      pathname: "./edit",
+      params: { username, token, id },
+    });
   }
-};
 
   // Display the diary entry details
   return (
@@ -119,6 +126,7 @@ const handleDeleteEntry = async () => {
           <Text style={styles.dateText}>
             {new Date(entry.details.date).toLocaleDateString()}
           </Text>
+          <Text style={styles.content}>{entry.details.diaryTitle}</Text>
           <Text style={styles.content}>{entry.data.text}</Text>
           <Text style={styles.infoText}>
             <Text style={styles.infoLabel}>Weight: </Text>
@@ -136,12 +144,12 @@ const handleDeleteEntry = async () => {
             <Image style={styles.imageIcon} />
             <Text style={styles.imageText}>Picture placeholder</Text>
           </TouchableOpacity>
-          {/* <ReusableButton
+          <ReusableButton
             title="Edit"
             onPress={handleEditEntry}
             edge="edgy"
             colour="#504475"
-          /> */}
+          />
           <ReusableButton
             title="Delete"
             onPress={handleDeleteEntry}
