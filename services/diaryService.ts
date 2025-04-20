@@ -93,7 +93,7 @@ export const postDiaryEntry = async (
 export const deleteSingleDiaryEntry = async (
   userId: string,
   entryId: number,
-  token: string
+  token: string,
 ) => {
   try {
     const url = `${API_URL}/delete/diary/${encodeURIComponent(
@@ -107,3 +107,30 @@ export const deleteSingleDiaryEntry = async (
     );
   }
 };
+
+export const updateDiaryEntry = async (
+  userId: string,
+  entryId: number,
+  token: string,
+  title: string,
+  text: string,
+  weight: number,
+  foodType: string,
+  foodAmount: number,
+) => {
+  try {
+    const url = `${API_URL}/put/diary/${encodeURIComponent(userId)}/${encodeURIComponent(entryId)}/${encodeURIComponent(token)}`;
+    const response = await axios.put(url, {
+      title,
+      text,
+      weight,
+      foodType,
+      foodAmount,
+    });
+    return response.data;
+  } catch (error: any) {
+    throw new Error(
+      error.response ? error.response.data.message : error.message
+    )
+  }
+}
