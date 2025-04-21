@@ -10,8 +10,6 @@ import {
 
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Navbar from "@/app/Navbar";
-import { ThemedView } from "@/components/ThemedView";
-import { ThemedText } from "@/components/ThemedText";
 
 export default function UpdateEmailPage() {
   const router = useRouter();
@@ -30,14 +28,12 @@ export default function UpdateEmailPage() {
   };
 
   return (
-    <ThemedView style={styles.container}>
-      <ThemedText type="title" style={styles.textTitle}>
-        Account Settings
-      </ThemedText>
+    <View style={styles.container}>
+      <Text style={styles.textTitle}>Account Settings</Text>
 
-      {/* Update Email */}
-      <ThemedView style={styles.settingOption}>
-        <ThemedText style={styles.settingText}>Update Email</ThemedText>
+      {/* Update Email Section */}
+      <View style={styles.settingOption}>
+        <Text style={styles.settingText}>Update Email</Text>
         <TextInput
           style={styles.input}
           placeholder="New Email"
@@ -49,13 +45,13 @@ export default function UpdateEmailPage() {
           style={styles.actionButton}
           onPress={handleUpdateEmail}
         >
-          <ThemedText style={styles.actionButtonText}>Update Email</ThemedText>
+          <Text style={styles.actionButtonText}>Update Email</Text>
         </TouchableOpacity>
-      </ThemedView>
+      </View>
 
       {/* Navbar */}
       <Navbar />
-    </ThemedView>
+    </View>
   );
 }
 
