@@ -3,15 +3,12 @@ import {
   View,
   Text,
   StyleSheet,
-  useColorScheme,
   TouchableOpacity,
   Switch,
   Alert
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Navbar from "../../Navbar";
-import { ThemedView } from "@/components/ThemedView"
-import { ThemedText } from "@/components/ThemedText"
 import Header from "@/app/Header";
 
 export default function SettingsPage() {
@@ -59,42 +56,42 @@ export default function SettingsPage() {
   };
 
   return (
-    <ThemedView style={styles.container}>
+    <View style={styles.container}>
       <Header title="Settings"/>
-      <ThemedText type="title" style={styles.textTitle}>
+      <Text style={[styles.textTitle]}>
         Settings
-      </ThemedText>
+      </Text>
 
       {/* Settings Options */}
-      <ThemedView style={styles.settingOption}>
-        <ThemedText style={styles.settingText}>Enable Notifications</ThemedText>
+      <View style={styles.settingOption}>
+        <Text style={styles.settingText}>Enable Notifications</Text>
         <Switch
           value={notificationsEnabled}
           onValueChange={toggleNotifications}
         />
-      </ThemedView>
-      <ThemedView style={styles.settingOption}>
-        <ThemedText style={styles.settingText}>Enable Dark Mode</ThemedText>
+      </View>
+      <View style={styles.settingOption}>
+        <Text style={styles.settingText}>Enable Dark Mode</Text>
         <Switch value={darkModeEnabled} onValueChange={toggleDarkMode} />
-      </ThemedView>
+      </View>
 
       {/* AboutApp nav button */}
-      <ThemedView style={styles.header}>
+      <View style={styles.header}>
         <TouchableOpacity style={styles.actionButton} onPress={aboutApp}>
-          <ThemedText style={styles.actionButtonText}>About App</ThemedText>
+          <Text style={styles.actionButtonText}>About App</Text>
         </TouchableOpacity>
-      </ThemedView>
+      </View>
 
       {/* Account Settings Nav Button */}
-      <ThemedView style={styles.header}>
+      <View style={styles.header}>
         <TouchableOpacity style={styles.actionButton} onPress={accountSettings}>
-          <ThemedText style={styles.actionButtonText}>My Account</ThemedText>
+          <Text style={styles.actionButtonText}>My Account</Text>
         </TouchableOpacity>
-      </ThemedView>
+      </View>
 
       {/* Navigation Bar */}
       <Navbar />
-    </ThemedView>
+    </View>
   );
 }
 
