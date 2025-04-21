@@ -48,6 +48,14 @@ export default function CreateDiaryEntry() {
   const [entry, setEntry] = useState<DiaryEntry | null>(null); // State to store diary entry data
   const [loading, setLoading] = useState(true); // State to track loading status
 
+  // State variables for form fields and validation errors
+  const [title, setTitle] = useState("");
+  const [text, setText] = useState("");
+  const [weight, setWeight] = useState("");
+  const [foodType, setFoodType] = useState("");
+  const [foodAmount, setFoodAmount] = useState("");
+  const [errors, setErrors] = useState<Errors>({});
+
   const fetchDiaryEntry = async (
     username: string,
     entry_id: number,
@@ -62,6 +70,7 @@ export default function CreateDiaryEntry() {
       );
       console.log(data.details.diaryTitle);
       if (data) {
+        console.log("Store the retrived entry");
         setEntry(data); // Store the retrieved entry
       } else {
         Alert.alert("Error", "Diary entry not found."); // Show an alert if entry is not found
@@ -79,15 +88,15 @@ export default function CreateDiaryEntry() {
     }
   }, [id, username]); // Fetch the diary entry when `id` or `username` changes
 
-  // State variables for form fields and validation errors
-  const [title, setTitle] = useState(entry?.details.diaryTitle ?? "");
-  const [text, setText] = useState(entry?.data.text ?? "");
-  const [weight, setWeight] = useState(entry?.data.weight?.toString() ?? "");
-  const [foodType, setFoodType] = useState(entry?.data.foodType ?? "");
-  const [foodAmount, setFoodAmount] = useState(entry?.data.foodAmount?.toString() ?? "");
-  const [errors, setErrors] = useState<Errors>({});
-
-  
+  useEffect(() => {
+    if (entry) {
+      setTitle(entry.details.diaryTitle);
+      setText(entry.data.text);
+      setWeight(entry.data.weight.toString());
+      setFoodType(entry.data.foodType);
+      setFoodAmount(entry.data.foodAmount.toString());
+    }
+  }, [entry]);
 
   // Form validation function
   const validateForm = () => {
@@ -109,9 +118,13 @@ export default function CreateDiaryEntry() {
     return Object.keys(newErrors).length === 0; // Return true if no errors exist
   };
 
+  const logFoodType = (input: string) => {
+    console.log(input);
+  }
+
   return (
     <View style={styles.container}>
-      <Header title="New Diary Entry" onBackPress={router.back} />
+      <Header title="Edit Diary Entry" onBackPress={router.back} />
       <ScrollView style={styles.diaryContainer}>
         {/* Form Fields */}
         {errors.title && <Text style={styles.errorText}>{errors.title}</Text>}
@@ -119,6 +132,7 @@ export default function CreateDiaryEntry() {
           title="Title"
           placeholder="Enter title"
           onChangeText={setTitle}
+          value={title}
         />
 
         {errors.text && <Text style={styles.errorText}>{errors.text}</Text>}
@@ -127,6 +141,7 @@ export default function CreateDiaryEntry() {
           size="medium"
           placeholder="Write your diary..."
           onChangeText={setText}
+          value={text}
           multiline
         />
 
@@ -135,27 +150,28 @@ export default function CreateDiaryEntry() {
           title="Weight"
           placeholder="Weight (g)"
           onChangeText={setWeight}
+          value={weight}
           keyboardType="numeric"
         />
 
         <View style={styles.radioContainer}>
           <Text style={styles.fieldLabel}>Food Type</Text>
           <View style={styles.radioGroup}>
-            {["Breast Milk", "Instant Formula", "Other"].map((option) => (
-              <TouchableOpacity
-                key={option}
-                style={styles.radioItem}
+          {["Breast Milk", "Instant Formula", "Other"].map((option) => (
+            <TouchableOpacity
+              key={option}
+              style={styles.radioItem}
+              onPress={() => setFoodType(option)}
+            >
+              <RadioButton
+                value={option}
+                status={(option === foodType || (option === "Breast Milk" && foodType === "Milk")) ? "checked" : "unchecked"}
                 onPress={() => setFoodType(option)}
-              >
-                <RadioButton
-                  value={option}
-                  status={foodType === option ? "checked" : "unchecked"}
-                  onPress={() => setFoodType(option)}
-                  color="#5A3E92" // Purple-like colour matching the image
-                />
-                <Text style={styles.radioLabel}>{option}</Text>
-              </TouchableOpacity>
-            ))}
+                color="#5A3E92"
+              />
+              <Text style={styles.radioLabel}>{option}</Text>
+            </TouchableOpacity>
+          ))}
           </View>
         </View>
 
@@ -166,6 +182,7 @@ export default function CreateDiaryEntry() {
           title="Food amount"
           placeholder="Food amount (g)"
           onChangeText={setFoodAmount}
+          value={foodAmount}
           keyboardType="numeric"
         />
 
@@ -178,7 +195,7 @@ export default function CreateDiaryEntry() {
 
         {/* Submit Button */}
         <ReusableButton
-          title="Create"
+          title="Edit"
           edge="edgy"
           onPress={() => {
             if (validateForm()) {
@@ -196,7 +213,7 @@ export default function CreateDiaryEntry() {
                 String(token)
               )
                 .then(() => {
-                  console.log("Diary entry created successfully!");
+                  console.log("Diary entry created successfully.");
                   setTitle("");
                   setText("");
                   setWeight("");
