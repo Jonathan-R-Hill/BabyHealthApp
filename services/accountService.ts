@@ -28,6 +28,21 @@ const asyncValidateUser = async (email: string, password: string) => {
     }
   };
 
+  const asyncLogoutUser = async () => {
+    try {
+      const response = await axios.post(
+      `${API_URL}/resetUserToken`)
+  
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.log("Error:", error.response?.data?.message);
+      } else {
+        console.log("An unexpected error occurred");
+      }
+      return false;
+    }
+  }
+
 const asyncUpdateEmail = async (email: string, code: string, password: string) => {
     try {
 
@@ -63,4 +78,4 @@ const asyncUpdateEmail = async (email: string, code: string, password: string) =
 
 
 
-export { asyncUpdateEmail };
+export { asyncValidateUser, asyncLogoutUser, asyncUpdateEmail };

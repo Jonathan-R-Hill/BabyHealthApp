@@ -10,6 +10,7 @@ import {
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Navbar from "../../../Navbar";
 import { asyncValidateUser } from "@/services/accountService";
+import { asyncLogoutUser } from "@/services/accountService";
 import { Button } from "react-native-paper";
 
 
