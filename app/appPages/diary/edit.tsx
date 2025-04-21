@@ -11,7 +11,7 @@ import {
   Alert
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
-import { fetchSingleDiaryEntry, postDiaryEntry } from "../../../services/diaryService";
+import { fetchSingleDiaryEntry, updateDiaryEntry } from "../../../services/diaryService";
 import Header from "../../Header";
 import Navbar from "../../Navbar";
 import { ReusableTextInput } from "@/components/ReusableTextInputBox";
@@ -200,20 +200,19 @@ export default function CreateDiaryEntry() {
           onPress={() => {
             if (validateForm()) {
               const userId = String(username);
-              const weightValue = parseFloat(weight);
-              const foodAmountValue = parseFloat(foodAmount);
 
-              postDiaryEntry(
+              updateDiaryEntry(
                 userId,
+                parseInt(String(id)),
+                String(token),
                 title,
                 text,
-                weightValue,
+                parseFloat(weight),
                 foodType,
-                foodAmountValue,
-                String(token)
+                parseFloat(foodAmount)
               )
                 .then(() => {
-                  console.log("Diary entry created successfully.");
+                  console.log("Diary entry updated successfully.");
                   setTitle("");
                   setText("");
                   setWeight("");
@@ -228,7 +227,7 @@ export default function CreateDiaryEntry() {
                   });
                 })
                 .catch((error) => {
-                  console.error("Error creating diary entry:", error);
+                  console.error("Error updating the diary entry:", error);
                 });
             }
           }}

@@ -120,7 +120,7 @@ export const updateDiaryEntry = async (
 ) => {
   try {
     const url = `${API_URL}/put/diary/${encodeURIComponent(userId)}/${encodeURIComponent(entryId)}/${encodeURIComponent(token)}`;
-    const response = await axios.put(url, {
+    const response = await axios.post(url, {
       title,
       text,
       weight,
