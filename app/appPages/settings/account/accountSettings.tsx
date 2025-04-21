@@ -13,7 +13,6 @@ import { asyncValidateUser } from "@/services/accountService";
 import { asyncLogoutUser } from "@/services/accountService";
 import { Button } from "react-native-paper";
 
-
 export default function AccountPage() {
   const router = useRouter();
   const { username, token } = useLocalSearchParams();
@@ -62,7 +61,7 @@ export default function AccountPage() {
           text: "Logout",
           style: "destructive",
           onPress: () => {
-              router.replace("/loginSection/loginScreen"); // wip
+            router.replace("/loginSection/loginScreen"); // wip
           },
         },
       ],
@@ -77,7 +76,7 @@ export default function AccountPage() {
       </Text>
 
       {/* Update Email Nav Button */}
-      <View style={styles.header}>
+      <View style={styles.settingOption}>
         <TouchableOpacity style={styles.actionButton} onPress={changeEmail}>
           <Text style={styles.actionButtonText}>Update Email</Text>
         </TouchableOpacity>
@@ -85,9 +84,7 @@ export default function AccountPage() {
 
       {/* Update Password [nav button] */}
       <View style={styles.settingOption}>
-        <Button style={styles.settingText}>Update Password</Button>
-        <TouchableOpacity style={styles.actionButton} onPress={changePassword}
-        >
+        <TouchableOpacity style={styles.actionButton} onPress={changePassword}>
           <Text style={styles.actionButtonText}>Update Password</Text>
         </TouchableOpacity>
       </View>
