@@ -1,21 +1,23 @@
 import React, { useState } from "react";
 import {
   View,
+  Text,
+  Image,
   StyleSheet,
   TouchableOpacity,
   Alert,
   TextInput,
-  Text,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Navbar from "../../../Navbar";
+import Header from "@/app/Header";
 import { asyncValidateUser } from "@/services/accountService";
 import { asyncLogoutUser } from "@/services/accountService";
-import { Button } from "react-native-paper";
+
 
 export default function AccountPage() {
   const router = useRouter();
-  const { username, token } = useLocalSearchParams();
+  const { username, token, userId } = useLocalSearchParams();
 
   // Nav Functions
   const changeEmail = () => {
@@ -61,8 +63,10 @@ export default function AccountPage() {
           text: "Logout",
           style: "destructive",
           onPress: () => {
+            asyncLogoutUser(userId)
+            
             router.replace("/loginSection/loginScreen"); // wip
-          },
+    },
         },
       ],
       { cancelable: true }
@@ -71,9 +75,15 @@ export default function AccountPage() {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.textTitle, { fontWeight: "bold", fontSize: 24 }]}>
-        Account Settings
-      </Text>
+      <Header title="My Account" />
+
+      <View style={styles.profileContainer}>
+        <Image
+          source={require('@/assets/images/CharlesPH.png')}
+          style={styles.profileImage}
+        />
+        <Text style={styles.profileImage}>{username}</Text>
+      </View>
 
       {/* Update Email Nav Button */}
       <View style={styles.settingOption}>
@@ -82,7 +92,7 @@ export default function AccountPage() {
         </TouchableOpacity>
       </View>
 
-      {/* Update Password [nav button] */}
+      {/* Update Password Nav Button */}
       <View style={styles.settingOption}>
         <TouchableOpacity style={styles.actionButton} onPress={changePassword}>
           <Text style={styles.actionButtonText}>Update Password</Text>
@@ -90,7 +100,7 @@ export default function AccountPage() {
       </View>
 
       {/* Logout Button */}
-      <View style={styles.header}>
+      <View style={styles.settingOption}>
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Text style={styles.logoutButtonText}>Logout</Text>
         </TouchableOpacity>
@@ -173,5 +183,19 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     flex: 2,
+  },
+  profileContainer: {
+    alignItems: "center",
+    marginVertical: 20,
+  },
+  profileImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 10,
+  },
+  profileUsername: {
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
