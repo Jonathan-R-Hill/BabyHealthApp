@@ -93,7 +93,7 @@ export const postDiaryEntry = async (
 export const deleteSingleDiaryEntry = async (
   userId: string,
   entryId: number,
-  token: string,
+  token: string
 ) => {
   try {
     const url = `${API_URL}/delete/diary/${encodeURIComponent(
@@ -116,11 +116,13 @@ export const updateDiaryEntry = async (
   text: string,
   weight: number,
   foodType: string,
-  foodAmount: number,
+  foodAmount: number
 ) => {
   try {
-    const url = `${API_URL}/put/diary/${encodeURIComponent(userId)}/${encodeURIComponent(entryId)}/${encodeURIComponent(token)}`;
-    const response = await axios.post(url, {
+    const url = `${API_URL}/put/diary/${encodeURIComponent(
+      userId
+    )}/${encodeURIComponent(entryId)}/${encodeURIComponent(token)}`;
+    const response = await axios.put(url, {
       title,
       text,
       weight,
@@ -131,6 +133,6 @@ export const updateDiaryEntry = async (
   } catch (error: any) {
     throw new Error(
       error.response ? error.response.data.message : error.message
-    )
+    );
   }
-}
+};
