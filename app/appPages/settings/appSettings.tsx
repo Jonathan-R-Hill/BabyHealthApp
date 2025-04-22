@@ -41,7 +41,7 @@ export default function SettingsPage() {
       );
     }
   };
-
+ 
   const accountSettings = () => {
     try {
       console.log("Account Settings Button Pressed");
@@ -58,9 +58,6 @@ export default function SettingsPage() {
   return (
     <View style={styles.container}>
       <Header title="Settings"/>
-      <Text style={[styles.textTitle]}>
-        Settings
-      </Text>
 
       {/* Settings Options */}
       <View style={styles.settingOption}>
@@ -72,18 +69,15 @@ export default function SettingsPage() {
       </View>
       <View style={styles.settingOption}>
         <Text style={styles.settingText}>Enable Dark Mode</Text>
-        <Switch value={darkModeEnabled} onValueChange={toggleDarkMode} />
+        <Switch value={darkModeEnabled} onValueChange={toggleDarkMode}/>
       </View>
 
       {/* AboutApp nav button */}
-      <View style={styles.header}>
+      <View style={styles.container}>
         <TouchableOpacity style={styles.actionButton} onPress={aboutApp}>
           <Text style={styles.actionButtonText}>About App</Text>
         </TouchableOpacity>
-      </View>
-
       {/* Account Settings Nav Button */}
-      <View style={styles.header}>
         <TouchableOpacity style={styles.actionButton} onPress={accountSettings}>
           <Text style={styles.actionButtonText}>My Account</Text>
         </TouchableOpacity>

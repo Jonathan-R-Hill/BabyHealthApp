@@ -14,10 +14,9 @@ import Header from "@/app/Header";
 import { asyncValidateUser } from "@/services/accountService";
 import { asyncLogoutUser } from "@/services/accountService";
 
-
 export default function AccountPage() {
   const router = useRouter();
-  const { username, token, userId } = useLocalSearchParams();
+  const { username, token } = useLocalSearchParams();
 
   // Nav Functions
   const changeEmail = () => {
@@ -62,11 +61,26 @@ export default function AccountPage() {
         {
           text: "Logout",
           style: "destructive",
-          onPress: () => {
-            asyncLogoutUser(userId)
-            
-            router.replace("/loginSection/loginScreen"); // wip
-    },
+          onPress: async () => {
+            try {
+              if (username) {
+                const result = await asyncLogoutUser(username as string);
+
+                if (result !== false) {
+                  console.log("Logout Successful¬");
+                  router.replace("/loginSection/loginScreen");
+                } else {
+                  Alert.alert("Failed to Logout", "unable to properly logout");
+                }
+              } else {
+                console.error("no username found");
+                Alert.alert("Failed to Logout", "no username found");
+              }
+            } catch (error) {
+              console.error("Error logging out", error);
+              Alert.alert("Logout Error", "an unexpected error occured");
+            }
+          },
         },
       ],
       { cancelable: true }
@@ -79,7 +93,7 @@ export default function AccountPage() {
 
       <View style={styles.profileContainer}>
         <Image
-          source={require('@/assets/images/CharlesPH.png')}
+          source={require("@/assets/images/CharlesPH.png")} // Placeholder, needs accountbound pfp
           style={styles.profileImage}
         />
         <Text style={styles.profileImage}>{username}</Text>
