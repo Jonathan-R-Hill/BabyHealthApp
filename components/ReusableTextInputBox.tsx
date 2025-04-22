@@ -11,7 +11,8 @@ import {
 const { width: screenWidth } = Dimensions.get("window");
 
 // Determine input width dynamically
-const inputWidth = screenWidth <= 1200 ? "100%" : "60%";
+const isSmallScreen = screenWidth <= 1200 ? "100%" : "60%";
+const buttonWidth = isSmallScreen ? "100%" : "60%";
 
 type ReusableTextInputProps = TextInputProps & {
   title?: string;
@@ -56,7 +57,7 @@ export function ReusableTextInput({
         style={[
           styles.inputBase,
           {
-            width: inputWidth,
+            // width: inputWidth,
             fontSize: textSize,
             color: textColour,
             backgroundColor: backgroundColour,
@@ -73,7 +74,9 @@ export function ReusableTextInput({
 const styles = StyleSheet.create({
   container: {
     marginBottom: 16,
-    alignSelf: "center",
+    position: "relative", // required for absolute label positioning
+    // width: buttonWidth,
+    // alignSelf: isSmallScreen ? "stretch" : "center",
   },
   label: {
     marginBottom: 4,

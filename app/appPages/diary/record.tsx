@@ -7,13 +7,22 @@ import {
   Alert,
   ScrollView,
   TouchableOpacity,
-  Image
+  Image,
+  Dimensions
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Navbar from "../../Navbar";
 import Header from "../../Header";
 import { deleteSingleDiaryEntry, fetchSingleDiaryEntry } from "../../../services/diaryService";
 import { ReusableButton } from "@/components/ReusableButton";
+
+// Get screen width
+const { width: screenWidth } = Dimensions.get("window");
+
+// Determine button width dynamically
+const isSmallScreen = screenWidth <= 900;
+const formMargin = isSmallScreen ? "0%" : "20%";
+// const alignItems = isSmallScreen ? "center" : "flex-start";
 
 interface DiaryEntry {
   details: {
@@ -171,6 +180,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     padding: 20,
+    marginHorizontal: formMargin,
   },
   dateText: {
     fontSize: 18,

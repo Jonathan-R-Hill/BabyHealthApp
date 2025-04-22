@@ -9,14 +9,6 @@ import {
   Dimensions,
 } from "react-native";
 
-// Get screen width
-const { width: screenWidth } = Dimensions.get("window");
-
-// Determine button width dynamically
-const isSmallScreen = screenWidth <= 1200;
-const buttonWidth = isSmallScreen ? "100%" : "60%";
-const alignItems = isSmallScreen ? "center" : "flex-start";
-
 type ReusableTextInputProps = TextInputProps & {
   title?: string;
 
@@ -157,8 +149,6 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: 16,
     position: "relative", // required for absolute label positioning
-    width: buttonWidth,
-    alignSelf: isSmallScreen ? "stretch" : "center",
   },
   label: {
     position: "absolute",

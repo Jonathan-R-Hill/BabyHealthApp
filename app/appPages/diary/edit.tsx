@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  Alert
+  Alert,
+  Dimensions
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { fetchSingleDiaryEntry, updateDiaryEntry } from "../../../services/diaryService";
@@ -17,6 +18,14 @@ import Navbar from "../../Navbar";
 import { ReusableTextInput } from "@/components/ReusableTextInputBox";
 import { ReusableButton } from "@/components/ReusableButton";
 import { ReusableTextInputAnimated } from "@/components/ReusableTextInputBoxAnimated";
+
+// Get screen width
+const { width: screenWidth } = Dimensions.get("window");
+
+// Determine button width dynamically
+const isSmallScreen = screenWidth <= 900;
+const formMargin = isSmallScreen ? "0%" : "20%";
+// const alignItems = isSmallScreen ? "center" : "flex-start";
 
 interface DiaryEntry {
   details: {
@@ -128,7 +137,7 @@ export default function CreateDiaryEntry() {
       <ScrollView style={styles.diaryContainer}>
         {/* Form Fields */}
         {errors.title && <Text style={styles.errorText}>{errors.title}</Text>}
-        <ReusableTextInputAnimated
+        <ReusableTextInput
           title="Title"
           placeholder="Enter title"
           onChangeText={setTitle}
@@ -136,7 +145,7 @@ export default function CreateDiaryEntry() {
         />
 
         {errors.text && <Text style={styles.errorText}>{errors.text}</Text>}
-        <ReusableTextInputAnimated
+        <ReusableTextInput
           title="Diary Entry"
           size="medium"
           placeholder="Write your diary..."
@@ -146,7 +155,7 @@ export default function CreateDiaryEntry() {
         />
 
         {errors.weight && <Text style={styles.errorText}>{errors.weight}</Text>}
-        <ReusableTextInputAnimated
+        <ReusableTextInput
           title="Weight"
           placeholder="Weight (g)"
           onChangeText={setWeight}
@@ -178,7 +187,7 @@ export default function CreateDiaryEntry() {
         {errors.foodAmount && (
           <Text style={styles.errorText}>{errors.foodAmount}</Text>
         )}
-        <ReusableTextInputAnimated
+        <ReusableTextInput
           title="Food amount"
           placeholder="Food amount (g)"
           onChangeText={setFoodAmount}
@@ -248,6 +257,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     flex: 1,
     paddingHorizontal: 10,
+    marginHorizontal: formMargin,
   },
   header: {
     flexDirection: "row",

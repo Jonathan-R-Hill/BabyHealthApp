@@ -10,6 +10,14 @@ import { useLocalSearchParams } from "expo-router";
 import Header from "@/app/Header";
 import Navbar from "@/app/Navbar";
 
+// Get screen width
+const { width: screenWidth } = Dimensions.get("window");
+
+// Determine button width dynamically
+const isSmallScreen = screenWidth <= 900;
+const formMargin = isSmallScreen ? "0%" : "20%";
+// const alignItems = isSmallScreen ? "center" : "flex-start";
+
 type WeightRecord = {
   date: string;
   weight: number;
@@ -216,7 +224,7 @@ const styles = StyleSheet.create({
   },
   chart: {
     marginVertical: 20,
-    marginHorizontal: 0,
+    marginHorizontal: formMargin,
   },
   analysisHeader: {
     fontSize: 16,
@@ -232,7 +240,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     borderRadius: 10,
     padding: 15,
-    marginHorizontal: 15,
+    marginHorizontal: formMargin,
     marginBottom: 70,
     shadowColor: "#000",
     shadowOpacity: 0.1,

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { postDiaryEntry } from "../../../services/diaryService";
@@ -16,6 +17,14 @@ import Navbar from "../../Navbar";
 import { ReusableTextInput } from "@/components/ReusableTextInputBox";
 import { ReusableButton } from "@/components/ReusableButton";
 import { ReusableTextInputAnimated } from "@/components/ReusableTextInputBoxAnimated";
+
+// Get screen width
+const { width: screenWidth } = Dimensions.get("window");
+
+// Determine button width dynamically
+const isSmallScreen = screenWidth <= 900;
+const formMargin = isSmallScreen ? "0%" : "20%";
+// const alignItems = isSmallScreen ? "center" : "flex-start";
 
 // Define the type for form errors
 type Errors = {
@@ -181,6 +190,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     flex: 1,
     paddingHorizontal: 10,
+    marginHorizontal: formMargin,
   },
   header: {
     flexDirection: "row",
