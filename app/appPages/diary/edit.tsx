@@ -195,7 +195,7 @@ export default function CreateDiaryEntry() {
 
         {/* Submit Button */}
         <ReusableButton
-          title="Edit"
+          title="Save Changes"
           edge="edgy"
           onPress={() => {
             if (validateForm()) {
