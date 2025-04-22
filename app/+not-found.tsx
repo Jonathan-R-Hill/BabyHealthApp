@@ -11,8 +11,8 @@ export default function NotFoundScreen() {
   return (
     <>
       <Stack.Screen options={{ title: "Oops!" }} />
+      <Header title=" "></Header>
       <ThemedView style={styles.container}>
-        <Header title="404"></Header>
         <ThemedText type="title">
           This screen doesn't exist. Please go back
         </ThemedText>
