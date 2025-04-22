@@ -35,6 +35,8 @@ const asyncLogoutUser = async (userId: string): Promise<boolean> => {
     const response = await axios.post(
       `${API_URL}/accounts/logOut/${encodeURIComponent(userId)}`
     );
+
+    console.log("Logout response:", response.data);
     return true;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {

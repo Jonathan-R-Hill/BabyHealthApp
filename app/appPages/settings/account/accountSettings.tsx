@@ -63,6 +63,7 @@ export default function AccountPage() {
           style: "destructive",
           onPress: async () => {
             try {
+              console.log("logout Button Pressed");
               if (username) {
                 const result = await asyncLogoutUser(username as string);
 
