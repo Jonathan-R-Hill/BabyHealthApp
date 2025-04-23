@@ -22,7 +22,6 @@ const { width: screenWidth } = Dimensions.get("window");
 // Determine button width dynamically
 const isSmallScreen = screenWidth <= 900;
 const formMargin = isSmallScreen ? "0%" : "20%";
-// const alignItems = isSmallScreen ? "center" : "flex-start";
 
 interface DiaryEntry {
   details: {

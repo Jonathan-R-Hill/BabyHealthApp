@@ -9,6 +9,7 @@ import {
   Image,
   ScrollView,
   Dimensions,
+  Alert,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { postDiaryEntry } from "../../../services/diaryService";
@@ -17,6 +18,7 @@ import Navbar from "../../Navbar";
 import { ReusableTextInput } from "@/components/ReusableTextInputBox";
 import { ReusableButton } from "@/components/ReusableButton";
 import { ReusableTextInputAnimated } from "@/components/ReusableTextInputBoxAnimated";
+import * as ImagePicker from "expo-image-picker";
 
 // Get screen width
 const { width: screenWidth } = Dimensions.get("window");
@@ -42,6 +44,7 @@ export default function CreateDiaryEntry() {
   const [weight, setWeight] = useState("");
   const [foodType, setFoodType] = useState("");
   const [foodAmount, setFoodAmount] = useState("");
+  const [imageUri, setImageUri] = useState<string | null>(null);
   const [errors, setErrors] = useState<Errors>({});
 
   const router = useRouter();
@@ -65,6 +68,85 @@ export default function CreateDiaryEntry() {
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; // Return true if no errors exist
+  };
+
+  // Image picker function
+  const pickImage = async () => {
+    // Request permission to access the media library
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    
+    if (status !== "granted") {
+      Alert.alert(
+        "Permission Required",
+        "Sorry, we need camera roll permissions to upload images."
+      );
+      return;
+    }
+
+    // Launch the image picker
+    let result = await ImagePicker.launchImageLibraryAsync();
+
+    if (!result.canceled && result.assets && result.assets.length > 0) {
+      setImageUri(result.assets[0].uri);
+    }
+  };
+
+  // Create FormData for upload
+  const createFormData = () => {
+    const formData = new FormData();
+    
+    formData.append("userId", String(username));
+    formData.append("title", title);
+    formData.append("text", text);
+    formData.append("weight", weight);
+    formData.append("foodType", foodType);
+    formData.append("foodAmount", foodAmount);
+    formData.append("token", String(token));
+    
+    if (imageUri) {
+      const fileName = imageUri.split('/').pop() || 'image.jpg';
+      const match = /\.(\w+)$/.exec(fileName);
+      const type = match ? `image/${match[1]}` : 'image/jpeg';
+      
+      formData.append('image', {
+        uri: imageUri,
+        name: fileName,
+        type,
+      } as any);
+    }
+    
+    return formData;
+  };
+
+  // Submit diary entry with image
+  const submitDiaryEntry = async () => {
+    if (validateForm()) {
+
+      try {
+        const formData = createFormData();
+        await postDiaryEntry(formData);
+        
+        console.log("Diary entry created successfully!");
+        
+        // Reset form fields
+        setTitle("");
+        setText("");
+        setWeight("");
+        setFoodType("");
+        setFoodAmount("");
+        setImageUri(null);
+        setErrors({});
+        
+        // Navigate back to main page
+        router.push({
+          pathname: "./main",
+          params: { username, token },
+        });
+      } catch (error) {
+        console.error("Error creating diary entry:", error);
+        Alert.alert("Error", "Failed to create diary entry. Please try again.");
+      }
+    }
   };
 
   return (
@@ -127,52 +209,33 @@ export default function CreateDiaryEntry() {
           keyboardType="numeric"
         />
 
-        {/* Image Upload Section */
-        /* TODO: Remove this placeholder and implement the photo upload feature */}
-        <TouchableOpacity style={styles.imageUploader}>
-          <Image style={styles.imageIcon} />
-          <Text style={styles.imageText}>Add pic</Text>
-        </TouchableOpacity>
+        <View style={styles.imageSection}>
+          <Text style={styles.fieldLabel}>Add Photo</Text>
+          
+          {imageUri ? (
+            <View style={styles.imagePreviewContainer}>
+              <Image source={{ uri: imageUri }} style={styles.imagePreview} />
+              <TouchableOpacity 
+                style={styles.removeImageBtn}
+                onPress={() => setImageUri(null)}
+              >
+                <Text style={styles.removeImageText}>✕</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View style={styles.imageButtonsContainer}>
+              <TouchableOpacity style={styles.imageButton} onPress={pickImage}>
+                <Text style={styles.imageButtonText}>Choose from Gallery</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
 
         {/* Submit Button */}
         <ReusableButton
           title="Create"
           edge="edgy"
-          onPress={() => {
-            if (validateForm()) {
-              const userId = String(username);
-              const weightValue = parseFloat(weight);
-              const foodAmountValue = parseFloat(foodAmount);
-
-              postDiaryEntry(
-                userId,
-                title,
-                text,
-                weightValue,
-                foodType,
-                foodAmountValue,
-                String(token)
-              )
-                .then(() => {
-                  console.log("Diary entry created successfully!");
-                  setTitle("");
-                  setText("");
-                  setWeight("");
-                  setFoodType("");
-                  setFoodAmount("");
-                  setErrors({}); // Clear errors after successful submission
-                })
-                .then(() => {
-                  router.push({
-                    pathname: "./main",
-                    params: { username, token },
-                  });
-                })
-                .catch((error) => {
-                  console.error("Error creating diary entry:", error);
-                });
-            }
-          }}
+          onPress={submitDiaryEntry}
         />
         <View style={{marginBottom: 80}}></View>
       </ScrollView>
@@ -182,6 +245,55 @@ export default function CreateDiaryEntry() {
 }
 
 const styles = StyleSheet.create({
+
+  imageSection: {
+    marginBottom: 20,
+  },
+  imageButtonsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+  imageButton: {
+    backgroundColor: "#5A3E92",
+    padding: 12,
+    borderRadius: 5,
+    flex: 1,
+    marginHorizontal: 5,
+    alignItems: "center",
+  },
+  imageButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  imagePreviewContainer: {
+    position: "relative",
+    marginTop: 10,
+    alignItems: "center",
+  },
+  imagePreview: {
+    width: "100%",
+    height: 200,
+    borderRadius: 8,
+    resizeMode: "cover",
+  },
+  removeImageBtn: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    backgroundColor: "rgba(0,0,0,0.6)",
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  removeImageText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+
   container: {
     flex: 1,
     backgroundColor: "#fff",
