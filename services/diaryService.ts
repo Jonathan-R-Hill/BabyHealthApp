@@ -52,42 +52,21 @@ export const fetchAllDiaryEntries = async (userId: string, token: string) => {
   }
 };
 
-/**
+export const postDiaryEntry = async (formData: FormData) => {
+  /**
  * Submits a new diary entry for a user.
  *
- * @param {string} userId - The ID of the user creating the diary entry.
- * @param {string} text - The diary entry text.
- * @param {number} weight - The user's weight associated with the diary entry.
- * @param {string} foodType - The type of food recorded in the diary entry.
- * @param {number} foodAmount - The amount of food recorded in the diary entry.
+ * @param {FormData} 
  * @returns {Promise<object>} A promise that resolves to the created diary entry.
  * @throws {Error} Throws an error if the submission fails.
  */
-export const postDiaryEntry = async (
-  userId: string,
-  title: string,
-  text: string,
-  weight: number,
-  foodType: string,
-  foodAmount: number,
-  token: string
-) => {
-  try {
-    const response = await axios.post(`${API_URL}/post/diary`, {
-      userId,
-      title,
-      text,
-      weight,
-      foodType,
-      foodAmount,
-      token,
-    });
-    return response.data;
-  } catch (error: any) {
-    throw new Error(
-      error.response ? error.response.data.message : error.message
-    );
-  }
+  const response = await fetch(`${API_URL}/post/diary`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) throw new Error("Failed to create entry");
+  return await response.json();
 };
 
 export const deleteSingleDiaryEntry = async (
