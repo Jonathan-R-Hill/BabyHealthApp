@@ -52,21 +52,29 @@ export const fetchAllDiaryEntries = async (userId: string, token: string) => {
   }
 };
 
-export const postDiaryEntry = async (formData: FormData) => {
-  /**
- * Submits a new diary entry for a user.
- *
- * @param {FormData} 
- * @returns {Promise<object>} A promise that resolves to the created diary entry.
- * @throws {Error} Throws an error if the submission fails.
- */
-  const response = await fetch(`${API_URL}/post/diary`, {
-    method: "POST",
-    body: formData,
-  });
+export const postDiaryEntry = async (
+  formData: FormData,
+  userId: string,
+  token: string
+) => {
+  const hasImage = formData.has("image");
+  const endpoint = hasImage
+    ? `/post/diaryImage/${encodeURIComponent(userId)}/${encodeURIComponent(
+        token
+      )}`
+    : `/post/diary/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`;
 
-  if (!response.ok) throw new Error("Failed to create entry");
-  return await response.json();
+  console.log("FormData:", formData); // Debugging lines
+  console.log(`Endpoint: ${API_URL}${endpoint}`);
+
+  // formData.append("userId", userId);
+  // formData.append("token", token);
+
+  return axios.post(`${API_URL}${endpoint}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 
 export const deleteSingleDiaryEntry = async (

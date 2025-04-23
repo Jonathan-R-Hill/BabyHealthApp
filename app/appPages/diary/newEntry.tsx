@@ -74,7 +74,7 @@ export default function CreateDiaryEntry() {
   const pickImage = async () => {
     // Request permission to access the media library
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    
+
     if (status !== "granted") {
       Alert.alert(
         "Permission Required",
@@ -94,40 +94,39 @@ export default function CreateDiaryEntry() {
   // Create FormData for upload
   const createFormData = () => {
     const formData = new FormData();
-    
+
     formData.append("userId", String(username));
+    formData.append("token", String(token));
     formData.append("title", title);
     formData.append("text", text);
     formData.append("weight", weight);
     formData.append("foodType", foodType);
     formData.append("foodAmount", foodAmount);
-    formData.append("token", String(token));
-    
+
     if (imageUri) {
-      const fileName = imageUri.split('/').pop() || 'image.jpg';
+      const fileName = imageUri.split("/").pop() || "image.jpg";
       const match = /\.(\w+)$/.exec(fileName);
-      const type = match ? `image/${match[1]}` : 'image/jpeg';
-      
-      formData.append('image', {
+      const type = match ? `image/${match[1]}` : "image/jpeg";
+
+      formData.append("image", {
         uri: imageUri,
         name: fileName,
         type,
       } as any);
     }
-    
+
     return formData;
   };
 
   // Submit diary entry with image
   const submitDiaryEntry = async () => {
     if (validateForm()) {
-
       try {
         const formData = createFormData();
-        await postDiaryEntry(formData);
-        
+        await postDiaryEntry(formData, String(username), String(token));
+
         console.log("Diary entry created successfully!");
-        
+
         // Reset form fields
         setTitle("");
         setText("");
@@ -136,7 +135,7 @@ export default function CreateDiaryEntry() {
         setFoodAmount("");
         setImageUri(null);
         setErrors({});
-        
+
         // Navigate back to main page
         router.push({
           pathname: "./main",
@@ -211,11 +210,11 @@ export default function CreateDiaryEntry() {
 
         <View style={styles.imageSection}>
           <Text style={styles.fieldLabel}>Add Photo</Text>
-          
+
           {imageUri ? (
             <View style={styles.imagePreviewContainer}>
               <Image source={{ uri: imageUri }} style={styles.imagePreview} />
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={styles.removeImageBtn}
                 onPress={() => setImageUri(null)}
               >
@@ -232,12 +231,8 @@ export default function CreateDiaryEntry() {
         </View>
 
         {/* Submit Button */}
-        <ReusableButton
-          title="Create"
-          edge="edgy"
-          onPress={submitDiaryEntry}
-        />
-        <View style={{marginBottom: 80}}></View>
+        <ReusableButton title="Create" edge="edgy" onPress={submitDiaryEntry} />
+        <View style={{ marginBottom: 80 }}></View>
       </ScrollView>
       <Navbar />
     </View>
@@ -245,7 +240,6 @@ export default function CreateDiaryEntry() {
 }
 
 const styles = StyleSheet.create({
-
   imageSection: {
     marginBottom: 20,
   },
