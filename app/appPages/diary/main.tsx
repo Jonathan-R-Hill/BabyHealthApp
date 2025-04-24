@@ -88,13 +88,6 @@ export default function CreateDiaryEntry() {
           <Text style={styles.createButtonText}>+ Create a new entry</Text>
         </TouchableOpacity> */}
 
-        <ReusableButton
-          title="Create a new entry"
-          onPress={handleNavigateToEntry}
-          edge="edgy"
-          colour="#504475"
-        />
-
         {/* Display diary entries */}
         {diaryEntries.map((entry) => {
           const entryDate = new Date(entry.details.date);
@@ -132,6 +125,9 @@ export default function CreateDiaryEntry() {
           );
         })}
       </ScrollView>
+      <TouchableOpacity style={styles.fabButton} onPress={handleNavigateToEntry}>
+    <Text style={styles.fabButtonText}>+</Text>
+  </TouchableOpacity>
       <Navbar />
     </View>
   );
@@ -194,4 +190,29 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
+  fabButton: {
+    position: "absolute",
+    bottom: 80, 
+    right: 20,
+    width: 65,
+    height: 65,
+    borderRadius: 10,
+    backgroundColor: "#4a3f6e",
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 5, // Android shadow
+    shadowColor: "#1f1c29", // iOS shadow
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.5,
+    shadowRadius: 3,
+    zIndex: 10,
+  },
+  
+  fabButtonText: {
+    fontSize: 50,
+    color: "#fff",
+    fontWeight: "bold",
+    marginBottom: 8, // Slight adjust for optical balance
+  },
+  
 });

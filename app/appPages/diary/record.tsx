@@ -152,18 +152,20 @@ export default function DiaryEntryDetails() {
             <Image style={styles.imageIcon} />
             <Text style={styles.imageText}>Picture placeholder</Text>
           </TouchableOpacity>
-          <ReusableButton
-            title="Edit"
-            onPress={handleEditEntry}
-            edge="edgy"
-            colour="#504475"
-          />
-          <ReusableButton
-            title="Delete"
-            onPress={handleDeleteEntry}
-            edge="edgy"
-            colour="#504475"
-          />
+          <View style={styles.buttonContainer}>
+            <ReusableButton
+              title="Edit"
+              onPress={handleEditEntry}
+              edge="edgy"
+              colour="#504475"
+            />
+            <ReusableButton
+              title="Delete"
+              onPress={handleDeleteEntry}
+              edge="edgy"
+              colour="#B11226"
+            />
+          </View>
         </ScrollView>
       </View>
       <Navbar />
@@ -223,5 +225,12 @@ const styles = StyleSheet.create({
     marginTop: -30,
     fontSize: 16,
     color: "#999",
+  },
+  buttonContainer: {
+    display: "flex",
+    flexDirection: "row",
+    marginTop: 10,
+    flex: 1,
+    gap: 5,
   },
 });

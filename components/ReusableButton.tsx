@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingTop: 5,
+    flex: 1
   },
   roundEdge: {
     marginBottom: 25,
