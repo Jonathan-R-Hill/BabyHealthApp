@@ -18,8 +18,10 @@ export const fetchBaby = async (
     babyId: number | string,
     token: string
 ) => {
+    console.log("Fetching from URL:", `${API_URL}/get/singlebaby/${encodeURIComponent(userId)}/${encodeURIComponent(babyId)}/${encodeURIComponent(token)}`);
+
     try {
-        const response = await axios.get<Baby[]>(
+        const response = await axios.get<Baby>(
             `${API_URL}/get/singlebaby/${encodeURIComponent(userId)}/${encodeURIComponent(
                 babyId
         )}/${encodeURIComponent(token)}`
@@ -85,6 +87,50 @@ export const postBaby = async (
     } catch (error: any) {
         throw new Error(
             error.response ? error.response.data.message: error.message
+        );
+    }
+};
+
+export const updateBaby = async (
+    userId: string,
+    token: string,
+    name: string,
+    gender: string,
+    dateOfBirth: Date,
+    weight: number
+) => {
+    try {
+        const response = await axios.post(`${API_URL}/put/baby/${userId}/${token}`, {
+            userId,
+            token,
+            name,
+            gender,
+            dateOfBirth,
+            weight,
+        });
+        return response.data;
+    } catch (error: any) {
+        throw new Error(
+            error.response ? error.response.data.message: error.message
+        );
+    }
+};
+
+export const deleteBaby = async (
+    userId: string,
+    babyId: string,
+    token: string
+) => {
+    try {
+        const response = await axios.get(
+            `${API_URL}/get/baby/${encodeURIComponent(userId)}/${encodeURIComponent(
+                babyId
+            )}/${encodeURIComponent(token)}`
+        );
+        return response.data;
+    } catch (error: any) {
+        throw new Error(
+            error.response?.data?.message || "Failed to fetch baby."
         );
     }
 };
