@@ -170,12 +170,14 @@ export default function DiaryEntryDetails() {
               onPress={handleEditEntry}
               edge="edgy"
               colour="#504475"
+              doubleButtons={true}
             />
             <ReusableButton
               title="Delete"
               onPress={handleDeleteEntry}
               edge="edgy"
               colour="#B11226"
+              doubleButtons={true}
             />
           </View>
         </ScrollView>

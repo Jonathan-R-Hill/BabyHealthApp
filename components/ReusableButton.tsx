@@ -35,6 +35,7 @@ type ReusableButtonProps = PressableProps & {
   textSize?: number;
   textColour?: string;
   fontWeights?: FontWeight;
+  doubleButtons?: boolean;
 };
 
 export function ReusableButton({
@@ -45,6 +46,7 @@ export function ReusableButton({
   textSize = 16,
   textColour = "white",
   fontWeights = "bold",
+  doubleButtons = false,
   ...otherProps
 }: ReusableButtonProps) {
   const sizeStyles = {
@@ -53,7 +55,7 @@ export function ReusableButton({
   };
 
   return (
-    <View style={styles.centerContainer}>
+    <View style={doubleButtons ? styles.centerContainerDouble : styles.centerContainerSingle}>
       <Pressable
         style={[
           {
@@ -90,11 +92,16 @@ export function ReusableButton({
 }
 
 const styles = StyleSheet.create({
-  centerContainer: {
+  centerContainerSingle: {
     justifyContent: "center",
     alignItems: "center",
     paddingTop: 5,
-    //flex: 1
+  },
+  centerContainerDouble: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 5,
+    flex: 1,
   },
   roundEdge: {
     marginBottom: 25,
