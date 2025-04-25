@@ -65,16 +65,14 @@ export const postDiaryEntry = async (
     : `/post/diary/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`;
 
   console.log("FormData:", formData); // Debugging lines
-  console.log(`Endpoint: ${API_URL}${endpoint}`);
 
-  // formData.append("userId", userId);
-  // formData.append("token", token);
-
-  return axios.post(`${API_URL}${endpoint}`, formData, {
+  const response = await axios.post(`${API_URL}${endpoint}`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
   });
+
+  return response.data;
 };
 
 export const deleteSingleDiaryEntry = async (

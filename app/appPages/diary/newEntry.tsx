@@ -11,6 +11,8 @@ import {
   Dimensions,
   Alert,
 } from "react-native";
+import { Platform } from "react-native";
+
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { postDiaryEntry } from "../../../services/diaryService";
 import Header from "../../Header";
@@ -46,6 +48,7 @@ export default function CreateDiaryEntry() {
   const [foodAmount, setFoodAmount] = useState("");
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [errors, setErrors] = useState<Errors>({});
+  const [webImage, setWebImage] = useState<File | null>(null);
 
   const router = useRouter();
   const { username, token } = useLocalSearchParams(); // Retrieve username and token from the URL
@@ -72,22 +75,41 @@ export default function CreateDiaryEntry() {
 
   // Image picker function
   const pickImage = async () => {
-    // Request permission to access the media library
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (Platform.OS === "web") {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/*";
 
-    if (status !== "granted") {
-      Alert.alert(
-        "Permission Required",
-        "Sorry, we need camera roll permissions to upload images."
-      );
-      return;
-    }
+      input.onchange = () => {
+        if (input.files && input.files.length > 0) {
+          const file = input.files[0];
+          const uri = URL.createObjectURL(file);
+          setImageUri(uri);
 
-    // Launch the image picker
-    let result = await ImagePicker.launchImageLibraryAsync();
+          // Store file in ref for formData
+          setWebImage(file);
+        }
+      };
 
-    if (!result.canceled && result.assets && result.assets.length > 0) {
-      setImageUri(result.assets[0].uri);
+      input.click();
+    } else {
+      // Mobile version using expo-image-picker
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert("Permission Required", "Camera roll access is needed.");
+        return;
+      }
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 1,
+        base64: false,
+      });
+
+      if (!result.canceled && result.assets.length > 0) {
+        setImageUri(result.assets[0].uri);
+      }
     }
   };
 
@@ -103,7 +125,9 @@ export default function CreateDiaryEntry() {
     formData.append("foodType", foodType);
     formData.append("foodAmount", foodAmount);
 
-    if (imageUri) {
+    if (Platform.OS === "web" && webImage) {
+      formData.append("image", webImage);
+    } else if (Platform.OS !== "web" && imageUri) {
       const fileName = imageUri.split("/").pop() || "image.jpg";
       const match = /\.(\w+)$/.exec(fileName);
       const type = match ? `image/${match[1]}` : "image/jpeg";
@@ -135,6 +159,7 @@ export default function CreateDiaryEntry() {
         setFoodAmount("");
         setImageUri(null);
         setErrors({});
+        setWebImage(null);
 
         // Navigate back to main page
         router.push({

@@ -8,12 +8,15 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Navbar from "../../Navbar";
 import Header from "../../Header";
-import { deleteSingleDiaryEntry, fetchSingleDiaryEntry } from "../../../services/diaryService";
+import {
+  deleteSingleDiaryEntry,
+  fetchSingleDiaryEntry,
+} from "../../../services/diaryService";
 import { ReusableButton } from "@/components/ReusableButton";
 
 // Get screen width
@@ -29,6 +32,7 @@ interface DiaryEntry {
     entry_id: number;
     userId: string;
     diaryTitle: string;
+    imageId?: string;
   };
   data: {
     foodAmount: number;
@@ -95,11 +99,19 @@ export default function DiaryEntryDetails() {
 
   // Navigate to the new diary entry creation page
   const handleDeleteEntry = async () => {
-    if (typeof username === "string" && typeof id === "string" && typeof token === "string") {
+    if (
+      typeof username === "string" &&
+      typeof id === "string" &&
+      typeof token === "string"
+    ) {
       const entryId = parseInt(id, 10);
       if (!isNaN(entryId)) {
         try {
-          const response = await deleteSingleDiaryEntry(username, entryId, token);
+          const response = await deleteSingleDiaryEntry(
+            username,
+            entryId,
+            token
+          );
           console.log("Diary entry deleted.");
           router.push({
             pathname: "./main",
@@ -123,12 +135,12 @@ export default function DiaryEntryDetails() {
       pathname: "./edit",
       params: { username, token, id },
     });
-  }
+  };
 
   // Display the diary entry details
   return (
     <View style={styles.container}>
-      <Header title="Diary Page"/>
+      <Header title="Diary Page" />
       <View style={styles.contentContainer}>
         <ScrollView>
           <Text style={styles.dateText}>
