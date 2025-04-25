@@ -285,13 +285,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: "#dde2eb",
     elevation: 5,
-    width: "100%",
+    width: "60%",
     height: "40%",
     maxHeight: 400,
     maxWidth: 900,
-    alignSelf:"center"
+    alignSelf:"center",
   },
   buttonBlock: {
     flexDirection: "column",
