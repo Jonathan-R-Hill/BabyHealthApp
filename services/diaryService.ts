@@ -46,9 +46,10 @@ export const fetchAllDiaryEntries = async (userId: string, token: string) => {
     );
     return response.data;
   } catch (error: any) {
-    throw new Error(
+    console.error(
       error.response?.data?.message || "Failed to fetch diary entry"
     );
+    return false;
   }
 };
 
