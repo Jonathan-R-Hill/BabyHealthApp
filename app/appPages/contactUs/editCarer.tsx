@@ -8,11 +8,15 @@ import {
   Alert,
   TextInput,
   Modal,
-  ImageBackground
+  ImageBackground,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 
-import { updateCarer, fetchSingleCarer, deleteCarer } from "../../../services/contactUsService";
+import {
+  updateCarer,
+  fetchSingleCarer,
+  deleteCarer,
+} from "../../../services/contactUsService";
 
 import Navbar from "../../Navbar";
 import Header from "@/app/Header";
@@ -48,19 +52,27 @@ export default function editCarerPage() {
     }
   }, [username]);
 
-  const fetchCarer = async (username: string, token: string, carerId: number) => {
-    try{
-      const carer: Carer = await fetchSingleCarer(username, token, carerId);
-      setCarer(carer);
-      // Prefill the input fields after fetching the carer data
-      if (carer && carer.data) {
-        setName(carer.data.name);
-        setTitle(carer.data.title);
-        setPhoneNumber(carer.data.phone);
-        setEmail(carer.data.email);
+  const fetchCarer = async (
+    username: string,
+    token: string,
+    carerId: number
+  ) => {
+    try {
+      const carer = await fetchSingleCarer(username, token, carerId);
+      if (carer == false) {
+        setErrorDisplayMessage("Could not load carers due to a connection issue, please try logging in again");
+      } else {
+        setCarer(carer);
+        // Prefill the input fields after fetching the carer data
+        if (carer && carer.data) {
+          setName(carer.data.name);
+          setTitle(carer.data.title);
+          setPhoneNumber(carer.data.phone);
+          setEmail(carer.data.email);
+        }
       }
-    } catch(error: any) {
-      Alert.alert("Error", "Could not find carer to edit")
+    } catch (error: any) {
+      Alert.alert("Error", "Could not find carer to edit");
     }
   };
 
@@ -68,7 +80,6 @@ export default function editCarerPage() {
     try {
       if (checkIfFilledCorrectly()) {
         try {
-          
           const result = await updateCarer(
             String(username),
             String(token),
@@ -111,14 +122,16 @@ export default function editCarerPage() {
       errorCount++;
       possibleErrorMessage = possibleErrorMessage + " title";
     }
-    if(!(phoneNumber === undefined || phoneNumber === "" || phoneNumber == "N/A")){
-      if(!phoneRegex.test(phoneNumber)){
+    if (
+      !(phoneNumber === undefined || phoneNumber === "" || phoneNumber == "N/A")
+    ) {
+      if (!phoneRegex.test(phoneNumber)) {
         errorCount++;
         possibleErrorMessage = possibleErrorMessage + " phone number";
       }
     }
 
-    if(errorCount > 0){
+    if (errorCount > 0) {
       setErrorDisplayMessage(possibleErrorMessage);
       return false;
     }
@@ -136,8 +149,12 @@ export default function editCarerPage() {
   };
 
   const deleteCarerMethod = async () => {
-    try{
-      const result = await deleteCarer(String(username), String(token), Number(carerId));
+    try {
+      const result = await deleteCarer(
+        String(username),
+        String(token),
+        Number(carerId)
+      );
       if (result) {
         toggleVisibility();
         router.push({
@@ -148,7 +165,7 @@ export default function editCarerPage() {
         setErrorDisplayMessage("We could not delete this carer");
         toggleVisibility();
       }
-    }catch (error) {
+    } catch (error) {
       Alert.alert("Error", "Could not delete this carer");
     }
   };
@@ -156,15 +173,14 @@ export default function editCarerPage() {
   const toggleVisibility = () => {
     if (isModalVisible) {
       setModalVisible(false);
-    }
-    else {
+    } else {
       setModalVisible(true);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Header title="Contact a carer"/>
+      <Header title="Contact a carer" />
       <ScrollView style={styles.scrollViewContainer}>
         <Text style={styles.errorText}>{errorDisplayMessage}</Text>
 
@@ -177,15 +193,27 @@ export default function editCarerPage() {
           onChangeText={setName}
         />
 
-        <Modal visible={isModalVisible} transparent={true} style={styles.popupWindow}>
+        <Modal
+          visible={isModalVisible}
+          transparent={true}
+          style={styles.popupWindow}
+        >
           <View style={styles.popup}>
-            <Text style={styles.label}>Are you sure you want to delete this?</Text>
+            <Text style={styles.label}>
+              Are you sure you want to delete this?
+            </Text>
             <View style={styles.buttonBlock}>
-              <TouchableOpacity onPress={deleteCarerMethod} style={styles.deleteButton}>
+              <TouchableOpacity
+                onPress={deleteCarerMethod}
+                style={styles.deleteButton}
+              >
                 <Text style={styles.createButtonText}>Delete Carer</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={toggleVisibility} style={styles.createButton}>
+              <TouchableOpacity
+                onPress={toggleVisibility}
+                style={styles.createButton}
+              >
                 <Text style={styles.createButtonText}>Cancel</Text>
               </TouchableOpacity>
             </View>
@@ -218,14 +246,17 @@ export default function editCarerPage() {
           value={email}
           onChangeText={setEmail}
         />
-      
+
         {/*Create Button*/}
         <TouchableOpacity onPress={editCarer} style={styles.createButton}>
           <Text style={styles.createButtonText}>Save</Text>
         </TouchableOpacity>
 
         {/*Delete Button*/}
-        <TouchableOpacity onPress={toggleVisibility} style={styles.deleteButton}>
+        <TouchableOpacity
+          onPress={toggleVisibility}
+          style={styles.deleteButton}
+        >
           <Text style={styles.createButtonText}>Delete</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -272,7 +303,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 5,
     alignItems: "center",
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
   },
   createButtonText: {
     color: "#fff",
@@ -291,7 +322,7 @@ const styles = StyleSheet.create({
     height: "40%",
     maxHeight: 400,
     maxWidth: 900,
-    alignSelf:"center",
+    alignSelf: "center",
   },
   buttonBlock: {
     flexDirection: "column",
@@ -303,9 +334,9 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 5,
     alignItems: "center",
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
   },
   popupWindow: {
     alignSelf: "center",
-  }
+  },
 });

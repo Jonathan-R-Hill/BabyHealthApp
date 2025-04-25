@@ -83,8 +83,8 @@ export const getDataOnCarers = async (
     const response = await axios.get(`${API_URL}/carers/getAll/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`);
     return response.data.carers;
   } catch(error: any){
-    throw new Error(
-      error.response ? error.response.data.message : error.message);
+      console.error(error.response ? error.response.data.message : error.message);
+      return false
   }
 };
 
@@ -148,8 +148,8 @@ export const fetchSingleCarer = async (
       }
     }
   } catch(error: any){
-    throw new Error(
-      error.response ? error.response.data.message : error.message);
+    console.warn(error.response ? error.response.data.message : error.message);
+    return false;
   }
 };
 
