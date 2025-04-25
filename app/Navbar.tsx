@@ -5,7 +5,7 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 // Define navigation pages and their corresponding paths
 const pages = {
-  Charts: "/appPages/charts/weightChart",
+  Charts: "/appPages/charts/charts",
   Diary: "/appPages/diary/main",
   "Baby Care": "/appPages/adviceSection/main",
   Settings: "/appPages/settings/appSettings",

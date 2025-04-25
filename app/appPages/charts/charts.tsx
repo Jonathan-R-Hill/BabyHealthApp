@@ -15,7 +15,7 @@ const { width: screenWidth } = Dimensions.get("window");
 
 // Determine button width dynamically
 const isSmallScreen = screenWidth <= 900;
-const formMargin = isSmallScreen ? "0%" : "20%";
+const formMargin = isSmallScreen ? "3%" : "20%";
 // const alignItems = isSmallScreen ? "center" : "flex-start";
 
 type WeightRecord = {
@@ -152,6 +152,7 @@ const BabyCharts = () => {
       <Header title="Health Charts" />
       <ScrollView>
         <View style={styles.chart}>
+          <Text style={styles.chartTitle}>Weight Trends (Last Month)</Text>
           <LineChart
             areaChart
             curved
@@ -181,6 +182,7 @@ const BabyCharts = () => {
           </Text>
         </View>
         <View style={styles.chart}>
+        <Text style={styles.chartTitle}>Weight Trends (Last Month)</Text>
           <LineChart
             areaChart
             curved
@@ -223,8 +225,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   chart: {
-    marginVertical: 20,
+    marginTop: 5,
+    marginBottom: 10,
     marginHorizontal: formMargin,
+  },
+  chartTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+    marginVertical: 15,
   },
   analysisHeader: {
     fontSize: 16,
@@ -237,11 +246,11 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   card: {
-    backgroundColor: "#FFF",
+    backgroundColor: "#F7F2FA",
     borderRadius: 10,
     padding: 15,
     marginHorizontal: formMargin,
-    marginBottom: 70,
+    marginBottom: 20,
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 3 },
