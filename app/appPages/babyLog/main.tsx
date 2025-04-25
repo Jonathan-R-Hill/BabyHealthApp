@@ -13,6 +13,7 @@ import Navbar from "../../Navbar";
 import Header from "../../Header";
 
 import { fetchBabies } from "../../../services/babyProfileService"; 
+import { popup } from "@/components/LogoutPopup";
 
 export interface Baby {
   _id: string;
@@ -32,13 +33,19 @@ export default function CreateBaby() {
 
   const getBabies = async (username: string, token: string) => {
     try {
-      const data: Baby[] = await fetchBabies(username, token);
+      const data = await fetchBabies(username, token);
       console.log("Fetched data", data);
       console.log("Fetched data:", JSON.stringify(data, null, 2));
-      setBabies(data.map(baby => ({
-        ...baby,
-        ...baby.data
-      })));
+      if(data == false)
+      {
+        popup()
+      }
+      else{
+        setBabies(data.map((baby: { data: any; }) => ({
+          ...baby,
+          ...baby.data
+        })));
+      }
     } catch (error) {
       Alert.alert("Error.", "Could not load Babies")
     }

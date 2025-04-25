@@ -52,6 +52,7 @@ export const fetchBabies = async (userId: string,  token: string) => {
         return response.data;   
     } catch (error: any) {
         console.log(error);
+        return false;
     }
 };
 
