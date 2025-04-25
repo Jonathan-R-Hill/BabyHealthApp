@@ -8,7 +8,7 @@ import {
   Alert,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
-
+import { popup } from "@/components/LogoutPopup";
 import Navbar from "../../Navbar";
 import Header from "../../Header";
 
@@ -80,16 +80,10 @@ export default function CreateDiaryEntry() {
     <View style={styles.container}>
       <Header title="Diary" />
       <ScrollView style={styles.diaryContainer}>
-        {/* Button to create a new diary entry */}
-        {/* <TouchableOpacity
-          onPress={handleNavigateToEntry}
-          style={styles.createButton}
-        >
-          <Text style={styles.createButtonText}>+ Create a new entry</Text>
-        </TouchableOpacity> */}
 
         {/* Display diary entries */}
-        {diaryEntries.map((entry) => {
+        { !diaryEntries ? popup() :  
+        diaryEntries.map((entry) => {
           const entryDate = new Date(entry.details.date);
           const entryYear = entryDate.getFullYear().toString();
           const currentYear = new Date().getFullYear().toString();
