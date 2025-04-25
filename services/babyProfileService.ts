@@ -94,6 +94,7 @@ export const postBaby = async (
 
 export const updateBaby = async (
     userId: string,
+    babyId: string,
     token: string,
     name: string,
     gender: string,
@@ -101,9 +102,7 @@ export const updateBaby = async (
     weight: number
 ) => {
     try {
-        const response = await axios.post(`${API_URL}/put/baby/${userId}/${token}`, {
-            userId,
-            token,
+        const response = await axios.put(`${API_URL}/put/updatebaby/${userId}/${babyId}/${token}`, {
             name,
             gender,
             dateOfBirth,

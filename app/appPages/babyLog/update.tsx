@@ -178,6 +178,7 @@ export default function EditBabyDetails() {
               });
               updateBaby(
                 userId,
+                String(id),
                 String(token),
                 name,
                 gender,
