@@ -104,13 +104,16 @@ export default function BabyDetails() {
         );
     };
     
-    const handleEditEntry = async () => {
-        console.log(`Redirected to edit page (ID: ${id}).`);
-        router.push({
-            pathname: "./edit",
-            params: { username, token, id },
-        });
-    }
+    const handleNavigateToUpdate = (babyId: number) => {
+        if (username) {
+          router.push({
+            pathname: "./update",
+            params: {id: babyId.toString(), username, token },
+          });
+        } else {
+          Alert.alert("Error,", "Username not available")
+        }
+      };
 
     const calculateAge = (dateOfBirth: Date) => {
         const today = new Date();
@@ -162,7 +165,7 @@ export default function BabyDetails() {
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
                     style={styles.actionButton}
-                    onPress={() => { handleEditEntry()}}>
+                    onPress={() => { handleNavigateToUpdate(baby.details.babyId)}}>
                         <Text style={styles.buttonText}>Edit</Text>
                     </TouchableOpacity>
             </View>
