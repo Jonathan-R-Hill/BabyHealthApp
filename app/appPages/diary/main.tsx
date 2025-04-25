@@ -173,18 +173,20 @@ export default function CreateDiaryEntry() {
           </View>
         </View>
         </LinearGradient>
+        <Navbar />
       </View>
       <View>
         <ScrollView style={styles.diaryContainer}>
           {/* Display diary entries */}
           {renderDiaryEntries(diaryEntries, handleNavigateToDetails)}
         </ScrollView>
+        
         <TouchableOpacity style={styles.fabButton} onPress={handleNavigateToEntry}>
           <Text style={styles.fabButtonText}>+</Text>
         </TouchableOpacity>
         
       </View>
-      <Navbar />
+      
     </View>
   );
 }
