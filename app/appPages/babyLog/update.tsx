@@ -1,217 +1,216 @@
 import React, { useState, useEffect } from "react";
 import { useRouter, useLocalSearchParams } from "expo-router";
-import { 
-    Alert,
-    View,
-    ScrollView,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    Platform,
-    StyleSheet,
- } from "react-native";
+import {
+  Alert,
+  View,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Platform,
+  StyleSheet,
+} from "react-native";
 import { Baby } from "../babyLog/main";
-import { fetchBaby, updateBaby } from "../../../services/babyProfileService"
+import { fetchBaby, updateBaby } from "../../../services/babyProfileService";
 import Header from "../../Header";
 import Navbar from "../../Navbar";
 import { Picker } from "@react-native-picker/picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 type Errors = {
-    name?: string;
-    gender?: string;
-    dateOfBirth?: string;
-    weight?: string;
+  name?: string;
+  gender?: string;
+  dateOfBirth?: string;
+  weight?: string;
 };
 
 export default function EditBabyDetails() {
-    const router = useRouter();
-    const { username, id, token } = useLocalSearchParams();
-    const [baby, setBaby] = useState<Baby | null>(null);
-    const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const { username, id, token } = useLocalSearchParams();
+  const [baby, setBaby] = useState<Baby | null>(null);
+  const [loading, setLoading] = useState(true);
 
-    const [name, setName] = useState("");
-    const [gender, setGender] = useState("");
-    const [dateOfBirth, setDateOfBirth] = useState(new Date());
-    const [showDatePicker, setShowDatePicker] = useState(false);
-    const [weight, setWeight] = useState("");
-    const [errors, setErrors] = useState<Errors>({});
+  const [name, setName] = useState("");
+  const [gender, setGender] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [weight, setWeight] = useState("");
+  const [errors, setErrors] = useState<Errors>({});
 
-    const fetchBabyDetails = async (
-        userId: string,
-        babyId: string,
-        token: string 
-    ) => {
-        console.log("Fetch: ", { userId, babyId, token })
-        try {
-            const data = await fetchBaby(
+  const fetchBabyDetails = async (
+    userId: string,
+    babyId: string,
+    token: string
+  ) => {
+    console.log("Fetch: ", { userId, babyId, token });
+    try {
+      const data = await fetchBaby(userId, babyId, String(token));
+      console.log("Baby data:", data);
+      if (data) {
+        setBaby(data);
+      } else {
+        Alert.alert("Error", "Baby not found.");
+      }
+    } catch (error) {
+      Alert.alert("Error", "Failed to load baby");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchBabyDetails(String(username), String(id), String(token));
+  }, [id, username]);
+
+  useEffect(() => {
+    if (baby) {
+      setName(baby.data.name);
+      setGender(baby.data.gender);
+      setDateOfBirth(new Date(baby.data.dateOfBirth));
+      setWeight(baby.data.weight.toString());
+    }
+  }, [baby]);
+
+  const validateForm = () => {
+    const newErrors: Errors = {};
+
+    if (!name.trim()) newErrors.name = "Name is required";
+    if (!gender.trim()) newErrors.gender = "Gender is required";
+    if (!dateOfBirth) newErrors.dateOfBirth = "Date of Birth is required";
+    if (!weight.trim() || isNaN(parseFloat(weight)) || parseFloat(weight) <= 0)
+      newErrors.weight = "Valid weight is required.";
+
+    setErrors(newErrors);
+    console.log(errors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleDateConfirm = (_event: any, selectedDate?: Date) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setDateOfBirth(selectedDate);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Header title="Edit Baby Details" />
+      <ScrollView style={styles.babyContainer}>
+        <Text style={styles.label}>Name</Text>
+        <TextInput
+          style={[styles.input, styles.textArea]}
+          placeholder={baby?.data.name}
+          value={name}
+          onChangeText={setName}
+          multiline
+        />
+
+        <Text style={styles.label}>Gender</Text>
+        <Picker
+          selectedValue={gender}
+          onValueChange={(itemValue) => setGender(itemValue)}
+          style={styles.picker}
+          mode="dropdown"
+        >
+          <Picker.Item label="Select Gender" value="" />
+          <Picker.Item label="Male" value="male" />
+          <Picker.Item label="Female" value="female" />
+        </Picker>
+
+        <Text style={styles.label}>Date of Birth</Text>
+
+        {Platform.OS !== "web" && (
+          <View>
+            {!showDatePicker && (
+              <TouchableOpacity
+                onPress={() => setShowDatePicker(true)}
+                style={styles.dateButton}
+              >
+                <Text style={styles.dateText}>
+                  {dateOfBirth ? dateOfBirth.toDateString() : "Select Date"}
+                </Text>
+              </TouchableOpacity>
+            )}
+
+            {showDatePicker && (
+              <DateTimePicker
+                value={dateOfBirth}
+                mode="date"
+                display="default"
+                onChange={handleDateConfirm} // Ensure date is set properly
+              />
+            )}
+          </View>
+        )}
+
+        {Platform.OS === "web" && (
+          <input
+            type="date"
+            value={dateOfBirth.toISOString().split("T")[0]} // Format the date for web
+            onChange={(e) => setDateOfBirth(new Date(e.target.value))}
+            style={styles.webDateInput}
+          />
+        )}
+
+        <Text style={styles.label}>Weight (g)</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter weight"
+          value={weight}
+          onChangeText={setWeight}
+          keyboardType="numeric"
+        />
+        {errors.weight && <Text style={styles.errorText}>{errors.weight}</Text>}
+
+        <TouchableOpacity
+          onPress={() => {
+            if (validateForm()) {
+              const userId = String(username);
+              const weightValue = parseFloat(weight);
+
+              console.log("Submitting:", {
                 userId,
-                babyId,
-                String(token)
-            );
-            console.log("Baby data:", data);
-            if (data) {
-                setBaby(data);
-            } else {
-                Alert.alert("Error", "Baby not found.");
+                token,
+                name,
+                gender,
+                dateOfBirth,
+                weight,
+              });
+              updateBaby(
+                userId,
+                String(token),
+                name,
+                gender,
+                dateOfBirth,
+                weightValue
+              )
+                .then(() => {
+                  console.log("Baby updated successfully!");
+                  setName("");
+                  setGender("");
+                  setDateOfBirth(new Date());
+                  setWeight("");
+                  setErrors({});
+                })
+                .then(() => {
+                  router.push({
+                    pathname: "./main",
+                    params: { username, token },
+                  });
+                })
+                .catch((error) => {
+                  console.error("Error adding baby", error);
+                });
             }
-        } catch (error) {
-            Alert.alert("Error", "Failed to load baby")
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        if (id && username) {
-            fetchBabyDetails(String(username), (String(id)), String(token));
-        }
-    }, [id, username]);
-
-    useEffect(() => {
-        if (baby) {
-            setName(baby.data.name);
-            setGender(baby.data.gender);
-            setDateOfBirth(baby.data.dateOfBirth);
-            setWeight(baby.data.weight.toString());
-        }
-    }, [baby]);
-
-    const validateForm = () => {
-        const newErrors: Errors = {};
-    
-        if (!name.trim()) newErrors.name = "Name is required";
-        if (!gender.trim()) newErrors.gender = "Gender is required";
-        if (!dateOfBirth) newErrors.dateOfBirth = "Date of Birth is required";
-        if (!weight.trim() || isNaN(parseFloat(weight)) || parseFloat(weight) <= 0)
-          newErrors.weight = "Valid weight is required.";
-    
-        setErrors(newErrors);
-        console.log(errors);
-        return Object.keys(newErrors).length === 0;
-      };
-
-    const handleDateConfirm = (_event: any, selectedDate?: Date) => {
-        setShowDatePicker(false);
-        if (selectedDate) {
-          setDateOfBirth(selectedDate);
-        }
-    };
-
-    return (
-        <View style={styles.container}>
-            <Header title="Edit Baby Details"/>
-            <ScrollView style={styles.babyContainer}>
-
-                <Text style={styles.label}>Name</Text>
-                <TextInput
-                    style={[styles.input, styles.textArea]}
-                    placeholder={baby?.data.name}
-                    value={name}
-                    onChangeText={setName}
-                    multiline
-                />
-
-                <Text style={styles.label}>Gender</Text>
-                    <Picker
-                        selectedValue={gender}
-                        onValueChange={(itemValue) => setGender(itemValue)}
-                        style={styles.picker}
-                        mode="dropdown"
-                    >
-                        <Picker.Item label="Select Gender" value="" />
-                        <Picker.Item label="Male" value="male" />
-                        <Picker.Item label="Female" value="female" />
-                    </Picker>
-                
-                <Text style={styles.label}>Date of Birth</Text>
-
-                {Platform.OS !== "web" && (
-                    <View>
-                        {!showDatePicker && (
-                            <TouchableOpacity
-                                onPress={() => setShowDatePicker(true)}
-                                style={styles.dateButton}
-                                >
-                                    <Text style={styles.dateText}>
-                                        {dateOfBirth ? dateOfBirth.toDateString() : "Select Date"}
-                                    </Text>
-                                </TouchableOpacity>
-                        )}
-
-                {showDatePicker && (
-                <DateTimePicker
-                    value={dateOfBirth}
-                    mode="date"
-                    display="default"
-                    onChange={handleDateConfirm} // Ensure date is set properly
-                />
-                )}
-                    </View>
-                )}
-
-                {Platform.OS === "web" && (
-                          <input
-                            type="date"
-                            value={dateOfBirth.toISOString().split("T")[0]} // Format the date for web
-                            onChange={(e) => setDateOfBirth(new Date(e.target.value))}
-                            style={styles.webDateInput}
-                          />
-                        )}
-                
-                        <Text style={styles.label}>Weight (g)</Text>
-                          <TextInput
-                          style={styles.input}
-                          placeholder="Enter weight"
-                          value={weight}
-                          onChangeText={setWeight}
-                          keyboardType="numeric"
-                        />
-                        {errors.weight && <Text style={styles.errorText}>{errors.weight}</Text>}
-                
-                        <TouchableOpacity 
-                          onPress={() => {
-                            if (validateForm()) {
-                              const userId = String(username);
-                              const weightValue = parseFloat(weight);
-                
-                              console.log("Submitting:", { userId, token, name, gender, dateOfBirth, weight });
-                              updateBaby(
-                                userId,
-                                String(token),
-                                name,
-                                gender,
-                                dateOfBirth,
-                                weightValue,
-                              )
-                                .then(() => {
-                                  console.log("Baby updated successfully!");
-                                  setName("");
-                                  setGender("");
-                                  setDateOfBirth(new Date());
-                                  setWeight("");
-                                  setErrors({});
-                                })
-                                .then(() => {
-                                  router.push({
-                                    pathname: "./main",
-                                    params: { username, token },
-                                  });
-                                })
-                                .catch((error) => {
-                                  console.error("Error adding baby", error);
-                                });
-                            }
-                          }}
-                          style={styles.createButton}
-                          
-                        >
-                          <Text style={styles.createButtonText}>Update Details</Text>
-                        </TouchableOpacity>
-            </ScrollView>
-            <Navbar />
-        </View>
-    )
+          }}
+          style={styles.createButton}
+        >
+          <Text style={styles.createButtonText}>Update Details</Text>
+        </TouchableOpacity>
+      </ScrollView>
+      <Navbar />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -221,7 +220,7 @@ const styles = StyleSheet.create({
   },
   babyContainer: {
     flex: 1,
-    paddingHorizontal:10,
+    paddingHorizontal: 10,
   },
   header: {
     flexDirection: "row",
@@ -306,7 +305,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 16,
     fontWeight: "bold",
-  }, 
+  },
   dateButton: {
     padding: 10,
     backgroundColor: "#65558F",
@@ -317,7 +316,7 @@ const styles = StyleSheet.create({
   dateText: {
     fontSize: 16,
     color: "#fff",
-  },  
+  },
   webDateInput: {
     padding: 10,
     fontSize: 16,
@@ -336,6 +335,7 @@ const styles = StyleSheet.create({
   },
   submitButtonText: {
     color: "#fff",
-    fontSize: 16, 
-    fontWeight: "bold" },
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 });
