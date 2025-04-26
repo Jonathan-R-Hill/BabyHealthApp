@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
     borderTopColor: "#ccc",
     paddingTop: 1,
     marginTop: 30,
+    zIndex: 20,
   },
   mainButtonsContainer: {
     flexDirection: "row",

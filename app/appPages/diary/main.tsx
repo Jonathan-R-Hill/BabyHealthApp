@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   infoChip: {
-    backgroundColor: "#fff",
+    backgroundColor: "#F7F2FA",
     borderRadius: 20,
     paddingVertical: 8,
     paddingHorizontal: 15,
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
     top: "50%",
     height: 1,
     width: "90%",
-    backgroundColor: "#2c3e50", // Same color as year header text
+    backgroundColor: "#2c3e50", 
     opacity: 0.4, // Make it subtle
   },
   diaryEntry: {
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
     width: 65,
     height: 65,
     borderRadius: 10,
-    backgroundColor: "#4a3f6e",
+    backgroundColor: "#cfa4db",
     justifyContent: "center",
     alignItems: "center",
     elevation: 5, // Android shadow
@@ -307,14 +307,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 3,
     zIndex: 10,
-    // borderWidth: 1,
-    // borderColor: "#4aef"
   },
   fabButtonText: {
     fontSize: 50,
-    color: "#fff",
+    color: "#F7F2FA",
     fontWeight: "bold",
-    marginBottom: 8, // Slight adjust for optical balance
+    marginBottom: 9, // Slight adjust for optical balance
   },
-  
 });
