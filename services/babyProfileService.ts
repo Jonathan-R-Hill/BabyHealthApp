@@ -122,15 +122,15 @@ export const deleteBaby = async (
     token: string
 ) => {
     try {
-        const response = await axios.get(
-            `${API_URL}/get/baby/${encodeURIComponent(userId)}/${encodeURIComponent(
+        const url =
+            `${API_URL}/delete/singlebaby/${encodeURIComponent(userId)}/${encodeURIComponent(
                 babyId
-            )}/${encodeURIComponent(token)}`
-        );
+            )}/${encodeURIComponent(token)}`;
+        const response = await axios.delete(url)
         return response.data;
     } catch (error: any) {
         throw new Error(
-            error.response?.data?.message || "Failed to fetch baby."
+            error.response?.data?.message || "Failed to delete baby."
         );
     }
 };
