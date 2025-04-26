@@ -109,7 +109,6 @@ export default function CreateDiaryEntry() {
       const entryYear = entryDate.getFullYear().toString();
       const currentYear = new Date().getFullYear().toString();
       const displayYearHeader = entryYear !== lastYear && entryYear !== currentYear; // Show year header if new year appears
-  
       if (displayYearHeader) {
         lastYear = entryYear; // Update the last displayed year
       }
@@ -140,7 +139,7 @@ export default function CreateDiaryEntry() {
   };
 
   return (
-    <View>
+    <View  style={{ flex: 1 }}>
       <Header title="Diary" />
       <View style={styles.profileSection}>
         <Image
@@ -152,41 +151,37 @@ export default function CreateDiaryEntry() {
           colors={['transparent', 'rgba(0,0,0,0.7)']}
           style={styles.profileOverlay}
         >
-        <View style={styles.profileOverlay}>
-          <Text style={styles.babyName}>{babyProfile.name}</Text>
-          <Text style={styles.babySubtitle}>My baby</Text>
+          <View style={styles.profileOverlay}>
+            <Text style={styles.babyName}>{babyProfile.name}</Text>
+            <Text style={styles.babySubtitle}>My baby</Text>
 
-          <View style={styles.infoChips}>
-            <View style={styles.infoChip}>
-              <Ionicons name="calendar-outline" size={16} color="#65558f" />
-              <Text style={styles.chipText}>
-                {babyProfile.age.months} Months and {babyProfile.age.days} days
-              </Text>
-            </View>
-            
-            <View style={styles.infoChip}>
-              <Ionicons name="timer-outline" size={16} color="#65558f" />
-              <Text style={styles.chipText}>
-                {babyProfile.daysToFullTerm} days to full-term
-              </Text>
+            <View style={styles.infoChips}>
+              <View style={styles.infoChip}>
+                <Ionicons name="calendar-outline" size={16} color="#65558f" />
+                <Text style={styles.chipText}>
+                  {babyProfile.age.months} Months and {babyProfile.age.days} days
+                </Text>
+              </View>
+              
+              <View style={styles.infoChip}>
+                <Ionicons name="timer-outline" size={16} color="#65558f" />
+                <Text style={styles.chipText}>
+                  {babyProfile.daysToFullTerm} days to full-term
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
         </LinearGradient>
-        <Navbar />
       </View>
       <View>
         <ScrollView style={styles.diaryContainer}>
           {/* Display diary entries */}
           {renderDiaryEntries(diaryEntries, handleNavigateToDetails)}
         </ScrollView>
-        
         <TouchableOpacity style={styles.fabButton} onPress={handleNavigateToEntry}>
           <Text style={styles.fabButtonText}>+</Text>
         </TouchableOpacity>
-        
       </View>
-      
     </View>
   );
 }
