@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     display: "flex",
-    flexDirection: "row",
+    flexDirection: isSmallScreen ? "row" : "column",
     marginTop: 10,
     flex: 1,
     gap: 5,
