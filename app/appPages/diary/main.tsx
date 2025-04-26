@@ -139,22 +139,22 @@ export default function CreateDiaryEntry() {
   };
 
   return (
-    <View  style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <Header title="Diary" />
       <View style={styles.profileSection}>
         <Image
           source={babyProfile.profileImage}
           style={{ width: "100%", height: "100%" }}
-          resizeMode="cover" 
-        />  
+          resizeMode="cover"
+        />
         <LinearGradient
-          colors={['transparent', 'rgba(0,0,0,0.7)']}
+          colors={["transparent", "rgba(0,0,0,0.7)"]}
           style={styles.profileOverlay}
         >
           <View style={styles.profileOverlay}>
             <Text style={styles.babyName}>{babyProfile.name}</Text>
             <Text style={styles.babySubtitle}>My baby</Text>
-
+  
             <View style={styles.infoChips}>
               <View style={styles.infoChip}>
                 <Ionicons name="calendar-outline" size={16} color="#65558f" />
@@ -162,7 +162,7 @@ export default function CreateDiaryEntry() {
                   {babyProfile.age.months} Months and {babyProfile.age.days} days
                 </Text>
               </View>
-              
+  
               <View style={styles.infoChip}>
                 <Ionicons name="timer-outline" size={16} color="#65558f" />
                 <Text style={styles.chipText}>
@@ -173,14 +173,16 @@ export default function CreateDiaryEntry() {
           </View>
         </LinearGradient>
       </View>
-      <View>
-        <ScrollView style={styles.diaryContainer}>
+  
+      <View style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={{ paddingTop: 6, paddingBottom: 75}} style={styles.diaryContainer}>
           {/* Display diary entries */}
           {renderDiaryEntries(diaryEntries, handleNavigateToDetails)}
         </ScrollView>
         <TouchableOpacity style={styles.fabButton} onPress={handleNavigateToEntry}>
           <Text style={styles.fabButtonText}>+</Text>
         </TouchableOpacity>
+        <Navbar />
       </View>
     </View>
   );
@@ -305,8 +307,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 3,
     zIndex: 10,
+    // borderWidth: 1,
+    // borderColor: "#4aef"
   },
-  
   fabButtonText: {
     fontSize: 50,
     color: "#fff",
