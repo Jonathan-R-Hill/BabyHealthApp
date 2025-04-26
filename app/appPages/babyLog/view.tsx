@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  Platform,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { Baby } from "../babyLog/main";
@@ -88,20 +89,21 @@ export default function BabyDetails() {
     };   
 
     const confirmDeleteBaby = () => {
-        console.log("Delete button pressed");
-        Alert.alert(
-            "Delete Baby?",
-            "Are you sure you want to delete baby? This cannot be reversed.",
-            [
-                { text: "Cancel", style: "cancel" },
-                {
-                    text: "Delete",
-                    style: "destructive",
-                    onPress: handleDeleteBaby,
-                },
-            ]
-            
-        );
+        if (Platform.OS === 'web') {
+            const confirm = globalThis.confirm?.("Are you sure you want to delete?");
+            if (confirm) {
+                handleDeleteBaby();
+            }
+        } else {
+            Alert.alert(
+                "Delete Baby?",
+                "Are you sure you want to delete baby? This cannot be reversed.",
+                [
+                    { text: "Cancel", style: "cancel" },
+                    { text: "Delete", style: "destructive", onPress: handleDeleteBaby },
+                ]
+            );
+        }
     };
     
     const handleNavigateToUpdate = (babyId: number) => {
