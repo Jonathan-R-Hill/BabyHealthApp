@@ -223,6 +223,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    paddingBottom: 70
   },
   chart: {
     marginTop: 5,
