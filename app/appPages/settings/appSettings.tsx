@@ -5,7 +5,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   Switch,
-  Alert
+  Alert,
+  ScrollView,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Navbar from "../../Navbar";
@@ -27,111 +28,132 @@ export default function SettingsPage() {
 
   const toggleDarkMode = () => {
     setDarkModeEnabled((prevState) => !prevState);
+    Alert.alert(
+      "Settings Updated",
+      `Dark Mode ${!darkModeEnabled ? "enabled" : "disabled"}`
+    );
   };
 
-  const aboutApp = () => {
+  const navigateTo = (path: string) => {
     try {
-      console.log("About App Button Pressed");
-      router.push({ pathname: "./aboutApp", params: { username, token } });
+      router.push({ pathname: path, params: { username, token } });
     } catch (error) {
       console.error("Navigation Error", error);
       Alert.alert(
         "Navigation Error",
-        "Could not navigate to the About App page"
-      );
-    }
-  };
- 
-  const accountSettings = () => {
-    try {
-      console.log("Account Settings Button Pressed");
-      router.push({ pathname: "./account/accountSettings", params: { username, token } });
-    } catch (error) {
-      console.error("Navigation Error", error);
-      Alert.alert(
-        "Navigation Error",
-        "Could not navigate to the Account Settings page"
+        "Could not navigate to the selected page"
       );
     }
   };
 
   return (
-    <View style={styles.container}>
-      <Header title="Settings"/>
+    <View style={styles.pageContainer}>
+      <Header title="Settings" />
 
-      {/* Settings Options */}
-      <View style={styles.settingOption}>
-        <Text style={styles.settingText}>Enable Notifications</Text>
-        <Switch
-          value={notificationsEnabled}
-          onValueChange={toggleNotifications}
-        />
-      </View>
-      <View style={styles.settingOption}>
-        <Text style={styles.settingText}>Enable Dark Mode</Text>
-        <Switch value={darkModeEnabled} onValueChange={toggleDarkMode}/>
-      </View>
+      <ScrollView contentContainerStyle={styles.container}>
+        {/* Preferences Section */}
+        <Text style={styles.sectionTitle}>Preferences</Text>
+        <View style={styles.sectionContainer}>
+          <View style={styles.settingOption}>
+            <Text style={styles.settingText}>Enable Notifications</Text>
+            <Switch
+              value={notificationsEnabled}
+              onValueChange={toggleNotifications}
+            />
+          </View>
+          <View style={styles.settingOption}>
+            <Text style={styles.settingText}>Enable Dark Mode</Text>
+            <Switch
+              value={darkModeEnabled}
+              onValueChange={toggleDarkMode}
+            />
+          </View>
+        </View>
 
-      {/* AboutApp nav button */}
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.actionButton} onPress={aboutApp}>
-          <Text style={styles.actionButtonText}>About App</Text>
-        </TouchableOpacity>
-      {/* Account Settings Nav Button */}
-        <TouchableOpacity style={styles.actionButton} onPress={accountSettings}>
-          <Text style={styles.actionButtonText}>My Account</Text>
-        </TouchableOpacity>
-      </View>
+        {/* Account Section */}
+        <Text style={styles.sectionTitle}>Account & Info</Text>
+        <View style={styles.sectionContainer}>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => navigateTo("./aboutApp")}
+          >
+            <Text style={styles.actionButtonText}>About App</Text>
+          </TouchableOpacity>
 
-      {/* Navigation Bar */}
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => navigateTo("./account/accountSettings")}
+          >
+            <Text style={styles.actionButtonText}>My Account</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => navigateTo("@/appPages/contactUs/aboutUs/privacyPage")}
+          >
+            <Text style={styles.actionButtonText}>Privacy Policy</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => navigateTo("@/appPages/contactUs/main")}
+          >
+            <Text style={styles.actionButtonText}>Send Feedback</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{ height: 80 }} /> {/* Space before navbar */}
+      </ScrollView>
+
       <Navbar />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  pageContainer: {
     flex: 1,
+    backgroundColor: "#f5f5f5",
   },
-  textTitle: {
-    fontSize: 40,
+  container: {
+    padding: 20,
+  },
+  sectionTitle: {
+    fontSize: 22,
     fontWeight: "bold",
-    textAlign: "center",
-    marginVertical: 20,
+    marginVertical: 10,
+    color: "#333",
+  },
+  sectionContainer: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 20,
+    elevation: 2, // shadow on Android
+    shadowColor: "#000", // shadow on iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
   },
   settingOption: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 15,
+    paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderBottomColor: "#eee",
   },
   settingText: {
     fontSize: 18,
   },
-  header: {
-    padding: 10,
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    flex: 2,
-  },
   actionButton: {
-    backgroundColor: "#3498db",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    height: 50,
-    width: "80%",
-    maxWidth: 600,
+    paddingVertical: 15,
     alignItems: "center",
-    justifyContent: "center",
-    marginVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
   },
   actionButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    alignSelf: "center",
+    fontSize: 18,
+    color: "#3498db",
   },
 });
