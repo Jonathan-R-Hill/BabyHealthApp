@@ -56,7 +56,7 @@ Your privacy is important to us. This Privacy Policy explains how we collect, us
 8. International Data Transfers
     - Your data may be transferred to and processed in countries outside of your own.
     - We use Standard Contractual Clauses approved by the European Commission to ensure adequate protection of your data during international transfers.
-    - All data protection is compliant with GDRP and the Data Protection Act
+    - All data is stored in compliance with GDPR and the Data Protection Act (2018)
 
 9. Children’s Privacy
     - This app is for parents and caregivers. We do not knowingly collect data from children under 13.
