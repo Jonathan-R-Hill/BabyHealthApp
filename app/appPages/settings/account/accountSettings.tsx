@@ -6,85 +6,58 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
-  TextInput,
   ScrollView,
   Platform,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Navbar from "../../../Navbar";
 import Header from "@/app/Header";
-import { asyncValidateUser } from "@/services/accountService";
 import { asyncLogoutUser } from "@/services/accountService";
 
 export default function AccountPage() {
   const router = useRouter();
   const { username, token } = useLocalSearchParams();
 
-  // Nav Functions
   const changeEmail = () => {
     try {
-      console.log("Update Email Nav Button Pressed");
       router.push({ pathname: "./changeEmail", params: { username, token } });
     } catch (error) {
       console.error("Navigation Error", error);
-      Alert.alert(
-        "Navigation Error",
-        "Could not navigate to the Update Email page"
-      );
+      Alert.alert("Navigation Error", "Could not navigate to Update Email page");
     }
   };
 
   const changePassword = () => {
     try {
-      console.log("Update Password Nav Button Pressed");
-      router.push({
-        pathname: "./changePassword",
-        params: { username, token },
-      });
+      router.push({ pathname: "./changePassword", params: { username, token } });
     } catch (error) {
       console.error("Navigation Error", error);
-      Alert.alert(
-        "Navigation Error",
-        "Could not navigate to the Update Password page"
-      );
+      Alert.alert("Navigation Error", "Could not navigate to Update Password page");
     }
   };
 
-  // logout
   const handleLogout = () => {
     if (Platform.OS === 'web') {
       const confirmed = window.confirm('Are you sure you want to logout?');
-      if (confirmed) {
-        doLogout();
-      }
+      if (confirmed) doLogout();
     } else {
       Alert.alert(
         "Logout",
         "Are you sure you want to logout?",
         [
-          {
-            text: "Cancel",
-            style: "cancel",
-          },
-          {
-            text: "Logout",
-            style: "destructive",
-            onPress: doLogout,
-          },
+          { text: "Cancel", style: "cancel" },
+          { text: "Logout", style: "destructive", onPress: doLogout },
         ],
         { cancelable: true }
       );
     }
   };
-  
+
   const doLogout = async () => {
     try {
-      console.log("Logout Button Pressed");
       if (username) {
         const result = await asyncLogoutUser(username as string);
-  
         if (result !== false) {
-          console.log("Logout Successful");
           router.replace("/loginSection/loginScreen");
         } else {
           Alert.alert("Failed to Logout", "Unable to properly logout");
@@ -100,124 +73,82 @@ export default function AccountPage() {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <View style={styles.container}>
-        <Header title="My Account" />
-
+    <View style={styles.pageContainer}>
+      <Header title="My Account" />
+      <ScrollView contentContainerStyle={styles.container}>
+        {/* Profile Section */}
         <View style={styles.profileContainer}>
           <Image
-            source={require("@/assets/images/CharlesPH.png")} // Placeholder, needs accountbound pfp
+            source={require("@/assets/images/CharlesPH.png")}
             style={styles.profileImage}
           />
           <Text style={styles.profileUsername}>{username}</Text>
         </View>
 
-        {/* Update Email Nav Button */}
-        <View style={styles.settingOption}>
+        {/* Account Section */}
+        <Text style={styles.sectionTitle}>Account</Text>
+        <View style={styles.sectionContainer}>
           <TouchableOpacity style={styles.actionButton} onPress={changeEmail}>
             <Text style={styles.actionButtonText}>Update Email</Text>
           </TouchableOpacity>
-        </View>
 
-        {/* Update Password Nav Button */}
-        <View style={styles.settingOption}>
-          <TouchableOpacity
-            style={styles.actionButton}
-            onPress={changePassword}
-          >
+          <TouchableOpacity style={styles.actionButton} onPress={changePassword}>
             <Text style={styles.actionButtonText}>Update Password</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Logout Button */}
-        <View style={styles.settingOption}>
+        {/* Actions Section */}
+        <Text style={styles.sectionTitle}>Actions</Text>
+        <View style={styles.sectionContainer}>
           <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
             <Text style={styles.logoutButtonText}>Logout</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Navigation Bar */}
-        <Navbar />
-      </View>
-    </ScrollView>
+        <View style={{ height: 100 }} /> {/* Padding to avoid overlap with Navbar */}
+      </ScrollView>
+
+      <Navbar />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  pageContainer: {
     flex: 1,
+    backgroundColor: "#f5f5f5",
   },
-  textTitle: {
-    fontSize: 40,
+  container: {
+    padding: 20,
+  },
+  sectionTitle: {
+    fontSize: 22,
     fontWeight: "bold",
-    textAlign: "center",
-    marginVertical: 20,
-  },
-  settingOption: {
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-  },
-  settingText: {
-    fontSize: 18,
     marginBottom: 10,
+    color: "#333",
   },
-  input: {
-    width: "80%",
-    height: 40,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginVertical: 10,
-  },
-  actionButton: {
-    backgroundColor: "#3498db",
+  sectionContainer: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
     paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    height: 50,
-    width: "80%",
-    maxWidth: 600,
-    alignItems: "center",
-    justifyContent: "center",
-    marginVertical: 10,
-  },
-  actionButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    alignSelf: "center",
-  },
-  logoutButton: {
-    backgroundColor: "#e74c3c",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    height: 50,
-    width: "80%",
-    maxWidth: 600,
-    alignItems: "center",
-    justifyContent: "center",
-    marginVertical: 10,
-  },
-  logoutButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    alignSelf: "center",
-  },
-  header: {
-    padding: 10,
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    flex: 2,
+    marginBottom: 20,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
   },
   profileContainer: {
     alignItems: "center",
-    marginVertical: 20,
+    marginBottom: 20,
+    padding: 20,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
   },
   profileImage: {
     width: 100,
@@ -227,6 +158,29 @@ const styles = StyleSheet.create({
   },
   profileUsername: {
     fontSize: 20,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  actionButton: {
+    paddingVertical: 15,
+    alignItems: "center",
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+  actionButtonText: {
+    fontSize: 18,
+    color: "#3498db",
+  },
+  logoutButton: {
+    backgroundColor: "#e74c3c",
+    paddingVertical: 15,
+    borderRadius: 10,
+    marginHorizontal: 20,
+    alignItems: "center",
+  },
+  logoutButtonText: {
+    color: "#fff",
+    fontSize: 18,
     fontWeight: "bold",
   },
 });
