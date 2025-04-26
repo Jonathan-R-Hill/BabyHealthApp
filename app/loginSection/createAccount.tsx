@@ -7,9 +7,16 @@ import {
   Text,
   Alert,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { asyncCreateNewUser } from "../../services/loginService";
+import { ReusableTextInputAnimated } from "@/components/ReusableTextInputBoxAnimated";
+import { ReusableButton } from "@/components/ReusableButton";
+
+const { width: screenWidth } = Dimensions.get("window");
+const isSmallScreen = screenWidth <= 850;
+const formMargin = isSmallScreen ? "3%" : "20%";
 
 export default function CreateAccountScreen() {
   let [createEmail, setNewEmail] = useState("");
@@ -103,19 +110,14 @@ export default function CreateAccountScreen() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollStyle}>
-        {/*Title Text*/}
-        <View style={styles.textHeader}>
-          <Text style={styles.textTitle}>Create Account</Text>
-        </View>
 
         {/*Input Boxes*/}
         <View style={styles.header}>
           <View style={styles.innerHeader}>
             {/*Enter Email*/}
-            <Text style={styles.label}>Enter Email</Text>
-            <TextInput
-              style={styles.inputBox}
-              placeholder="Enter Email Here"
+            <ReusableTextInputAnimated 
+              title="Email"
+              placeholder="Enter Email"
               value={createEmail}
               onChangeText={setNewEmail}
               autoCapitalize="none"
@@ -124,14 +126,13 @@ export default function CreateAccountScreen() {
               placeholderTextColor={"#84868a"}
             />
           </View>
-
+          
           {/*Enter Confirm Email*/}
           <Text style={styles.warning}>{emailDisplayMessage}</Text>
           <View style={styles.innerHeader}>
-            <Text style={styles.label}>Confirm Email</Text>
-            <TextInput
-              style={styles.inputBox}
-              placeholder="Enter Email Here"
+            <ReusableTextInputAnimated 
+              title="Confirm Email"
+              placeholder="Confirm Email"
               value={confirmEmail}
               onChangeText={setConfirmedEmail}
               autoCapitalize="none"
@@ -142,16 +143,10 @@ export default function CreateAccountScreen() {
           </View>
 
           {/*Enter Password*/}
-          <Text style={styles.warning}>
-            {validPassword
-              ? "Password is up to safety standards"
-              : "Password must contain: 8 characters, a capital, a number and a special character (eg: @,>]"}
-          </Text>
           <View style={styles.innerHeader}>
-            <Text style={styles.label}>Enter Password</Text>
-            <TextInput
-              style={styles.inputBox}
-              placeholder="Enter Password Here"
+            <ReusableTextInputAnimated 
+              title="Password"
+              placeholder="Password"
               value={createPassword}
               onChangeText={(newText) => {
                 setNewPassword(newText); // Update state
@@ -168,10 +163,9 @@ export default function CreateAccountScreen() {
           {/*Enter Confirm Password*/}
           <Text style={styles.warning}>{displayMessage}</Text>
           <View style={styles.innerHeader}>
-            <Text style={styles.label}>Confirm Password</Text>
-            <TextInput
-              style={styles.inputBox}
-              placeholder="Enter Password Here"
+            <ReusableTextInputAnimated 
+              title="Confirm Password"
+              placeholder="Confirm Password"
               value={confirmPassword}
               onChangeText={(newText) => {
                 setConfirmedPassword(newText); // Update state
@@ -184,30 +178,30 @@ export default function CreateAccountScreen() {
               contextMenuHidden={true} //apparently does not work on android
             />
           </View>
+          <Text style={styles.warning}>
+            {validPassword
+              ? "Password is up to safety standards"
+              : "Password must contain: 8 characters, a capital, a number and a special character (eg: @,>]"}
+          </Text>
         </View>
+        
 
         {/*Create Account Button*/}
         <View style={styles.textHeader}>
-          <TouchableOpacity
-            style={[
-              styles.chartButton,
-              { backgroundColor: allValid ? "#65558F" : "#7c7d7c" },
-            ]}
+          <ReusableButton 
+            title="Create Account"
+            colour={allValid ? "#65558F" : "#7c7d7c"}
             onPress={createNewAccount}
             disabled={!allValid}
-          >
-            <Text style={styles.chartButtonText}>Create Account</Text>
-          </TouchableOpacity>
+          />
         </View>
 
         {/*Go Back Button*/}
         <View style={styles.textHeader}>
-          <TouchableOpacity
-            style={styles.chartButton}
+          <ReusableButton 
+            title="Go back to login"
             onPress={handleGoBackToLogin}
-          >
-            <Text style={styles.chartButtonText}>Go Back To Login Page</Text>
-          </TouchableOpacity>
+          />
         </View>
       </ScrollView>
     </View>
@@ -217,80 +211,32 @@ export default function CreateAccountScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 150,
+    paddingHorizontal: formMargin,
     backgroundColor: "#fff",
-    alignItems: "center",
   },
   scrollStyle: {
-    flexDirection: "column",
+    flexGrow: 1,
   },
   header: {
-    padding: 10,
     flexDirection: "column",
-    justifyContent: "flex-start",
     alignItems: "center",
+    justifyContent: "center",
     width: "100%",
-    maxWidth: 400,
   },
   innerHeader: {
-    padding: 10,
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center",
     width: "100%",
-    maxWidth: 400,
-    flex: 3,
+    marginBottom: 15,
   },
   textHeader: {
-    padding: 10,
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center",
     width: "100%",
-    maxWidth: 400,
-  },
-  chartButton: {
-    backgroundColor: "#65558F",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-  },
-  chartButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  textTitle: {
-    color: "#000000",
-    fontSize: 40,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  inputBox: {
-    borderColor: "blue",
-    borderWidth: 1,
-    marginBottom: 16,
-    borderRadius: 4,
-    paddingHorizontal: 8,
-    backgroundColor: "#e8e6e1",
-    textAlign: "center",
-    width: 300,
-    maxWidth: 400,
-  },
-  inputBoxContainer: {
-    height: "80%",
-    width: "90%",
-  },
-  label: {
-    fontSize: 16,
-    marginBottom: 8,
-    fontWeight: "bold",
+    marginTop: 10,
+    // alignItems: "center",
   },
   warning: {
     fontSize: 12,
-    marginBottom: 8,
-    fontWeight: "bold",
     color: "red",
-    maxHeight: "10%",
-    maxWidth: "100%",
-    flex: 1,
+    marginBottom: 10,
+    textAlign: "center",
   },
 });

@@ -11,7 +11,7 @@ import {
 const { width: screenWidth } = Dimensions.get("window");
 
 // Determine button width dynamically
-const buttonWidth = screenWidth <= 1200 ? "100%" : "60%";
+const buttonWidth = screenWidth <= 850 ? "100%" : "60%";
 
 // Define valid font weights
 type FontWeight =
@@ -45,7 +45,7 @@ export function ReusableButton({
   colour = "#65558F",
   textSize = 16,
   textColour = "white",
-  fontWeights = "bold",
+  fontWeights = "500",
   doubleButtons = false,
   ...otherProps
 }: ReusableButtonProps) {

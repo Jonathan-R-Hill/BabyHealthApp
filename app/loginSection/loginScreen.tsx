@@ -18,6 +18,9 @@ import { Divider } from "@/components/Divider";
 const { width: screenWidth } = Dimensions.get("window");
 const isLargeScreen = screenWidth > 1200;
 
+const isSmallScreen = screenWidth <= 850;
+const formMargin = isSmallScreen ? "3%" : "20%";
+
 const LoginScreen = () => {
   const [username, setUsername] = useState("test@test.test"); // Pre-fill with test username
   const [password, setPassword] = useState("Testdata1!"); // Pre-fill with test password
@@ -141,6 +144,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 16,
     backgroundColor: "#fff",
+    paddingHorizontal: formMargin
   },
   titleContainer: {
     textAlign: isLargeScreen ? "center" : "left",

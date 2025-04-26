@@ -24,6 +24,9 @@ type ReusableTextInputProps = TextInputProps & {
   backgroundColour?: string;
 };
 
+// const { width: screenWidth } = Dimensions.get("window");
+// const buttonWidth = screenWidth <= 850 ? "100%" : "60%";
+
 /**
  * Animated version of the reusable text input component with a label and adjustable input sizes.
  *

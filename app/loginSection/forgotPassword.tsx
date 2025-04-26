@@ -6,9 +6,16 @@ import {
   TouchableOpacity,
   Text,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { asyncSendCodePassword } from "../../services/loginService";
+import { ReusableTextInputAnimated } from "@/components/ReusableTextInputBoxAnimated";
+import { ReusableButton } from "@/components/ReusableButton";
+
+const { width: screenWidth } = Dimensions.get("window");
+const isSmallScreen = screenWidth <= 850;
+const formMargin = isSmallScreen ? "3%" : "20%";
 
 export default function forgotPasswordPage() {
     const router = useRouter();
@@ -54,39 +61,33 @@ export default function forgotPasswordPage() {
       <View style={styles.container}>
         <ScrollView>
           {/*Logo placement*/}
-          <View style={styles.header}>
+          {/* <View style={styles.header}>
             <View style={styles.profileIcon}></View>
-          </View>
+          </View> */}
 
-          {/*Enter Email*/}
-          <View style={styles.header}>
-              <Text style={styles.warning}>{displayMessage}</Text>
-              <Text style={styles.label}>Enter Email</Text>
-              <TextInput
-                style={styles.inputBox}
-                placeholder="Enter Email Here"
-                value={userEmail}
-                onChangeText={setUserEmail}
-                autoCapitalize="none"
-                autoCorrect={false}
-                keyboardType="default"
-                placeholderTextColor={"#84868a"}
-              />
-            </View>
+          <Text style={styles.warning}>{displayMessage}</Text>
+          <ReusableTextInputAnimated 
+            title="Email"
+            placeholder="Enter Email Here"
+            value={userEmail}
+            onChangeText={setUserEmail}
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="default"
+            placeholderTextColor={"#84868a"}
+          />
+        
+          {/*Submit Password Request Button*/}
+          <ReusableButton 
+            title="Submit password update"
+            onPress={submitPasswordReset}
+          />
 
-            {/*Submit Password Request Button*/}
-            <View style={styles.header}>
-              <TouchableOpacity style={styles.chartButton} onPress={submitPasswordReset}>
-                <Text style={styles.chartButtonText}>Submit Password Change Request</Text>
-              </TouchableOpacity>
-            </View>
-
-            {/*Go Back To Login Button*/}
-            <View style={styles.header}>
-              <TouchableOpacity style={styles.chartButton} onPress={handleBackToLogin}>
-                <Text style={styles.chartButtonText}>Back To Login</Text>
-              </TouchableOpacity>
-            </View>
+          <ReusableButton 
+            title="Back To Login"
+            onPress={handleBackToLogin}
+          />
+          
         </ScrollView>
       </View>
     );
@@ -96,7 +97,9 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: "#fff",
-      alignItems: "center",
+      // alignItems: "center",
+      paddingHorizontal: formMargin,
+      paddingTop: 350,
     },
     header: {
       padding: 10,

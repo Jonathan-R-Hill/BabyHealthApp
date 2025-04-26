@@ -6,9 +6,16 @@ import {
   TouchableOpacity,
   Text,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { asyncValidateAuthCode } from "../../services/loginService";
+import { ReusableTextInputAnimated } from "@/components/ReusableTextInputBoxAnimated";
+import { ReusableButton } from "@/components/ReusableButton";
+
+const { width: screenWidth } = Dimensions.get("window");
+const isSmallScreen = screenWidth <= 850;
+const formMargin = isSmallScreen ? "3%" : "20%";
 
 export default function authenticationPage() {
     const router = useRouter();
@@ -38,55 +45,40 @@ export default function authenticationPage() {
     return (
         <View style={styles.container}>
             <ScrollView>
-                {/*Logo placement*/}
-                <View style={styles.header}>
-                <View style={styles.profileIcon}></View>
-                </View>
+              <ReusableTextInputAnimated 
+                title="Email"
+                placeholder="Enter Email Here"
+                value={userEmail}
+                onChangeText={setUserEmail}
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="default"
+                placeholderTextColor={"#84868a"}
+              />
+                    
+              <ReusableTextInputAnimated 
+                title="Authentication Code"
+                placeholder="Authentication Code"
+                value={authCode}
+                onChangeText={setAuthCode}
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="default"
+                placeholderTextColor={"#84868a"}
+              />
 
-                {/*Enter Email Again*/}
-                <View style={styles.header}>
-                    <Text style={styles.warning}>{displayMessage}</Text>
-                    <Text style={styles.label}>Enter Your Email Again</Text>
-                    <TextInput
-                    style={styles.inputBox}
-                    placeholder="Enter Email Here"
-                    value={userEmail}
-                    onChangeText={setUserEmail}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    keyboardType="default"
-                    placeholderTextColor={"#84868a"}
-                    />
-                </View>
+              <Text style={styles.warning}>{displayMessage}</Text>
 
-                {/*Enter Auth Code*/}
-                <View style={styles.header}>
-                    <Text style={styles.label}>Enter Authentication Code</Text>
-                    <TextInput
-                    style={styles.inputBox}
-                    placeholder="Enter Code Here"
-                    value={authCode}
-                    onChangeText={setAuthCode}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    keyboardType="default"
-                    placeholderTextColor={"#84868a"}
-                    />
-                </View>
+              {/*Submit Code Button*/}
+              <ReusableButton 
+                title="Authenticate"
+                onPress={handleAuthCode}
+              />
 
-                {/*Submit Code Button*/}
-                <View style={styles.header}>
-                    <TouchableOpacity style={styles.chartButton} onPress={handleAuthCode}>
-                    <Text style={styles.chartButtonText}>Submit Code</Text>
-                    </TouchableOpacity>
-                </View>
-
-                {/*Go Back To Login Button*/}
-                <View style={styles.header}>
-                    <TouchableOpacity style={styles.chartButton} onPress={handleBackToLogin}>
-                    <Text style={styles.chartButtonText}>Back To Login</Text>
-                    </TouchableOpacity>
-                </View>
+              <ReusableButton 
+                title="Back to login"
+                onPress={handleBackToLogin}
+              />
             </ScrollView>
         </View>
     )
@@ -94,25 +86,27 @@ export default function authenticationPage() {
 };
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "#fff",
-      alignItems: "center",
-    },
-    header: {
-      padding: 10,
-      flexDirection: "column",
-      justifyContent: "flex-start",
-      alignItems: "center",
-      width: "100%",
-      maxWidth: 600,
-    },
-  profileIcon: {
-    width: 80,
-    height: 80,
-    backgroundColor: "#ccc",
-    borderRadius: 20,
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    // alignItems: "center",
+    paddingHorizontal: formMargin,
+    paddingTop: 300
   },
+  header: {
+    // padding: 10,
+    // flexDirection: "column",
+    // justifyContent: "flex-start",
+    // alignItems: "center",
+    // width: "100%",
+    // maxWidth: 600,
+  },
+  // profileIcon: {
+  //   width: 80,
+  //   height: 80,
+  //   backgroundColor: "#ccc",
+  //   borderRadius: 20,
+  // },
   inputBox: {
     borderColor: "blue",
     borderWidth: 1,
