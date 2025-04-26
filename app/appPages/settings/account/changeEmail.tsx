@@ -10,16 +10,24 @@ import {
 
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Navbar from "@/app/Navbar";
+import Header from "@/app/Header";
 
 export default function UpdateEmailPage() {
   const router = useRouter();
   const { username, token } = useLocalSearchParams();
-  const [email, setEmail] = useState("");
+
   const [newEmail, setNewEmail] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
 
+  const [allValid, setAllValid] = useState(false);
+
+  const isEmailValid = () => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    setAllValid(emailRegex.test(newEmail));
+  };
+
   const handleUpdateEmail = () => {
-    console.log("update email button pressed")
+    console.log("update email button pressed");
     if (newEmail !== confirmEmail) {
       Alert.alert("Error", "Emails do not match.");
       return;
@@ -30,16 +38,22 @@ export default function UpdateEmailPage() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textTitle}>Account Settings</Text>
+      <Header title="Change Email" />
 
-      {/* Update Email Section */}
       <View style={styles.settingOption}>
         <Text style={styles.settingText}>Update Email</Text>
         <TextInput
           style={styles.input}
-          placeholder="New Email"
-          value={email}
-          onChangeText={setEmail}
+          placeholder="new email"
+          value={newEmail}
+          onChangeText={setNewEmail}
+          keyboardType="email-address"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="confirm new email"
+          value={confirmEmail}
+          onChangeText={setConfirmEmail}
           keyboardType="email-address"
         />
         <TouchableOpacity
@@ -50,7 +64,6 @@ export default function UpdateEmailPage() {
         </TouchableOpacity>
       </View>
 
-      {/* Navbar */}
       <Navbar />
     </View>
   );
