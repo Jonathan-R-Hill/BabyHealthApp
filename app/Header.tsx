@@ -12,14 +12,10 @@ type HeaderProps = {
 const router = useRouter();
 
 export default function Header({ title = "Chage this to the page title", onBackPress = router.back }: HeaderProps) {
-  
-  // Get the height of the status bar only if the platform is Android (iOS handles this differently)
-  // If StatusBar.currentHeight is undefined (rare), fall back to 0
-  const statusBarHeight = Platform.OS === 'android' ? StatusBar.currentHeight || 0 : 0;
 
   return (
     // Outer container of the header, with extra top padding for status bar space
-    <View style={[styles.headerContainer, { paddingTop: statusBarHeight}]}>
+    <View style={[styles.headerContainer]}>
       <StatusBar backgroundColor="#65558F" barStyle="light-content" />
       
       <View style={styles.contentRow}>
