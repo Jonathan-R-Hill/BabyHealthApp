@@ -19,6 +19,7 @@ export default function UpdateEmailPage() {
   const [confirmEmail, setConfirmEmail] = useState("");
 
   const handleUpdateEmail = () => {
+    console.log("update email button pressed")
     if (newEmail !== confirmEmail) {
       Alert.alert("Error", "Emails do not match.");
       return;

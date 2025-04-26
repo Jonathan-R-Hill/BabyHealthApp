@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Alert,
   TextInput,
+  ScrollView,
+  Platform,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Navbar from "../../../Navbar";
@@ -50,80 +52,94 @@ export default function AccountPage() {
 
   // logout
   const handleLogout = () => {
-    Alert.alert(
-      "Logout",
-      "Are you sure you want to logout?",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Logout",
-          style: "destructive",
-          onPress: async () => {
-            try {
-              console.log("logout Button Pressed");
-              if (username) {
-                const result = await asyncLogoutUser(username as string);
-
-                if (result !== false) {
-                  console.log("Logout Successful¬");
-                  router.replace("/loginSection/loginScreen");
-                } else {
-                  Alert.alert("Failed to Logout", "unable to properly logout");
-                }
-              } else {
-                console.error("no username found");
-                Alert.alert("Failed to Logout", "no username found");
-              }
-            } catch (error) {
-              console.error("Error logging out", error);
-              Alert.alert("Logout Error", "an unexpected error occured");
-            }
+    if (Platform.OS === 'web') {
+      const confirmed = window.confirm('Are you sure you want to logout?');
+      if (confirmed) {
+        doLogout();
+      }
+    } else {
+      Alert.alert(
+        "Logout",
+        "Are you sure you want to logout?",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
           },
-        },
-      ],
-      { cancelable: true }
-    );
+          {
+            text: "Logout",
+            style: "destructive",
+            onPress: doLogout,
+          },
+        ],
+        { cancelable: true }
+      );
+    }
+  };
+  
+  const doLogout = async () => {
+    try {
+      console.log("Logout Button Pressed");
+      if (username) {
+        const result = await asyncLogoutUser(username as string);
+  
+        if (result !== false) {
+          console.log("Logout Successful");
+          router.replace("/loginSection/loginScreen");
+        } else {
+          Alert.alert("Failed to Logout", "Unable to properly logout");
+        }
+      } else {
+        console.error("No username found");
+        Alert.alert("Failed to Logout", "No username found");
+      }
+    } catch (error) {
+      console.error("Error logging out:", error);
+      Alert.alert("Logout Error", "An unexpected error occurred");
+    }
   };
 
   return (
-    <View style={styles.container}>
-      <Header title="My Account" />
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <View style={styles.container}>
+        <Header title="My Account" />
 
-      <View style={styles.profileContainer}>
-        <Image
-          source={require("@/assets/images/CharlesPH.png")} // Placeholder, needs accountbound pfp
-          style={styles.profileImage}
-        />
-        <Text style={styles.profileImage}>{username}</Text>
+        <View style={styles.profileContainer}>
+          <Image
+            source={require("@/assets/images/CharlesPH.png")} // Placeholder, needs accountbound pfp
+            style={styles.profileImage}
+          />
+          <Text style={styles.profileUsername}>{username}</Text>
+        </View>
+
+        {/* Update Email Nav Button */}
+        <View style={styles.settingOption}>
+          <TouchableOpacity style={styles.actionButton} onPress={changeEmail}>
+            <Text style={styles.actionButtonText}>Update Email</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Update Password Nav Button */}
+        <View style={styles.settingOption}>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={changePassword}
+          >
+            <Text style={styles.actionButtonText}>Update Password</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Logout Button */}
+        <View style={styles.settingOption}>
+          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+            <Text style={styles.logoutButtonText}>Logout</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Navigation Bar */}
+        <Navbar />
       </View>
-
-      {/* Update Email Nav Button */}
-      <View style={styles.settingOption}>
-        <TouchableOpacity style={styles.actionButton} onPress={changeEmail}>
-          <Text style={styles.actionButtonText}>Update Email</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Update Password Nav Button */}
-      <View style={styles.settingOption}>
-        <TouchableOpacity style={styles.actionButton} onPress={changePassword}>
-          <Text style={styles.actionButtonText}>Update Password</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Logout Button */}
-      <View style={styles.settingOption}>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Text style={styles.logoutButtonText}>Logout</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Navigation Bar */}
-      <Navbar />
-    </View>
+    </ScrollView>
   );
 }
 
