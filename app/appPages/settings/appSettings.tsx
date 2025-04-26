@@ -89,14 +89,14 @@ export default function SettingsPage() {
 
           <TouchableOpacity
             style={styles.actionButton}
-            onPress={() => navigateTo("@/appPages/contactUs/aboutUs/privacyPage")}
+            onPress={() => navigateTo("../contactUs/aboutUs/privacyPage")}
           >
             <Text style={styles.actionButtonText}>Privacy Policy</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.actionButton}
-            onPress={() => navigateTo("@/appPages/contactUs/main")}
+            onPress={() => navigateTo("../contactUs/main")}
           >
             <Text style={styles.actionButtonText}>Send Feedback</Text>
           </TouchableOpacity>
