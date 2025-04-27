@@ -205,6 +205,7 @@ const styles = StyleSheet.create({
   babyContainer: {
     flex: 1,
     paddingHorizontal:10,
+    marginBottom: 100,
   },
   header: {
     flexDirection: "row",

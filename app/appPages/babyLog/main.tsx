@@ -105,7 +105,7 @@ export default function CreateBaby() {
           <Text style={styles.createButtonText}>+ Create a new baby</Text>
         </TouchableOpacity>
 
-    <ScrollView contentContainerStyle={styles.babyContainer}>
+    <ScrollView style={styles.scrollView}>
         {/* Display babies */}
       {babies && babies.length > 0 ? (
         babies.map((baby) => (
@@ -147,12 +147,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-  },
-  diaryContainer: {
-    flex: 1,
-    paddingHorizontal: 10,
+    alignItems: "center",
   },
   createButton: {
+    width: "80%",
     backgroundColor: "#65558F",
     paddingVertical: 15,
     marginVertical: 10,
@@ -199,11 +197,10 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
-
   babyContainer: {
-    flex: 1,
     paddingHorizontal: 10,
     flexGrow: 1,
+    marginBottom: 50,
   },
   babyCard: {
     backgroundColor: "#f1f1f1",
@@ -242,5 +239,9 @@ const styles = StyleSheet.create({
   noBabiesText: {
     color: "#fff",
     fontSize: 16,
+  },
+  scrollView: {
+    flex: 1,
+    marginBottom: 50,
   },
 });
