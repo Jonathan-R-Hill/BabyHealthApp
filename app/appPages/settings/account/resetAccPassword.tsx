@@ -9,7 +9,9 @@ import {
 } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { setParams } from "expo-router/build/global-state/routing";
-import { asyncChangePassword } from "../../services/accountService";
+import { asyncChangePassword } from "@/services/accountService";
+import Navbar from "@/app/Navbar"
+import Header from "@/app/Header"
 
 export default function resetPassword(){
     const router = useRouter();
@@ -26,7 +28,7 @@ export default function resetPassword(){
         try {
             console.log("Email: ", user);
             console.log("New password: ", newPassword);
-            const response = await asyncResetPassword( user, code, newPassword);
+            const response = await asyncChangePassword( user, code, newPassword);
             console.log(response);
             if(allValid && response) //all valid AND result of backend true
             {
@@ -104,7 +106,7 @@ export default function resetPassword(){
                 keyboardType="default"
                 placeholderTextColor={"#84868a"}
                 secureTextEntry={true}
-                contextMenuHidden={true} //apparently does not work on android
+                contextMenuHidden={true} //apparently doesn't work on android
                 />
             </View>
     
@@ -125,7 +127,7 @@ export default function resetPassword(){
                 keyboardType="default"
                 placeholderTextColor={"#84868a"}
                 secureTextEntry={true}
-                contextMenuHidden={true} //apparently does not work on android
+                contextMenuHidden={true} //apparently doesn't work on android
                 />
             </View>
         </View>
