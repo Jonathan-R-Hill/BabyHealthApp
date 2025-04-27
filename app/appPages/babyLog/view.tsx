@@ -151,7 +151,7 @@ export default function BabyDetails() {
             
             <View style={styles.attributeBox}>
                 <Text style={styles.label}>Date of Birth</Text>
-                <Text style={styles.content}>{new Date(baby.data.dateOfBirth).toLocaleDateString()}</Text>
+                <Text style={styles.content}>{new Date(baby.data.dateOfBirth).toLocaleDateString('en-GB')}</Text>
             </View>
 
             <View style={styles.attributeBox}>
