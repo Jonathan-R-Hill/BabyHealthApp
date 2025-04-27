@@ -5,6 +5,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
   Alert,
 } from "react-native";
 
@@ -20,12 +21,24 @@ export default function ResetPasswordPage() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [allValid, setAllValid] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState("");
 
-  // Check if new password matches confirm password and meets strength requirements
   useEffect(() => {
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!])(?=.{9,})/;
     const isPasswordStrong = passwordRegex.test(newPassword);
+
+    // Calculate password strength
+    if (newPassword.length < 8) {
+      setPasswordStrength("Weak");
+    } else if (newPassword.match(/(?=.*[A-Z])(?=.*\d)/)) {
+      setPasswordStrength("Medium");
+    } 
+    if (isPasswordStrong) {
+      setPasswordStrength("Strong");
+    }
+
     setAllValid(
       isPasswordStrong &&
       newPassword === confirmPassword &&
@@ -44,6 +57,8 @@ export default function ResetPasswordPage() {
         throw new Error("Missing token. Please log in again.");
       }
 
+      setLoading(true);
+
       const response = await asyncChangePassword(
         token as string,
         currentPassword,
@@ -52,12 +67,18 @@ export default function ResetPasswordPage() {
 
       console.log(response);
 
+      setLoading(false);
       Alert.alert("Password Changed", "Your password has been updated successfully.");
       router.replace("/loginSection/loginScreen");
 
     } catch (error: any) {
       console.error("Error resetting password:", error.message);
-      Alert.alert("Error", error.message || "Failed to change password.");
+      setLoading(false);
+      if (error.message.includes("current password")) {
+        Alert.alert("Incorrect Password", "Your current password is incorrect. Please try again.");
+      } else {
+        Alert.alert("Error", error.message || "Failed to change password.");
+      }
     }
   };
 
@@ -66,32 +87,40 @@ export default function ResetPasswordPage() {
       <Header title="Change Password" />
 
       <View style={styles.settingOption}>
+        <Text style={styles.settingText}>Update Password</Text>
 
         <TextInput
           style={styles.input}
           placeholder="Current Password"
+          placeholderTextColor="#a1a1a1"
           value={currentPassword}
           onChangeText={setCurrentPassword}
           secureTextEntry
-          placeholderTextColor="#84868a"
         />
 
         <TextInput
           style={styles.input}
           placeholder="New Password"
+          placeholderTextColor="#a1a1a1"
           value={newPassword}
           onChangeText={setNewPassword}
           secureTextEntry
-          placeholderTextColor="#84868a"
         />
+
+        {/* Password Strength Feedback */}
+        {newPassword.length > 0 && (
+          <Text style={[styles.strengthText, getStrengthColor(passwordStrength)]}>
+            {passwordStrength}
+          </Text>
+        )}
 
         <TextInput
           style={styles.input}
           placeholder="Confirm New Password"
+          placeholderTextColor="#a1a1a1"
           value={confirmPassword}
           onChangeText={setConfirmPassword}
           secureTextEntry
-          placeholderTextColor="#84868a"
         />
 
         <TouchableOpacity
@@ -100,9 +129,13 @@ export default function ResetPasswordPage() {
             { backgroundColor: allValid ? "#3498db" : "#7c7d7c" },
           ]}
           onPress={handleResetPassword}
-          disabled={!allValid}
+          disabled={!allValid || loading}
         >
-          <Text style={styles.actionButtonText}>Update Password</Text>
+          {loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text style={styles.actionButtonText}>Update Password</Text>
+          )}
         </TouchableOpacity>
       </View>
 
@@ -110,6 +143,19 @@ export default function ResetPasswordPage() {
     </View>
   );
 }
+
+const getStrengthColor = (strength: string) => {
+  switch (strength) {
+    case "Weak":
+      return { color: "red" };
+    case "Medium":
+      return { color: "orange" };
+    case "Strong":
+      return { color: "green" };
+    default:
+      return { color: "#000" };
+  }
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -135,6 +181,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginVertical: 10,
+    color: "#000",
+  },
+  strengthText: {
+    fontSize: 14,
+    marginBottom: 10,
+    fontWeight: "bold",
   },
   actionButton: {
     backgroundColor: "#3498db",
