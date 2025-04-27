@@ -84,4 +84,31 @@ const asyncUpdateEmail = async (
   }
 };
 
+// export const asyncAccChangePassword = async (token: string, currentPassword: string, newPassword: string) => {
+//   try {
+//     const response = await axios.post(
+//       `${API_URL}/accounts/changePassword`,
+//       {
+//         token,
+//         currentPassword,
+//         newPassword,
+//       },
+//       {
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         withCredentials: true,
+//       }
+//     );
+
+//     console.log("Password change response:", response.data);
+//     return response.data;
+//   } catch (error: unknown) {
+//     if (axios.isAxiosError(error)) {
+//       throw new Error(error.response?.data?.message || "Failed to change password");
+//     }
+//     throw new Error("An unexpected error occurred during password change");
+//   }
+// };
+
 export { asyncValidateUser, asyncLogoutUser, asyncUpdateEmail };
