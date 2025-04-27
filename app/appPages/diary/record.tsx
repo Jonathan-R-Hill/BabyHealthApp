@@ -154,7 +154,7 @@ export default function DiaryEntryDetails() {
           <Text style={styles.dateText}>
             {new Date(entry.details.date).toLocaleDateString()}
           </Text>
-          <Text style={styles.content}>{entry.details.diaryTitle}</Text>
+          <Text style={styles.titleContent}>{entry.details.diaryTitle}</Text>
           <Text style={styles.content}>{entry.data.text}</Text>
           <Text style={styles.infoText}>
             <Text style={styles.infoLabel}>Weight: </Text>
@@ -271,4 +271,9 @@ const styles = StyleSheet.create({
     height: "100%",
     borderRadius: 5,
   },
+  titleContent: {
+    fontSize: 22,
+    marginVertical: 10,
+    lineHeight: 30,
+  }
 });
