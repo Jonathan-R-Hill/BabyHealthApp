@@ -14,6 +14,7 @@ import Navbar from "../../Navbar";
 import Header from "../../Header";
 import { fetchBaby, deleteBaby } from "../../../services/babyProfileService";
 import { ActivityIndicator } from "react-native-paper";
+import { format } from "date-fns";
 
 export default function BabyDetails() {
     const router = useRouter();
@@ -151,7 +152,7 @@ export default function BabyDetails() {
             
             <View style={styles.attributeBox}>
                 <Text style={styles.label}>Date of Birth</Text>
-                <Text style={styles.content}>{new Date(baby.data.dateOfBirth).toLocaleDateString('en-GB')}</Text>
+                <Text style={styles.content}>{format(new Date(baby.data.dateOfBirth), 'dd/MM/yyyy')}</Text>
             </View>
 
             <View style={styles.attributeBox}>

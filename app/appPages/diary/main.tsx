@@ -49,7 +49,7 @@ export default function CreateDiaryEntry() {
   const [babyProfile, setBabyProfile] = useState<BabyProfile>({
     name: "Julian",
     age: {
-      months: 7,
+      months: 1,
       days: 24
     },
     daysToFullTerm: 38,

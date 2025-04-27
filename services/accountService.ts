@@ -32,13 +32,13 @@ const asyncValidateUser = async (email: string, password: string) => {
 
 const asyncLogoutUser = async (userId: string): Promise<boolean> => {
   try {
-    const response = await axios.post(
-      `${API_URL}/accounts/logOut/${encodeURIComponent(userId)}`
-    );
+    const response = await axios.post(`${API_URL}/accounts/logOut`, {
+      userId,
+    });
 
     console.log("Logout response:", response.data);
     return true;
-  } catch (error: unknown) {
+  } catch (error: any) {
     if (axios.isAxiosError(error)) {
       console.log("Error:", error.response?.data?.message);
     } else {
