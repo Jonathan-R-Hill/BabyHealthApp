@@ -57,7 +57,21 @@ export default function AddBaby() {
   const handleDateConfirm = (_event: any, selectedDate?: Date) => {
     setShowDatePicker(false);
     if (selectedDate) {
-      setDateOfBirth(selectedDate);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (selectedDate > today) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          dateOfBirth: "Date of birth cannot be in the future.",
+        }));
+        return;
+      } else {
+        setErrors((prevErrors) => {
+          const {dateOfBirth, ...rest } = prevErrors;
+          return rest;
+        });
+        setDateOfBirth(selectedDate);
+      }
     }
   };
   

@@ -97,7 +97,6 @@ export default function CreateBaby() {
   return (
     <View style={styles.container}>
       <Header title="Baby Profile"/>
-      <ScrollView style={styles.babyContainer}>
         {/* Button to create a new baby */}
         <TouchableOpacity
           onPress={handleNavigateToCreate}
@@ -105,7 +104,8 @@ export default function CreateBaby() {
         >
           <Text style={styles.createButtonText}>+ Create a new baby</Text>
         </TouchableOpacity>
-  
+
+    <ScrollView contentContainerStyle={styles.babyContainer}>
         {/* Display babies */}
       {babies && babies.length > 0 ? (
         babies.map((baby) => (
@@ -171,8 +171,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     color: "#2c3e50",
     position: "relative",
-    paddingRight: 20, // Make space for the line
-    opacity: 0.7, // Make it subtle
+    paddingRight: 20, 
+    opacity: 0.7, 
   },
   yearHeaderLine: {
     position: "absolute",
@@ -180,8 +180,8 @@ const styles = StyleSheet.create({
     top: "50%",
     height: 1,
     width: "90%", 
-    backgroundColor: "#2c3e50", // Same color as year header text
-    opacity: 0.4, // Make it subtle
+    backgroundColor: "#2c3e50",
+    opacity: 0.4,
   },
   diaryEntry: {
     flexDirection: "row",
@@ -203,8 +203,8 @@ const styles = StyleSheet.create({
   babyContainer: {
     flex: 1,
     paddingHorizontal: 10,
+    flexGrow: 1,
   },
-  
   babyCard: {
     backgroundColor: "#f1f1f1",
     padding: 15,
