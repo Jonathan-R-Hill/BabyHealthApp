@@ -40,7 +40,7 @@ export default function CarerPage() {
     const fetchAllCarers = async (username: string, token: string) => {
         try {
             const data = await getDataOnCarers(username, token);
-            if (data == false) {
+            if (data === false) {
                 popup()
             } else {
                 setCarers(data);

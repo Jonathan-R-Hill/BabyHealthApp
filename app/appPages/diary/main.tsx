@@ -60,8 +60,14 @@ export default function CreateDiaryEntry() {
   // Function to fetch diary entries from the backend
   const fetchDiaryEntries = async (username: string, token: string) => {
     try {
-      const data: DiaryEntry[] = await fetchAllDiaryEntries(username, token);
-      setDiaryEntries(data); // Store fetched diary entries in state
+      const data = await fetchAllDiaryEntries(username, token);
+      console.log(data)
+      if(data === false){
+        popup()
+      }
+      else{
+        setDiaryEntries(data); // Store fetched diary entries in state
+      }
     } catch (error) {
       Alert.alert("Error", "Could not load diary entries."); // Show an error alert if fetching fails
     }
@@ -100,10 +106,10 @@ export default function CreateDiaryEntry() {
     handleNavigateToDetails: (entry_id: number) => void
   ) => {
     let lastYear = ""; // Track the last displayed year for section headers
-    if (!diaryEntries){
+    /*if (!diaryEntries){
       popup()
       return
-    }
+    }*/
     return diaryEntries.map((entry) => {
       const entryDate = new Date(entry.details.date);
       const entryYear = entryDate.getFullYear().toString();

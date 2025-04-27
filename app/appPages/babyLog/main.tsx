@@ -36,7 +36,7 @@ export default function CreateBaby() {
       const data = await fetchBabies(username, token);
       console.log("Fetched data", data);
       console.log("Fetched data:", JSON.stringify(data, null, 2));
-      if(data == false)
+      if(data === false)
       {
         popup()
       }

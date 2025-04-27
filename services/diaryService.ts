@@ -47,6 +47,9 @@ export const fetchAllDiaryEntries = async (userId: string, token: string) => {
     );
     return response.data;
   } catch (error: any) {
+    if(error.message == "Request failed with status code 404"){
+      return [];
+    }
     console.error(
       error.response?.data?.message || "Failed to fetch diary entry"
     );

@@ -64,27 +64,31 @@ export const submitFeature = async (
  */
 interface Carers {
   details: {
-      carerId: number //unique identifier for the carer
-      userId: string //unique identifier for the user
+    carerId: number; //unique identifier for the carer
+    userId: string; //unique identifier for the user
   };
   data: {
-      name: string
-      title: string //title such as Sir, Dr, Mr, Miss, ect
-      phone: string
-      email: string
-  }
+    name: string;
+    title: string; //title such as Sir, Dr, Mr, Miss, ect
+    phone: string;
+    email: string;
+  };
 }
 
-export const getDataOnCarers = async (
-  userId: string,
-  token: string
-) => {
+export const getDataOnCarers = async (userId: string, token: string) => {
   try {
-    const response = await axios.get(`${API_URL}/carers/getAll/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`);
+    const response = await axios.get(
+      `${API_URL}/carers/getAll/${encodeURIComponent(
+        userId
+      )}/${encodeURIComponent(token)}`
+    );
     return response.data.carers;
-  } catch(error: any){
-      console.error(error.response ? error.response.data.message : error.message);
-      return false
+  } catch (error: any) {
+    if (error.message == "Request failed with status code 404") {
+      return [];
+    }
+    console.error(error.response ? error.response.data.message : error.message);
+    return false;
   }
 };
 
@@ -97,16 +101,25 @@ export const postNewCarer = async (
   phone: string
 ) => {
   try {
-    console.log(userId, token, name, title, email, phone)
-    const response = await axios.post(`${API_URL}/carers/create/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`,
-  {
-    userId, title, name, email, phone
-  });
-  console.log(userId, title, name, email, phone);
-  return response.data;
-  } catch (error: any){
+    console.log(userId, token, name, title, email, phone);
+    const response = await axios.post(
+      `${API_URL}/carers/create/${encodeURIComponent(
+        userId
+      )}/${encodeURIComponent(token)}`,
+      {
+        userId,
+        title,
+        name,
+        email,
+        phone,
+      }
+    );
+    console.log(userId, title, name, email, phone);
+    return response.data;
+  } catch (error: any) {
     throw new Error(
-      error.response ? error.response.data.message : error.message);
+      error.response ? error.response.data.message : error.message
+    );
   }
 };
 
@@ -120,15 +133,21 @@ export const updateCarer = async (
   phone: string
 ) => {
   try {
-    const response = await axios.put(`${API_URL}/carers/update/${encodeURIComponent(userId)}/
+    const response = await axios.put(
+      `${API_URL}/carers/update/${encodeURIComponent(userId)}/
         ${encodeURIComponent(carerId)}/${encodeURIComponent(token)}`,
-        {
-          name, title, email, phone
-        });
+      {
+        name,
+        title,
+        email,
+        phone,
+      }
+    );
     return response.data;
-  } catch(error: any){
+  } catch (error: any) {
     throw new Error(
-      error.response ? error.response.data.message : error.message);
+      error.response ? error.response.data.message : error.message
+    );
   }
 };
 
@@ -138,16 +157,18 @@ export const fetchSingleCarer = async (
   carerId: number
 ) => {
   try {
-    const response = await axios.get(`${API_URL}/carers/getAll/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`);
+    const response = await axios.get(
+      `${API_URL}/carers/getAll/${encodeURIComponent(
+        userId
+      )}/${encodeURIComponent(token)}`
+    );
     const carers = response.data.carers;
-    for(const carer of carers)
-    {
-      if(carer.details.carerId == carerId)
-      {
+    for (const carer of carers) {
+      if (carer.details.carerId == carerId) {
         return carer;
       }
     }
-  } catch(error: any){
+  } catch (error: any) {
     console.warn(error.response ? error.response.data.message : error.message);
     return false;
   }
@@ -159,12 +180,16 @@ export const deleteCarer = async (
   carerId: number
 ) => {
   try {
-    console.log(userId, carerId, token)
-    const response = await axios.delete(`${API_URL}/carers/delete/${encodeURIComponent(userId)}/
+    console.log(userId, carerId, token);
+    const response =
+      await axios.delete(`${API_URL}/carers/delete/${encodeURIComponent(
+        userId
+      )}/
         ${encodeURIComponent(carerId)}/${encodeURIComponent(token)}`);
     return response.data;
-  } catch(error: any){
+  } catch (error: any) {
     throw new Error(
-      error.response ? error.response.data.message : error.message);
+      error.response ? error.response.data.message : error.message
+    );
   }
 };
