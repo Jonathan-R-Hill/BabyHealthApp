@@ -84,14 +84,14 @@ const asyncUpdateEmail = async (
   }
 };
 
-const asyncChangePassword = async (token: string, currentPassword: string, newPassword: string) => {
+const asyncChangePassword = async (token: string, userId: string, currentPassword: string, newPassword: string) => {
   try {
     const response = await axios.post(
-      `${API_URL}/accounts/changePassword`,
+      `${API_URL}/accounts/updatePassword/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`,
       {
-        token,
-        currentPassword,
-        newPassword,
+        userId,
+        password: currentPassword,
+        newPassword: newPassword,
       },
       {
         headers: {

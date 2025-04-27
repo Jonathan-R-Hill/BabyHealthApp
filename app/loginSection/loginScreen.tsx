@@ -23,7 +23,7 @@ const formMargin = isSmallScreen ? "3%" : "20%";
 
 const LoginScreen = () => {
   const [username, setUsername] = useState("test@test.test"); // Pre-fill with test username
-  const [password, setPassword] = useState("Testdata1!"); // Pre-fill with test password
+  const [password, setPassword] = useState("TestPassword@21!"); // Pre-fill with test password
   let [invalidLoginError, setInvalidLoginError] = useState(false); //assume the login does not require an error message
   let [allValid, setAllValid] = useState(false); //assume nothing is valid to begin with
 
