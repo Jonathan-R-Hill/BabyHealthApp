@@ -75,7 +75,7 @@ export default function SettingsPage() {
         <View style={styles.sectionContainer}>
           <TouchableOpacity
             style={styles.actionButton}
-            onPress={() => navigateTo("./aboutApp")}
+            onPress={() => navigateTo("../contactUs/main")}
           >
             <Text style={styles.actionButtonText}>About App</Text>
           </TouchableOpacity>
