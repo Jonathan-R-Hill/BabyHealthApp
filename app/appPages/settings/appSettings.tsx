@@ -36,7 +36,7 @@ export default function SettingsPage() {
 
   const navigateTo = (path: string) => {
     try {
-      router.push({ pathname: path, params: { username, token } });
+      router.push({ pathname: `./${path}`, params: { username, token } });
     } catch (error) {
       console.error("Navigation Error", error);
       Alert.alert(
