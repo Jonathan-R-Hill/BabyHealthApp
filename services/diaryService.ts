@@ -22,6 +22,7 @@ export const fetchSingleDiaryEntry = async (
         entry_id
       )}/${encodeURIComponent(token)}`
     );
+
     return response.data;
   } catch (error: any) {
     throw new Error(

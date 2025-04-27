@@ -19,6 +19,8 @@ import {
 } from "../../../services/diaryService";
 import { ReusableButton } from "@/components/ReusableButton";
 
+import { targetURL } from "../../../config";
+
 // Get screen width
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -47,6 +49,7 @@ export default function DiaryEntryDetails() {
   const { id, username, token } = useLocalSearchParams(); // Get parameters from the route
   const [entry, setEntry] = useState<DiaryEntry | null>(null); // State to store diary entry data
   const [loading, setLoading] = useState(true); // State to track loading status
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const fetchDiaryEntry = async (
     username: string,
@@ -61,6 +64,11 @@ export default function DiaryEntryDetails() {
       );
       if (data) {
         setEntry(data); // Store the retrieved entry
+
+        if (data.details.imageId) {
+          // console.log(`${targetURL}/get/diaryImage/${data.details.imageId}`);
+          setImageUrl(`${targetURL}/get/diaryImage/${data.details.imageId}`);
+        }
       } else {
         Alert.alert("Error", "Diary entry not found."); // Show an alert if entry is not found
       }
@@ -160,10 +168,21 @@ export default function DiaryEntryDetails() {
             <Text style={styles.infoLabel}>Food Amount: </Text>
             {entry.data.foodAmount}ml
           </Text>
-          <TouchableOpacity style={styles.imageUploader}>
-            <Image style={styles.imageIcon} />
-            <Text style={styles.imageText}>Picture placeholder</Text>
-          </TouchableOpacity>
+          <View style={styles.imageUploader}>
+            {imageUrl ? (
+              <Image
+                source={{ uri: imageUrl }}
+                style={styles.imageDisplay}
+                resizeMode="cover"
+              />
+            ) : (
+              <>
+                <Image style={styles.imageIcon} />
+                <Text style={styles.imageText}>No Image Available</Text>
+              </>
+            )}
+          </View>
+
           <View style={styles.buttonContainer}>
             <ReusableButton
               title="Edit"
@@ -246,5 +265,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     flex: 1,
     gap: 5,
+  },
+  imageDisplay: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 5,
   },
 });
