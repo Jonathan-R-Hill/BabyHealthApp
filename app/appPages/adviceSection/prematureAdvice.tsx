@@ -61,7 +61,7 @@ export default function PrematureAdviceSection() {
 
   const generalAdvice = () => {
     try {
-      console.log("Button Pressed");
+      //console.log("Button Pressed");
       router.push({ pathname: "./main", params: { username, token } });
     } catch (error) {
       console.error("Navigation Error", error);

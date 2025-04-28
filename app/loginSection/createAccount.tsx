@@ -32,12 +32,12 @@ export default function CreateAccountScreen() {
 
   const createNewAccount = async () => {
     try {
-      console.log("Email:", createEmail, "Password:", confirmPassword);
+      //console.log("Email:", createEmail, "Password:", confirmPassword);
 
       const result = await asyncCreateNewUser(createEmail, confirmPassword);
 
       if (result) {
-        console.log("Account created successfully:", result);
+        //console.log("Account created successfully:", result);
         //send to auth code, then to created sucessfully
         router.push({pathname: './loginAuthenticationCodeEmail'}); //must go to auth code page first
       } else {
@@ -99,7 +99,7 @@ export default function CreateAccountScreen() {
 
   const handleGoBackToLogin = () => {
     try {
-      console.log("button pressed");
+      //console.log("button pressed");
       router.push("./loginScreen");
     } catch (error) {
       console.error("Error Navigating", error);

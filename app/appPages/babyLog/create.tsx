@@ -43,7 +43,7 @@ export default function AddBaby() {
       newErrors.weight = "Valid weight is required.";
 
     setErrors(newErrors);
-    console.log(errors);
+    //console.log(errors);
     return Object.keys(newErrors).length === 0;
   };
 
@@ -157,7 +157,7 @@ export default function AddBaby() {
               const userId = String(username);
               const weightValue = parseFloat(weight);
 
-              console.log("Submitting:", { userId, token, name, gender, dateOfBirth, weight });
+             // console.log("Submitting:", { userId, token, name, gender, dateOfBirth, weight });
               postBaby(
                 userId,
                 String(token),
@@ -167,7 +167,7 @@ export default function AddBaby() {
                 weightValue,
               )
                 .then(() => {
-                  console.log("Baby added successfully!");
+                  //console.log("Baby added successfully!");
                   setName("");
                   setGender("");
                   setDateOfBirth(new Date());

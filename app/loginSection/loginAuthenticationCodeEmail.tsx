@@ -38,7 +38,7 @@ export default function authenticationPage() {
     }
 
     const handleBackToLogin = () => {
-        console.log("Back To Login");
+        //console.log("Back To Login");
         router.push("./loginScreen");
       }
 

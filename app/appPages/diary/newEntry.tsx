@@ -149,7 +149,7 @@ export default function CreateDiaryEntry() {
         const formData = createFormData();
         await postDiaryEntry(formData, String(username), String(token));
 
-        console.log("Diary entry created successfully!");
+        //console.log("Diary entry created successfully!");
 
         // Reset form fields
         setTitle("");

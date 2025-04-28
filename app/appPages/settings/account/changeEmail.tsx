@@ -67,7 +67,7 @@ export default function UpdateEmailPage() {
         newEmail as string
       );
 
-      console.log(response);
+      //console.log(response);
 
       setLoading(false);
       Alert.alert("Email Updated", "Your email has been updated successfully.");

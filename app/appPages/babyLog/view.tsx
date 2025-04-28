@@ -27,14 +27,14 @@ export default function BabyDetails() {
         babyId: string, 
         token: string
     ) => {
-        console.log("Fetch: ", { userId, babyId, token})
+        //console.log("Fetch: ", { userId, babyId, token})
         try {
             const data = await fetchBaby(
                 userId,
                 babyId,
                 String(token)
             );
-            console.log("Baby data:", data);
+            //console.log("Baby data:", data);
             if (data) {
                 setBaby(data);
             } else {
@@ -75,7 +75,7 @@ export default function BabyDetails() {
         if (typeof username === "string" && typeof id === "string" && typeof token === "string") {
                 try {
                     const response = await deleteBaby(username, id, token);
-                    console.log("Baby deleted.");
+                    //console.log("Baby deleted.");
                     router.push({
                         pathname: "./main",
                         params: { username, token, },

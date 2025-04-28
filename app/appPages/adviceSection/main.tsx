@@ -61,7 +61,7 @@ export default function AdviceSection() {
 
   const prematureAdvice = () => {
     try {
-      console.log("Button Pressed");
+      //console.log("Button Pressed");
       router.push({
         pathname: "./prematureAdvice",
         params: { username, token },

@@ -69,7 +69,7 @@ export const postDiaryEntry = async (
       )}`
     : `/post/diary/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`;
 
-  console.log("FormData:", formData); // Debugging lines
+  //console.log("FormData:", formData); // Debugging lines
 
   const response = await axios.post(`${API_URL}${endpoint}`, formData, {
     headers: {

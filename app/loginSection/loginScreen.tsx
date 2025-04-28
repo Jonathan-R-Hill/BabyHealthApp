@@ -31,12 +31,12 @@ const LoginScreen = () => {
 
   const handleLogin = async () => {
     try {
-      console.log("Username:", username, "Password:", password);
+      //console.log("Username:", username, "Password:", password);
 
       // Await the login service
       const token = await asyncValidateUser(username, password);
 
-      console.log("Login successful:", token);
+      //console.log("Login successful:", token);
 
       // After successful login, navigate to the main diary page
       router.push({

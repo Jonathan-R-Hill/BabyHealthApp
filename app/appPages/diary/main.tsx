@@ -61,7 +61,7 @@ export default function CreateDiaryEntry() {
   const fetchDiaryEntries = async (username: string, token: string) => {
     try {
       const data = await fetchAllDiaryEntries(username, token);
-      console.log(data)
+      //console.log(data)
       if(data === false){
         popup()
       }

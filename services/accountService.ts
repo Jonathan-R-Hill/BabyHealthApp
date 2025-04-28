@@ -16,7 +16,7 @@ const asyncValidateUser = async (email: string, password: string) => {
       }
     );
 
-    console.log(response.data);
+    //console.log(response.data);
 
     if (!response.data.token) {
       return false; // If no token, invalid login
@@ -36,13 +36,13 @@ const asyncLogoutUser = async (userId: string): Promise<boolean> => {
       userId,
     });
 
-    console.log("Logout response:", response.data);
+    //console.log("Logout response:", response.data);
     return true;
   } catch (error: any) {
     if (axios.isAxiosError(error)) {
-      console.log("Error:", error.response?.data?.message);
+      //console.log("Error:", error.response?.data?.message);
     } else {
-      console.log("An unexpected error occurred");
+     //console.log("An unexpected error occurred");
     }
     return false;
   }
@@ -71,10 +71,10 @@ const asyncUpdateEmail = async (
       }
     );
 
-    console.log("Email Updated Successfully", response.data);
+    //console.log("Email Updated Successfully", response.data);
     return response.data;
   } catch (error: any) {
-    console.log("Error:", error.response?.data?.message);
+    //console.log("Error:", error.response?.data?.message);
     return false;
   }
 };
@@ -100,7 +100,7 @@ const asyncChangePassword = async (
       }
     );
 
-    console.log("Password change response:", response.data);
+    //console.log("Password change response:", response.data);
     return response.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {

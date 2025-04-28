@@ -18,7 +18,7 @@ const asyncLogin = async (email: string, password: string) => {
     if (password === response.data._id.password) {
       return response.data;
     } else {
-      console.log(response.data);
+      //console.log(response.data);
       throw new Error("Invalid password");
     }
   } catch (error: any) {
@@ -39,7 +39,7 @@ const asyncValidateUser = async (email: string, password: string) => {
       }
     );
 
-    console.log(response.data);
+    //console.log(response.data);
 
     if (!response.data.token) {
       return false; // If no token, invalid login
@@ -64,17 +64,17 @@ const asyncCreateNewUser = async (email: string, password: string) => {
       }
     );
 
-    console.log("Existing user:", existingUserResponse.data);
+    //console.log("Existing user:", existingUserResponse.data);
 
     // If a user is found, return false
     if (existingUserResponse) {
-      console.log("User already exists:", existingUserResponse.data);
+      //console.log("User already exists:", existingUserResponse.data);
       return false;
     }
   } catch (error: any) {
     // If the error "User not found"
     if (error.response?.status === 404) {
-      console.log("No existing user found. Proceeding to create a new user...");
+      //console.log("No existing user found. Proceeding to create a new user...");
 
       // Create a new user
       try {
@@ -92,7 +92,7 @@ const asyncCreateNewUser = async (email: string, password: string) => {
           }
         );
 
-        console.log("User created successfully:", response.data);
+        //console.log("User created successfully:", response.data);
         return response.data;
       } catch (creationError: any) {
         throw new Error(
@@ -126,7 +126,7 @@ const asyncValidateAuthCode = async (email: string, code: string) => {
       }
     );
 
-    console.log("Code authenticated successfully:", response.data);
+    //console.log("Code authenticated successfully:", response.data);
     return response.data;
   } catch (error: any) {
     console.log("Error:", error.response?.data?.message
@@ -149,7 +149,7 @@ const asyncResetPassword = async (email: string, code: string, password: string)
 
     console.log("Existing user:", existingUserResponse.data);
     if (!existingUserResponse) {
-      console.log("Unable to verify user exists with email: ", email);
+      //console.log("Unable to verify user exists with email: ", email);
       return false;
     } else {
       const response = await axios.post(
@@ -195,7 +195,7 @@ const asyncSendCodePassword = async (userId: string) => {
 
 const asyncValidatePwAuthCode = async (userId: string, code: string) => {
   try {
-    console.log(userId, code);
+    //console.log(userId, code);
     const response = await axios.post(
       `${API_URL}/post/checkForgotCode`,
       {
@@ -210,7 +210,7 @@ const asyncValidatePwAuthCode = async (userId: string, code: string) => {
       }
     );
 
-    console.log("Code authenticated successfully:", response.data);
+    //console.log("Code authenticated successfully:", response.data);
     return response.data;
   } catch (error: any) {
     console.log("Error:", error.response?.data?.message

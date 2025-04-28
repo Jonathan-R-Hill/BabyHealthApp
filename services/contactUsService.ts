@@ -101,7 +101,7 @@ export const postNewCarer = async (
   phone: string
 ) => {
   try {
-    console.log(userId, token, name, title, email, phone);
+    //console.log(userId, token, name, title, email, phone);
     const response = await axios.post(
       `${API_URL}/carers/create/${encodeURIComponent(
         userId
@@ -114,7 +114,7 @@ export const postNewCarer = async (
         phone,
       }
     );
-    console.log(userId, title, name, email, phone);
+    //console.log(userId, title, name, email, phone);
     return response.data;
   } catch (error: any) {
     throw new Error(
@@ -180,7 +180,7 @@ export const deleteCarer = async (
   carerId: number
 ) => {
   try {
-    console.log(userId, carerId, token);
+    //console.log(userId, carerId, token);
     const response =
       await axios.delete(`${API_URL}/carers/delete/${encodeURIComponent(
         userId

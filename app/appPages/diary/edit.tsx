@@ -71,15 +71,15 @@ export default function CreateDiaryEntry() {
     token: string
   ) => {
     try {
-      console.log(`Refetching diary entry for edition. (ID: ${id})`);
+      //console.log(`Refetching diary entry for edition. (ID: ${id})`);
       const data: DiaryEntry = await fetchSingleDiaryEntry(
         username,
         entry_id,
         String(token)
       );
-      console.log(data.details.diaryTitle);
+      //console.log(data.details.diaryTitle);
       if (data) {
-        console.log("Store the retrived entry");
+        //console.log("Store the retrived entry");
         setEntry(data); // Store the retrieved entry
       } else {
         Alert.alert("Error", "Diary entry not found."); // Show an alert if entry is not found
@@ -128,7 +128,7 @@ export default function CreateDiaryEntry() {
   };
 
   const logFoodType = (input: string) => {
-    console.log(input);
+    //console.log(input);
   }
 
   return (
@@ -221,7 +221,7 @@ export default function CreateDiaryEntry() {
                 parseFloat(foodAmount)
               )
                 .then(() => {
-                  console.log("Diary entry updated successfully.");
+                  //console.log("Diary entry updated successfully.");
                   setTitle("");
                   setText("");
                   setWeight("");

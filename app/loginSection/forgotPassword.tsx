@@ -26,9 +26,9 @@ export default function forgotPasswordPage() {
     const submitPasswordReset = async () => {
         if(allValid)
         {
-          console.log("user resetting password", userEmail);
+          //console.log("user resetting password", userEmail);
           const username = String(userEmail);
-          console.log(username);
+          //console.log(username);
           const response = await asyncSendCodePassword(username);
           if(response)
           {
@@ -44,7 +44,7 @@ export default function forgotPasswordPage() {
     };
 
     const handleBackToLogin = () => {
-      console.log("Back To Login");
+      //console.log("Back To Login");
       router.push("./loginScreen");
     }
 

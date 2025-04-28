@@ -19,7 +19,7 @@ export default function DevContactMain() {
 
   const reportBug = () => {
     try {
-      console.log("Report Bug Button Pressed");
+      //console.log("Report Bug Button Pressed");
       router.push({ pathname: "./reportBug", params: { username, token } });
     } catch (error) {
       console.error("Navigation Error", error);
@@ -29,7 +29,7 @@ export default function DevContactMain() {
 
   const requestFeature = () => {
     try {
-      console.log("Request Feature Button Pressed");
+      //console.log("Request Feature Button Pressed");
       router.push({
         pathname: "./requestFeature",
         params: { username, token },
@@ -42,7 +42,7 @@ export default function DevContactMain() {
 
   const discordServer = () => {
     try {
-      console.log("Button Pressed");
+      //console.log("Button Pressed");
       router.push("./discordServer"); //note this may be an actual link to a discord server in the future
     } catch (error) {
       console.error("Navigation Error", error);
@@ -52,7 +52,7 @@ export default function DevContactMain() {
 
   const gitHub = () => {
     try {
-      console.log("Button Pressed");
+      //console.log("Button Pressed");
       router.push("https://github.com/Jonathan-R-Hill/BabyHealthApp"); //note this may be an actual link to the github
     } catch (error) {
       console.error("Navigation Error", error);

@@ -120,7 +120,7 @@ export default function DiaryEntryDetails() {
             entryId,
             token
           );
-          console.log("Diary entry deleted.");
+          //console.log("Diary entry deleted.");
           router.push({
             pathname: "./main",
             params: { username, token },
@@ -138,7 +138,7 @@ export default function DiaryEntryDetails() {
   };
 
   const handleEditEntry = async () => {
-    console.log(`Redirected to edit page (ID: ${id}).`);
+    //console.log(`Redirected to edit page (ID: ${id}).`);
     router.push({
       pathname: "./edit",
       params: { username, token, id },

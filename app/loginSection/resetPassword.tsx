@@ -24,10 +24,10 @@ export default function resetPassword(){
 
     const handleResetPassword = async () => {
         try {
-            console.log("Email: ", user);
-            console.log("New password: ", newPassword);
+            //console.log("Email: ", user);
+            //console.log("New password: ", newPassword);
             const response = await asyncResetPassword( user, code, newPassword);
-            console.log(response);
+            //console.log(response);
             if(allValid && response) //all valid AND result of backend true
             {
               router.setParams({userEmail: undefined});

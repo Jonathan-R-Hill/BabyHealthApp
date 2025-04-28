@@ -42,10 +42,10 @@ export default function EditBabyDetails() {
     babyId: string,
     token: string
   ) => {
-    console.log("Fetch: ", { userId, babyId, token });
+    //console.log("Fetch: ", { userId, babyId, token });
     try {
       const data = await fetchBaby(userId, babyId, String(token));
-      console.log("Baby data:", data);
+      //console.log("Baby data:", data);
       if (data) {
         setBaby(data);
       } else {
@@ -81,7 +81,7 @@ export default function EditBabyDetails() {
       newErrors.weight = "Valid weight is required.";
 
     setErrors(newErrors);
-    console.log(errors);
+    //console.log(errors);
     return Object.keys(newErrors).length === 0;
   };
 
@@ -182,14 +182,14 @@ export default function EditBabyDetails() {
               const userId = String(username);
               const weightValue = parseFloat(weight);
 
-              console.log("Submitting:", {
-                userId,
-                token,
-                name,
-                gender,
-                dateOfBirth,
-                weight,
-              });
+              // console.log("Submitting:", {
+              //   userId,
+              //   token,
+              //   name,
+              //   gender,
+              //   dateOfBirth,
+              //   weight,
+              // });
               updateBaby(
                 userId,
                 String(id),
@@ -200,7 +200,7 @@ export default function EditBabyDetails() {
                 weightValue
               )
                 .then(() => {
-                  console.log("Baby updated successfully!");
+                  //console.log("Baby updated successfully!");
                   setName("");
                   setGender("");
                   setDateOfBirth(new Date());

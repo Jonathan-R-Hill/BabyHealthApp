@@ -66,7 +66,7 @@ export default function ResetPasswordPage() {
         newPassword
       );
 
-      console.log(response);
+      //console.log(response);
 
       setLoading(false);
       Alert.alert("Password Changed", "Your password has been updated successfully.");

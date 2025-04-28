@@ -18,7 +18,7 @@ export const fetchBaby = async (
     babyId: number | string,
     token: string
 ) => {
-    console.log("Fetching from URL:", `${API_URL}/get/singlebaby/${encodeURIComponent(userId)}/${encodeURIComponent(babyId)}/${encodeURIComponent(token)}`);
+    //console.log("Fetching from URL:", `${API_URL}/get/singlebaby/${encodeURIComponent(userId)}/${encodeURIComponent(babyId)}/${encodeURIComponent(token)}`);
 
     try {
         const response = await axios.get<Baby>(
@@ -51,7 +51,7 @@ export const fetchBabies = async (userId: string,  token: string) => {
         );
         return response.data;   
     } catch (error: any) {
-        console.log(error);
+        //console.log(error);
         return false;
     }
 };

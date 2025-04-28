@@ -13,10 +13,10 @@ export default function CreateAccountApprovalScreen() {
 
   const redirectToLogin = () => {
     try{
-        console.log("button pressed, routing to login screen");
+        //console.log("button pressed, routing to login screen");
         router.push("./loginScreen");
     }catch(error) {
-        console.log("routing failure", error);
+        //console.log("routing failure", error);
         alert("unable to send you to the login page");
     }
   };

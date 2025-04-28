@@ -43,7 +43,7 @@ export const fetchMilkRecord = async (userId: string, token: string) => {
         userId
       )}/${encodeURIComponent(token)}`
     );
-    console.log("MILK DATA: " + response.data);
+    //console.log("MILK DATA: " + response.data);
     return response.data; // Return the retrieved data
   } catch (error: any) {
     // Handle errors and return a meaningful message

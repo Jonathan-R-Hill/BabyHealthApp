@@ -46,11 +46,11 @@ const BabyCharts = () => {
 
   async function fetchWeightData(username: string, token: string) {
     try {
-      console.log("token: " + token);
+      //console.log("token: " + token);
       //fetch record returns an array of WeightRecord objects, parsed at service level
       const data: WeightRecord[] = await fetchWeightRecord(username, token);
 
-      console.log(data);
+      //console.log(data);
 
       if (data && data.length > 0) {
         setWeightData(data);
@@ -71,12 +71,12 @@ const BabyCharts = () => {
 
   async function fetchMilkData(username: string, token: string) {
     try {
-      console.log("token: " + token);
+      //console.log("token: " + token);
       //fetch record returns an array of WeightRecord objects, parsed at service level
       const data: MilkRecord[] = await fetchMilkRecord(username, token);
 
-      console.log("milk request token: " + token);
-      console.log(data);
+      //console.log("milk request token: " + token);
+      //console.log(data);
 
       if (data && data.length > 0) {
         setMilkData(data);

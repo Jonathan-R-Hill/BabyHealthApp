@@ -31,7 +31,7 @@ export const fetchAiWeightAnalysis = async (userId: string, token: string) => {
       }
     );
 
-    console.log("AI analysis response:", response.data);
+    //console.log("AI analysis response:", response.data);
     return response.data;
   } catch (error: any) {
     console.error(
@@ -73,7 +73,7 @@ export const fetchAiFoodConsumptionAnalysis = async (
       }
     );
 
-    console.log("AI analysis response:", response.data);
+    //console.log("AI analysis response:", response.data);
     return response.data;
   } catch (error: any) {
     console.error(
