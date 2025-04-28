@@ -5,10 +5,12 @@ An intuitive app to help parents log baby-related activities and milestones, whi
 ---
 
 ## 🚀 Tech Stack
+Please note that the backend is not a public repository for security purposes. 
 
 ### Frontend:
 - **React Native**: For cross-platform mobile development.
 - **Expo**: Simplifies the development workflow and provides useful tools for debugging and testing.
+- **TypeScript**: Adds static typing for better code quality and maintainability.
 
 ### Backend:
 - **Node.js**: A robust runtime for the server-side application.
@@ -24,9 +26,14 @@ Follow these steps to run the app locally:
 
 ### Prerequisites
 1. Install **Node.js** and **npm** (Node Package Manager).
-2. Install **Expo CLI** globally OR locally:
+2. Install the packages required for the application to function using:
    ```bash
-   npm install -g expo-cli
-3. run the server with:
+   npm i
+3. Install **Expo CLI** globally OR locally:
+   ```bash
+   npm install expo-cli
+4. run the server with:
    ```bash
    npx expo start
+
+To use the app in the browser you can use the cli information provided by expo.
