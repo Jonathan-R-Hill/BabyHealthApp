@@ -49,24 +49,19 @@ const asyncLogoutUser = async (userId: string): Promise<boolean> => {
 };
 
 const asyncUpdateEmail = async (
-  email: string,
-  code: string,
-  password: string
+  token: string,
+  userId: string,
+  password: string,
+  newEmail: string
 ) => {
   try {
-    const auth = await asyncValidateUser(email, password);
-    if (!auth) {
-      console.error("Invalid password");
-      return false;
-    }
-
+    
     const response = await axios.post(
-      `${API_URL}/accounts/updateEmail/${encodeURIComponent(
-        email
-      )}/${encodeURIComponent(code)}`,
+      `${API_URL}/accounts/updateEmail/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`,
       {
-        userId: email,
-        code,
+        userId,
+        password,
+        newEmail
       },
       {
         headers: {
@@ -76,7 +71,7 @@ const asyncUpdateEmail = async (
       }
     );
 
-    console.log("Code authenticated successfully:", response.data);
+    console.log("Email Updated Successfully", response.data);
     return response.data;
   } catch (error: any) {
     console.log("Error:", error.response?.data?.message);
@@ -84,7 +79,11 @@ const asyncUpdateEmail = async (
   }
 };
 
-const asyncChangePassword = async (token: string, userId: string, currentPassword: string, newPassword: string) => {
+const asyncChangePassword = async (
+  token: string, 
+  userId: string,
+  currentPassword: string,
+  newPassword: string ) => {
   try {
     const response = await axios.post(
       `${API_URL}/accounts/updatePassword/${encodeURIComponent(userId)}/${encodeURIComponent(token)}`,

@@ -11,13 +11,15 @@ import {
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Navbar from "@/app/Navbar";
 import Header from "@/app/Header";
+import { asyncUpdateEmail } from "@/services/accountService";
 
 export default function UpdateEmailPage() {
   const router = useRouter();
   const { username, token } = useLocalSearchParams();
 
+  const [password, setCheckPassword] = useState("");
   const [newEmail, setNewEmail] = useState("");
-  const [confirmEmail, setConfirmEmail] = useState("");
+  const [confirmNewEmail, setConfirmNewEmail] = useState("");
 
   const [allValid, setAllValid] = useState(false);
 
@@ -26,13 +28,56 @@ export default function UpdateEmailPage() {
     setAllValid(emailRegex.test(newEmail));
   };
 
-  const handleUpdateEmail = () => {
+  const handleUpdateEmail = async () => {
+
     console.log("update email button pressed");
-    if (newEmail !== confirmEmail) {
+    if (newEmail !== confirmNewEmail) {
       Alert.alert("Error", "Emails do not match.");
       return;
     }
-    // needs logic
+    // logic
+
+    if (username == confirmNewEmail) {
+      Alert.alert("Error", "Entered same email as previous email");
+      return;
+    }
+
+    if (newEmail !== confirmNewEmail) {
+      Alert.alert("Error", "New email and confirm email do not match");
+    }
+
+    try {
+      if (!token) {
+        throw new Error("Missing token. Please log in again.");
+      }
+
+      const response = await asyncUpdateEmail(
+        token as string,
+        username as string,
+        password as string,
+        confirmNewEmail as string
+      );
+
+      console.log(response);
+
+      Alert.alert(
+        "Password Changed",
+        "Your password has been updated successfully."
+      );
+      router.replace("/loginSection/loginScreen");
+    } catch (error: any) {
+      console.error("Error changing email:", error.message);
+
+      if (error.message.includes("password")) {
+        Alert.alert(
+          "Incorrect Password",
+          "The password you entered is incorrect. Please try again."
+        );
+      } else {
+        Alert.alert("Error", error.message || "Failed to change email.");
+      }
+    }
+
     Alert.alert("Email Updated", "Your email has been updated successfully.");
   };
 
@@ -42,6 +87,14 @@ export default function UpdateEmailPage() {
 
       <View style={styles.settingOption}>
         <Text style={styles.settingText}>Update Email</Text>
+
+        <TextInput
+          style={styles.input}
+          placeholder="enter current password"
+          value={password}
+          onChangeText={setCheckPassword}
+          keyboardType="email-address"
+        />
         <TextInput
           style={styles.input}
           placeholder="new email"
@@ -52,8 +105,8 @@ export default function UpdateEmailPage() {
         <TextInput
           style={styles.input}
           placeholder="confirm new email"
-          value={confirmEmail}
-          onChangeText={setConfirmEmail}
+          value={confirmNewEmail}
+          onChangeText={setConfirmNewEmail}
           keyboardType="email-address"
         />
         <TouchableOpacity
