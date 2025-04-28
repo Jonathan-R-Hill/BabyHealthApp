@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
   Text,
-  TouchableOpacity,
-  Alert,
   TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+  Alert,
 } from "react-native";
 
 import { useRouter, useLocalSearchParams } from "expo-router";
@@ -17,33 +18,39 @@ export default function UpdateEmailPage() {
   const router = useRouter();
   const { username, token } = useLocalSearchParams();
 
-  const [password, setCheckPassword] = useState("");
+  const [password, setPassword] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [confirmNewEmail, setConfirmNewEmail] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const [allValid, setAllValid] = useState(false);
+  const [emailStrength, setEmailStrength] = useState("");
 
-  const isEmailValid = () => {
+  useEffect(() => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    setAllValid(emailRegex.test(newEmail));
-  };
+    const isEmailValid = emailRegex.test(newEmail);
+
+    if (!isEmailValid) {
+      setEmailStrength("Invalid Email");
+    } else {
+      setEmailStrength("Valid Email");
+    }
+
+    setAllValid(
+      password.length > 0 &&
+        isEmailValid &&
+        newEmail === confirmNewEmail &&
+        newEmail !== username
+    );
+  }, [password, newEmail, confirmNewEmail]);
 
   const handleUpdateEmail = async () => {
-
-    console.log("update email button pressed");
     if (newEmail !== confirmNewEmail) {
-      Alert.alert("Error", "Emails do not match.");
+      Alert.alert("Error", "New email and confirm email do not match.");
       return;
     }
-    // logic
-
-    if (username == confirmNewEmail) {
-      Alert.alert("Error", "Entered same email as previous email");
+    if (username === newEmail) {
+      Alert.alert("Error", "Entered same email as current email.");
       return;
-    }
-
-    if (newEmail !== confirmNewEmail) {
-      Alert.alert("Error", "New email and confirm email do not match");
     }
 
     try {
@@ -51,22 +58,23 @@ export default function UpdateEmailPage() {
         throw new Error("Missing token. Please log in again.");
       }
 
+      setLoading(true);
+
       const response = await asyncUpdateEmail(
         token as string,
         username as string,
         password as string,
-        confirmNewEmail as string
+        newEmail as string
       );
 
       console.log(response);
 
-      Alert.alert(
-        "Password Changed",
-        "Your password has been updated successfully."
-      );
+      setLoading(false);
+      Alert.alert("Email Updated", "Your email has been updated successfully.");
       router.replace("/loginSection/loginScreen");
     } catch (error: any) {
-      console.error("Error changing email:", error.message);
+      console.error("Error updating email:", error.message);
+      setLoading(false);
 
       if (error.message.includes("password")) {
         Alert.alert(
@@ -74,11 +82,9 @@ export default function UpdateEmailPage() {
           "The password you entered is incorrect. Please try again."
         );
       } else {
-        Alert.alert("Error", error.message || "Failed to change email.");
+        Alert.alert("Error", error.message || "Failed to update email.");
       }
     }
-
-    Alert.alert("Email Updated", "Your email has been updated successfully.");
   };
 
   return (
@@ -90,30 +96,57 @@ export default function UpdateEmailPage() {
 
         <TextInput
           style={styles.input}
-          placeholder="enter current password"
+          placeholder="Current Password"
+          placeholderTextColor="#a1a1a1"
           value={password}
-          onChangeText={setCheckPassword}
-          keyboardType="email-address"
+          onChangeText={setPassword}
+          secureTextEntry
         />
+
         <TextInput
           style={styles.input}
-          placeholder="new email"
+          placeholder="New Email"
+          placeholderTextColor="#a1a1a1"
           value={newEmail}
           onChangeText={setNewEmail}
           keyboardType="email-address"
+          autoCapitalize="none"
         />
+
         <TextInput
           style={styles.input}
-          placeholder="confirm new email"
+          placeholder="Confirm New Email"
+          placeholderTextColor="#a1a1a1"
           value={confirmNewEmail}
           onChangeText={setConfirmNewEmail}
           keyboardType="email-address"
+          autoCapitalize="none"
         />
+
+        {newEmail.length > 0 && (
+          <Text
+            style={[
+              styles.strengthText,
+              { color: emailStrength === "Valid Email" ? "green" : "red" },
+            ]}
+          >
+            {emailStrength}
+          </Text>
+        )}
+
         <TouchableOpacity
-          style={styles.actionButton}
+          style={[
+            styles.actionButton,
+            { backgroundColor: allValid ? "#3498db" : "#7c7d7c" },
+          ]}
           onPress={handleUpdateEmail}
+          disabled={!allValid || loading}
         >
-          <Text style={styles.actionButtonText}>Update Email</Text>
+          {loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text style={styles.actionButtonText}>Update Email</Text>
+          )}
         </TouchableOpacity>
       </View>
 
@@ -125,12 +158,6 @@ export default function UpdateEmailPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  textTitle: {
-    fontSize: 40,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginVertical: 20,
   },
   settingOption: {
     flexDirection: "column",
@@ -152,6 +179,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginVertical: 10,
+    color: "#000",
   },
   actionButton: {
     backgroundColor: "#3498db",
@@ -170,28 +198,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignSelf: "center",
   },
-  logoutButton: {
-    backgroundColor: "#e74c3c",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    height: 50,
-    width: "80%",
-    maxWidth: 600,
-    alignItems: "center",
-    justifyContent: "center",
-    marginVertical: 10,
-  },
-  logoutButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    alignSelf: "center",
-  },
   header: {
     padding: 10,
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
     flex: 2,
+  },
+  strengthText: {
+    fontSize: 14,
+    marginBottom: 10,
+    fontWeight: "bold",
   },
 });
